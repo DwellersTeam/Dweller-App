@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "916549846966",
+    "project_id": "dwellers-61d22",
+    "storage_bucket": "dwellers-61d22.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916549846966:android:ee70ceb357e28f65c82317",
+        "android_client_info": {
+          "package_name": "com.dweller"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMl3z7VSvns6sKcuf5u1GX1379baici24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

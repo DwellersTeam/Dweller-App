@@ -1,0 +1,1 @@
+const kGoogleApiKey = "AIzaSyCGMiS6iWX8jrYMXuFJj9GXyZcL9PWJgoc"; // Replace with your Google API key
