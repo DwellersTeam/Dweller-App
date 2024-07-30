@@ -98,7 +98,7 @@ class PropertyHostModel{
       location: Location.fromJson(json['location'] ?? {}),
       facilities: json['facilities'] ?? [], //(json['facilities'] as List<String>?)?.map((detailsJson) => FacilityModel.fromJson(e)).toList() ?? [],
       propertyPics: json['pictures'] ?? [],
-      propertyOwner: UserModel.fromJson(json['owner'] ?? {}) //owner
+      propertyOwner: UserModel.fromJson(json['profile'] ?? {}) //owner
 
     );
   }
@@ -114,7 +114,7 @@ class PropertyHostModel{
       'location': location.toJson(),
       'facilities': facilities,
       'pictures': propertyPics,
-      'owner': propertyOwner.toJson()
+      'profile': propertyOwner.toJson()
 
     };
   }

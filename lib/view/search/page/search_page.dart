@@ -135,7 +135,8 @@ class _SearchPageState extends State<SearchPage> {
                             }
                             else {
                               Get.to(() => ProfilePageHost(
-                                property: data.id,
+                                property: data.property,
+                                userId: data.id,
                               ));
                             }
                           },

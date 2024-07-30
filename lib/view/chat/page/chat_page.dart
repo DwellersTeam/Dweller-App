@@ -124,7 +124,8 @@ class _ChatPageState extends State<ChatPage> {
                             }
                             else {
                               Get.to(() => ProfilePageHost(
-                                property: data.id,
+                                property: data.property,
+                                userId: data.id,
                               ));
                             }
                           },

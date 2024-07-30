@@ -36,6 +36,8 @@ class BookmarkService extends getx.GetxController {
 
       if (res.statusCode == 200 || res.statusCode == 201) {
 
+        //res.headers['x-accessToken']!.isNotEmpty ?
+
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');

@@ -126,7 +126,8 @@ class _MatchPageState extends State<MatchPage> {
                             }
                             else {
                               Get.to(() => ProfilePageHost(
-                                property: data.id,
+                                property: data.property,
+                                userId: data.id,
                               ));
                             }
                           },

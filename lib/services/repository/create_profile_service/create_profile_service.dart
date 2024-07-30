@@ -50,7 +50,7 @@ class CreateProfileService extends getx.GetxController {
       log("Decoded jwt: $decodedToken");
       UserModel jsonResponse = UserModel.fromJson(
         {
-          'property': decodedToken['property'] ?? '',
+          'property': decodedToken['property'] ?? false,
           'picture': decodedToken['picture'] ?? '',
           'firstname': decodedToken['firstname'] ?? '',
           'lastname': decodedToken['lastname'] ?? '',
@@ -79,10 +79,14 @@ class CreateProfileService extends getx.GetxController {
       http.Response res = await baseService.httpGet(endPoint: "users/$id",);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
-
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
+
+        /*if(res.headers['x-accessToken']!.isNotEmpty || res.headers['x-accessToken'] != null){
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-accessToken']!);
+        }*/
         
         //decode response from the server
         UserModel jsonResponse = UserModel.fromJson(json.decode(res.body));
@@ -645,12 +649,12 @@ class CreateProfileService extends getx.GetxController {
         debugPrint('this is response body ==> ${res.body}');
         
         //decode response from the server
-        final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
+        /*final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
 
         LocalStorage.saveToken(jsonResponse.accessToken);
-        LocalStorage.saveXrefreshToken(jsonResponse.refreshToken);
+        LocalStorage.saveXrefreshToken(jsonResponse.refreshToken);*/
 
-        log("$jsonResponse");
+        //log("$jsonResponse");
         onSuccess();
 
       }
@@ -717,12 +721,12 @@ class CreateProfileService extends getx.GetxController {
         debugPrint('this is response body ==> ${res.body}');
         
         //decode response from the server
-        final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
+        /*final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
 
         LocalStorage.saveToken(jsonResponse.accessToken);
         LocalStorage.saveXrefreshToken(jsonResponse.refreshToken);
 
-        log("$jsonResponse");
+        log("$jsonResponse");*/
         onSuccess();
 
       }

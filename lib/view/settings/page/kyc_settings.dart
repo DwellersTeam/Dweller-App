@@ -30,7 +30,7 @@ class KYCSettings extends StatelessWidget {
   final VoidCallback onRefresh;
 
   final controller = Get.put(SettingsController());
-  final String kycUrl = LocalStorage.getKYCDoc();
+  //final String kycUrl = LocalStorage.getKYCDoc();
 
   @override
   Widget build(BuildContext context) {
@@ -174,14 +174,14 @@ class KYCSettings extends StatelessWidget {
               SizedBox(height: MediaQuery.of(context).size.height * 0.42,),
               Obx(
                 () {
-                  return service.isLoading.value ? const Center(child: Loader2()) : Padding(
+                  return service.isLoading.value || controller.isLoading.value ? const Center(child: Loader2()) : Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: ConfirmButton(
                       textColor: AppColor.whiteColor,
                       backgroundColor: AppColor.darkPurpleColor,
                       text: 'Submit document',
                       onPressed: () async{
-                        if(kycUrl.isEmpty || controller.kycDocType.value == "Select") {
+                        if(controller.kycDocType.value == "Select") {
                           showMessagePopup(
                             title: "Uh oh!", 
                             message:  "please select and upload your valid document", 
@@ -192,7 +192,7 @@ class KYCSettings extends StatelessWidget {
                         else{
                           await service.updateKYC(
                             context: context, 
-                            kycDocUrl: kycUrl, 
+                            kycDocUrl: LocalStorage.getKYCDoc(), 
                             kycDocType: controller.kycDocType.value, 
                             onSuccess: () {
                               //dismiss the selected file

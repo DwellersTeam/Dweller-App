@@ -1,7 +1,10 @@
+import 'package:dweller/main.dart';
+import 'package:dweller/model/listing/property_model.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/view/home/widget/property/host_property_facilities.dart';
 import 'package:dweller/view/home/widget/property/host_property_gallery.dart';
 import 'package:dweller/view/home/widget/property/property_fee.dart';
+import 'package:dweller/view/home/widget/property/view_property_on_map.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,7 +19,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class HostPropertyInfo extends StatelessWidget {
-  const HostPropertyInfo({super.key});
+  const HostPropertyInfo({super.key, required this.model});
+  final PropertyHostModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +72,7 @@ class HostPropertyInfo extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    '14, Vana-Viru, Tallinn, 10111 - Estonia',
+                    model.location.address,
                     style: GoogleFonts.poppins(
                       color: AppColor.blackColor,
                       fontSize: 12,
@@ -79,7 +83,9 @@ class HostPropertyInfo extends StatelessWidget {
                 ),
                 SizedBox(width: 20.w,),
                 GestureDetector(
-                  onTap:() {},
+                  onTap:() {
+                    Get.to(() => ViewPropertyOnMap());
+                  },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
                     alignment: Alignment.center,
@@ -130,7 +136,7 @@ class HostPropertyInfo extends StatelessWidget {
               ],
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.035),
-            FacilitiesList(),
+            FacilitiesList(facilities: model.facilities),
       
             SizedBox(height: MediaQuery.of(context).size.height * 0.035),
             Row(
@@ -153,7 +159,7 @@ class HostPropertyInfo extends StatelessWidget {
               ],
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.035),
-            HostApartmentGallery(),
+            HostApartmentGallery(pictures: model.propertyPics),
         
             SizedBox(height: MediaQuery.of(context).size.height * 0.035),
             Row(
@@ -178,7 +184,7 @@ class HostPropertyInfo extends StatelessWidget {
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.035),
             PropertyFee(
-              fee: "#450",
+              fee: "${currency(context).currencySymbol} ${model.rent}",
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.03),
       

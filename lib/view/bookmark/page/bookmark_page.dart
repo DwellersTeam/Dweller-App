@@ -129,7 +129,8 @@ class _BookmarkPageState extends State<BookmarkPage> {
                             }
                             else {
                               Get.to(() => ProfilePageHost(
-                                property: data.id,
+                                property: data.property,
+                                userId: data.id,
                               ));
                             }
                           },

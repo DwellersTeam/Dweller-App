@@ -1,7 +1,7 @@
 import 'package:dweller/model/listing/property_model.dart';
 import 'package:dweller/model/profile/user_profile_model.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
-import 'package:dweller/view/home/widget/profile(h&s)/host_profile_info.dart';
+import 'package:dweller/view/home/widget/profile(h&s)/profile_info.dart';
 import 'package:dweller/view/home/widget/property/host_property_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,8 +21,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class HostTabPage extends StatefulWidget {
-  const HostTabPage({super.key, required this.user, required this.property,});
-  final UserModel user;
+  const HostTabPage({super.key, required this.property,});
+  //final UserModel user;
   final PropertyHostModel property;
 
   @override
@@ -140,9 +140,9 @@ class _HostTabPageState extends State<HostTabPage> with SingleTickerProviderStat
                     child: TabBarView(
                       controller: tabController,
                       physics: const BouncingScrollPhysics(),
-                      children: const [
-                        ProfileInfo(),
-                        HostPropertyInfo(),
+                      children: [
+                        ProfileInfo(user: widget.property.propertyOwner),
+                        HostPropertyInfo(model: widget.property,),
                       ]
                     ),
                   ),

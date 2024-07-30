@@ -102,6 +102,7 @@ class SettingsController extends getx.GetxController {
   //upload image to cloudinary
   Future<void> uploadKYCDocToCloudinary({required BuildContext context}) async{
     
+    isLoading .value = true;
     final response = await cloudinary.upload(
       file: kycDocFromGallery.value!.path,
       //uploadPreset: "somePreset",
@@ -118,19 +119,19 @@ class SettingsController extends getx.GetxController {
       log('cloudinary_image_url_saved: ${response.secureUrl}');
       isLoading.value = false;
       //success snackbar
-      /*showMySnackBar(
+      showMySnackBar(
         context: context,
         backgroundColor: AppColor.greenColor,
         message: "kyc file uploaded successfully"
-      );*/
+      );
     }
     else {
       isLoading.value = false;
-      /*showMySnackBar(
+      showMySnackBar(
         context: context,
         backgroundColor: AppColor.redColor,
         message: "failed to upload kyc file"
-      );*/
+      );
     }
   }
 

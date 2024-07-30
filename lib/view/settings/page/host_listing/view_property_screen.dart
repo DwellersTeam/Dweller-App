@@ -28,8 +28,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 //VIEW LISTING
 class ViewListingPage extends StatefulWidget {
-  const ViewListingPage({super.key, required this.propertyId});
-  final String propertyId;
+  const ViewListingPage({super.key, required this.userId});
+  final String userId;
 
   @override
   State<ViewListingPage> createState() => _ViewListingPageState();
@@ -47,7 +47,7 @@ class _ViewListingPageState extends State<ViewListingPage> {
   //REFRESH FUNCTIONALITY
   Future<PropertyModel> _refresh() async{
     await Future.delayed(const Duration(seconds: 2));
-    final propertyFuture = await profileService.getPropertiesByIdEndpoint(context: context, id: widget.propertyId);
+    final propertyFuture = await profileService.getPropertiesByIdEndpoint(context: context, id: widget.userId);
     return propertyFuture;
   }
 

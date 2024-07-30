@@ -444,6 +444,18 @@ class _AddListingPageState extends State<AddListingPage> {
                         ],
                       ),
 
+                      Obx(
+                        () {
+                          return listingController.isLoading.value ? SizedBox(height: size.height * 0.10,) : const SizedBox.shrink();
+                        }
+                      ),  
+
+                      Obx(
+                        () {
+                          return listingController.isLoading.value ? const Loader2() : const SizedBox.shrink();
+                        }
+                      ), 
+
                       SizedBox(
                         height: size.height * 0.10,
                       ),
@@ -451,7 +463,7 @@ class _AddListingPageState extends State<AddListingPage> {
                       //NEXT BUTTON
                       Obx(() {
                         return profileService.isLoadingAdd.value 
-                        ? Loader2()
+                        ? const Loader2()
                         : CustomNextButton(
                           text: 'Upload Listing',
                           textColor: AppColor.whiteColor,

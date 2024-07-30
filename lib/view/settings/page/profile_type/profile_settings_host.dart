@@ -40,8 +40,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class ProfilePageHost extends StatelessWidget {
-  const ProfilePageHost({super.key, required this.property,});
-  final String property; //check if host has uploaded a property or not.
+  const ProfilePageHost({super.key, required this.property, required this.userId});
+  final bool property; //check if host has uploaded a property or not.
+  final String userId;
 
 
   @override
@@ -64,7 +65,7 @@ class ProfilePageHost extends StatelessWidget {
               DwellerAppBar(
                 actionIcon: InkWell(
                   onTap: () {
-                    Get.to(() => SettingsPage());
+                    Get.to(() => const SettingsPage());
                   },
                   child: SvgPicture.asset('assets/svg/settings_icon.svg')
                 ),
@@ -72,7 +73,7 @@ class ProfilePageHost extends StatelessWidget {
             
               SizedBox(height: size.height * 0.01,),
             
-              HostProfileTab(property: property,)
+              HostProfileTab(property: property, userId: userId,)
                    
             ],
           ),
@@ -90,8 +91,9 @@ class ProfilePageHost extends StatelessWidget {
 
 
 class HostProfileTab extends StatefulWidget {
-  const HostProfileTab({super.key, required this.property,});
-  final String property; //check if host has uploaded a property or not.
+  const HostProfileTab({super.key, required this.property, required this.userId,});
+  final bool property; //check if host has uploaded a property or not.
+  final String userId;
 
 
 
@@ -180,10 +182,9 @@ class _HostProfileTabState extends State<HostProfileTab> with SingleTickerProvid
               children: [
                 ProfileSettingHost(
                   context: context,
-          
                 ),
-                //ViewListingPage(),
-                widget.property.isEmpty ? const AddListingPage() : ViewListingPage(propertyId: widget.property,),
+                //AddListingPage(),
+                widget.property ? ViewListingPage(userId: widget.userId,):  const AddListingPage(),
       
               ]
             ),

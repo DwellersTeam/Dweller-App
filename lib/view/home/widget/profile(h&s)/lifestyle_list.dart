@@ -12,9 +12,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class ProfileLifestyleList extends StatelessWidget {
-  ProfileLifestyleList({super.key});
+  ProfileLifestyleList({super.key, required this.lifestyleList});
+  final List<dynamic> lifestyleList;
 
-  final controller = Get.put(HomePageController());
+  //final controller = Get.put(HomePageController());
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class ProfileLifestyleList extends StatelessWidget {
           childAspectRatio: 0.28, //0.3 Adjust this ratio as needed to control the item size
         ),
         physics: const BouncingScrollPhysics(),
-        itemCount: controller.mainLifestyleList.length,
+        itemCount: lifestyleList.length,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.symmetric(horizontal: 0.w),
@@ -49,7 +50,7 @@ class ProfileLifestyleList extends StatelessWidget {
                 )
               ),
               child: Text(
-                controller.mainLifestyleList[index],  //${index}
+                lifestyleList[index],  //${index}
                 style: GoogleFonts.poppins(
                   color:  AppColor.blackColor,
                   fontSize: 12.sp,

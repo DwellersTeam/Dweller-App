@@ -2,7 +2,7 @@ import 'package:dweller/model/profile/user_profile_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
-import 'package:dweller/view/home/widget/profile(h&s)/host_profile_info.dart';
+import 'package:dweller/view/home/widget/profile(h&s)/profile_info.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -65,7 +65,7 @@ class _SeekerTabPageState extends State<SeekerTabPage>{
             SizedBox(height: 30.h),
             
             Expanded(
-              child: ProfileInfo(),
+              child: ProfileInfo(user: widget.user,),
             )
             //
           

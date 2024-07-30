@@ -21,6 +21,8 @@ import 'package:image_picker/image_picker.dart';
 class ListingController extends getx.GetxController {
   
 
+  final isLoading = false.obs;
+
   //cloudinary config
   /// This three params can be obtained directly from your Cloudinary account Dashboard.
   /// The .signedConfig(...) factory constructor is recommended only for server side apps, where [apiKey] and 
@@ -108,6 +110,7 @@ class ListingController extends getx.GetxController {
 
   //upload image to cloudinary
   Future<void> uploadFirstPropertyImageToCloudinary({required BuildContext context}) async{
+    isLoading.value = true;
     final response = await cloudinary.upload(
       file: firstPropImage.value!.path,
       //uploadPreset: "somePreset",
@@ -120,12 +123,14 @@ class ListingController extends getx.GetxController {
     );
   
     if(response.isSuccessful) {
+      isLoading.value = false;
       debugPrint("${response.statusCode}");
       debugPrint('cloudinary_image_url: ${response.secureUrl}');
       propImage1.text = response.secureUrl!;
       debugPrint(propImage1.text);
     }
     else {
+      isLoading.value = false;
       debugPrint("${response.statusCode}}");
       showMySnackBar(
         context: context,
@@ -164,6 +169,7 @@ class ListingController extends getx.GetxController {
 
   //upload image to cloudinary
   Future<void> uploadSecondPropertyImageToCloudinary({required BuildContext context}) async{
+    isLoading.value = true;
     final response = await cloudinary.upload(
       file: secondPropImage.value!.path,
       //uploadPreset: "somePreset",
@@ -176,12 +182,14 @@ class ListingController extends getx.GetxController {
     );
   
     if(response.isSuccessful) {
+      isLoading.value = false;
       debugPrint("${response.statusCode}");
       debugPrint('cloudinary_image_url: ${response.secureUrl}');
       propImage2.text = response.secureUrl!;
       debugPrint(propImage2.text);
     }
     else {
+      isLoading.value = false;
       debugPrint("${response.statusCode}}");
       showMySnackBar(
         context: context,
@@ -221,6 +229,7 @@ class ListingController extends getx.GetxController {
 
   //upload image to cloudinary
   Future<void> uploadThirdPropertyImageToCloudinary({required BuildContext context}) async{
+    isLoading.value = true;
     final response = await cloudinary.upload(
       file: thirdPropImage.value!.path,
       //uploadPreset: "somePreset",
@@ -233,12 +242,14 @@ class ListingController extends getx.GetxController {
     );
   
     if(response.isSuccessful) {
+      isLoading.value = false;
       debugPrint("${response.statusCode}");
       debugPrint('cloudinary_image_url: ${response.secureUrl}');
       propImage3.text = response.secureUrl!;
       debugPrint(propImage3.text);
     }
     else {
+      isLoading.value = false;
       debugPrint("${response.statusCode}}");
       showMySnackBar(
         context: context,

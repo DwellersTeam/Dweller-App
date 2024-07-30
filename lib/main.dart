@@ -100,9 +100,11 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  final token = LocalStorage.getXrefreshToken();
   final controller = Get.put(PushNotificationController());
   final locationService = Get.put(LocationService());
+
+  final token = LocalStorage.getXrefreshToken();
+  //final token = LocalStorage.getToken();
 
 
   bool isExpiredVal = false;

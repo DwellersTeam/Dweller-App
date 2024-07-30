@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:dweller/model/profile/user_profile_model.dart';
+import 'package:dweller/services/repository/match_service/match_service.dart';
 import 'package:dweller/view/home/widget/alert/right_swipe_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' as getx;
@@ -11,9 +12,9 @@ import 'package:get/get.dart' as getx;
 
 
 class HomePageController extends getx.GetxController {
+  
 
-
-final isBookmarked = false.obs;  
+  final isBookmarked = false.obs;  
 
 
   getx.RxInt currentIndex = 0.obs;
@@ -43,14 +44,17 @@ final isBookmarked = false.obs;
     required SwiperActivity activity,
     //add variables but make them nullable => [String? val, String? fil]
     required BuildContext context, 
+    required VoidCallback onSuccess,
     required UserModel userModel
     }) {
     switch (activity) {
       case Swipe():
-        log('The card was swiped to the : ${activity.direction}');
+        log('The card was swiped to the : ${activity.direction.name}');
         log('previous index: $previousIndex, target index: $targetIndex');
 
         if (activity.direction.name == "right") {
+          log('The card was swiped to the : ${activity.direction.name}');
+          onSuccess();
           // Increment the right swipe count
           rightSwipeCount.value++;
           //call the api that matches straight up

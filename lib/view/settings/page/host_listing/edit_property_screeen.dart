@@ -379,7 +379,19 @@ class _EditListingPageState extends State<EditListingPage> {
                           SizedBox(width: 20.w,),
                           ImageButton3(),
                         ],
-                      ),                  
+                      ),         
+
+                      Obx(
+                        () {
+                          return listingController.isLoading.value ? SizedBox(height: size.height * 0.10,) : const SizedBox.shrink();
+                        }
+                      ),  
+
+                      Obx(
+                        () {
+                          return listingController.isLoading.value ? const Loader2() : const SizedBox.shrink();
+                        }
+                      ),    
                                            
                       SizedBox(height: size.height * 0.10,),
                             
@@ -395,17 +407,17 @@ class _EditListingPageState extends State<EditListingPage> {
                               await profileService.updatePropertyEndpoint(
                                 context: context, 
                                 location: {
-                                  'address': listingController.propertyLocationController.text.isNotEmpty ? listingController.propertyLocationController.text : widget.model.location.address,
+                                  'address': listingController.propertyLocationControllerEdit.text.isNotEmpty ? listingController.propertyLocationControllerEdit.text : widget.model.location.address,
                                   'placeId': locationService.placeId.value.isNotEmpty ? locationService.placeId.value : widget.model.location.placeId,
                                   'longitude': locationService.longitudeValue.value != 0.0 ? locationService.longitudeValue.value : widget.model.location.longitude,
                                   'latitude': locationService.latitudeValue.value != 0.0 ? locationService.latitudeValue.value : widget.model.location.latitude,
                                 },
 
                                 buildingType: listingController.selectedBuildingTypeValue.value,
-                                rooms: listingController.roomsController.text.isNotEmpty ? int.parse(listingController.roomsController.text) : widget.model.rooms.toInt(),
-                                floors: listingController.floorsController.text.isNotEmpty ? int.parse(listingController.floorsController.text) : widget.model.floors.toInt(),
-                                size: listingController.propertySizeController.text.isNotEmpty ? int.parse(listingController.propertySizeController.text) : widget.model.size.toInt(),
-                                rent: listingController.rentController.text.isNotEmpty ? int.parse(listingController.rentController.text) : widget.model.rent.toInt(),
+                                rooms: listingController.roomsControllerEdit.text.isNotEmpty ? int.parse(listingController.roomsControllerEdit.text) : widget.model.rooms.toInt(),
+                                floors: listingController.floorsControllerEdit.text.isNotEmpty ? int.parse(listingController.floorsControllerEdit.text) : widget.model.floors.toInt(),
+                                size: listingController.propertySizeControllerEdit.text.isNotEmpty ? int.parse(listingController.propertySizeControllerEdit.text) : widget.model.size.toInt(),
+                                rent: listingController.rentControllerEdit.text.isNotEmpty ? int.parse(listingController.rentControllerEdit.text) : widget.model.rent.toInt(),
                                 facilitiesList: listingController.selectedFacilitiesList.isNotEmpty ? listingController.selectedFacilitiesList.map((e) => e.name as dynamic).toList() : widget.model.facilities,
                                 propertyPicList: listingController.propImage1.text.isNotEmpty && listingController.propImage2.text.isNotEmpty && listingController.propImage3.text.isNotEmpty ? [
                                   listingController.propImage1.text,
@@ -421,11 +433,11 @@ class _EditListingPageState extends State<EditListingPage> {
                                   listingController.propImage3.clear();
                                   
                                   listingController.selectedFacilitiesList.clear();
-                                  listingController.propertyLocationController.clear();
-                                  listingController.roomsController.clear();
-                                  listingController.floorsController.clear();
-                                  listingController.propertySizeController.clear();
-                                  listingController.rentController.clear();
+                                  listingController.propertyLocationControllerEdit.clear();
+                                  listingController.roomsControllerEdit.clear();
+                                  listingController.floorsControllerEdit.clear();
+                                  listingController.propertySizeControllerEdit.clear();
+                                  listingController.rentControllerEdit.clear();
 
                                   Get.back();
                                   widget.onRefresh();

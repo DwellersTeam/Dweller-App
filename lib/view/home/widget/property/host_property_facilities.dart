@@ -15,9 +15,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class FacilitiesList extends StatelessWidget {
-  FacilitiesList({super.key});
+  const FacilitiesList({super.key, required this.facilities});
+  final List<dynamic> facilities;
 
-  final controller = Get.put(HomePageController());
+  //final controller = Get.put(HomePageController());
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +34,13 @@ class FacilitiesList extends StatelessWidget {
           childAspectRatio: 1.0, //0.35 Adjust this ratio as needed to control the item size
         ),
         physics: const BouncingScrollPhysics(),
-        itemCount: controller.facilitiesList.length,
+        itemCount: facilities.length,
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         //padding: EdgeInsets.symmetric(horizontal: 20.w),
         itemBuilder: (context, index) {
 
-          final data =  controller.facilitiesList[index];
+          final data =  facilities[index];
 
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -60,18 +61,12 @@ class FacilitiesList extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SvgPicture.asset("${data['icon']}", height: 26.h, width: 26.w,),
-                /*Text(
-                  data['icon'],
-                  style: GoogleFonts.poppins(
-                    color: AppColor.blackColor,
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w500
-                  )
-                ),*/
-                SizedBox(height: 30.h,),
+                
+                /*SvgPicture.asset("${data['icon']}", height: 26.h, width: 26.w,),
+                SizedBox(height: 30.h,),*/
+
                 Text(
-                  data['facility'],
+                  data,
                   style: GoogleFonts.poppins(
                     color: AppColor.blackColor,
                     fontSize: 12.sp,

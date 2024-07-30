@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dweller/services/controller/home/homepage_controller.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,9 +16,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class HostApartmentGallery extends StatelessWidget {
-  HostApartmentGallery({super.key});
+  const HostApartmentGallery({super.key, required this.pictures});
+  final List<dynamic> pictures;
 
-  final controller = Get.put(HomePageController());
+  //final controller = Get.put(HomePageController());
 
   @override
   Widget build(BuildContext context) {
@@ -27,39 +29,22 @@ class HostApartmentGallery extends StatelessWidget {
       child: ListView.separated(
         //padding: EdgeInsets.symmetric(horizontal: 20.w),
         physics: const BouncingScrollPhysics(),
-        itemCount: controller.imageUrls.length,
+        itemCount: pictures.length,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         separatorBuilder: (context, index) => SizedBox(width: 15.w,),
         itemBuilder: (context, index) {
+
+          final data = pictures[index];
+
           return InkWell(
-            onTap: () {
-              //controller.selectedApartmentIndex == index; "setState"
-            },
-            child: Image.asset(
-              controller.imageUrls[index], 
+            onTap: () {},
+            child: CachedNetworkImage(
+              imageUrl: data,        
               height: 400.h, //60.h
               width: 200.w, //120.w
               fit: BoxFit.cover,
             )
-            /*Container(
-              alignment: Alignment.center,
-              //height: 150,
-              //padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  //colorFilter: const ColorFilter.mode(AppColor.darkGreyColor, BlendMode.softLight), //dst, softLight
-                  image: AssetImage(
-                    //controller.imageUrls[index],
-                    "assets/images/messi.png",
-                  ),
-                  fit: BoxFit.cover
-                ),
-                color: AppColor.darkPurpleColor,
-                borderRadius: BorderRadius.circular(20.r), 
-              ),
-              //child: ,
-            )*/
           );
         }
       ),

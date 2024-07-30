@@ -5,6 +5,7 @@ import 'package:dweller/model/profile/user_profile_model.dart';
 import 'package:dweller/services/controller/home/homepage_controller.dart';
 import 'package:dweller/services/repository/bookmark_service/bookmark_service.dart';
 import 'package:dweller/services/repository/home_service/home_service.dart';
+import 'package:dweller/services/repository/match_service/match_service.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/loader.dart';
 import 'package:dweller/view/home/widget/tab(h&s)/seek_tab.dart';
@@ -23,9 +24,12 @@ class SeekerCard extends StatefulWidget {
 }
 
 class _SeekerCardState extends State<SeekerCard> {
+
+
   final HomePageController controller = Get.put(HomePageController());
   final HomeService service = Get.put(HomeService());
   final BookmarkService bookmarkService = Get.put(BookmarkService());
+  final MatchService matchService = Get.put(MatchService());
 
   late Future<List<UserModel>> seekersFuture;
 
@@ -93,27 +97,37 @@ class _SeekerCardState extends State<SeekerCard> {
             );
           },
           onSwipeEnd: (int previousIndex, int targetIndex, SwiperActivity activity) {
-            if (targetIndex >= 0 && targetIndex < service.seekersList.length) {
+            if (previousIndex >= 0 && previousIndex < service.seekersList.length) {
               controller.swipeEnd(
+                onSuccess: () async{
+                  await matchService.sendMatchRequest(
+                    context: context, 
+                    userId: service.seekersList[previousIndex].id,
+                    onSuccess: () {
+                      //call the notifications API to send a push notification and create data in db
+                      print('match sent');
+                    }
+                  );
+                },
                 previousIndex: previousIndex,
                 targetIndex: targetIndex,
                 activity: activity,
                 context: context,
-                userModel: service.seekersList[targetIndex],
+                userModel: service.seekersList[previousIndex],
               );
             }
           },
           onEnd: controller.onEnd,
           cardCount: service.seekersList.length,
           cardBuilder: (BuildContext context, int index) {
-
+        
             if (index < 0 || index >= service.seekersList.length) {
               return const SizedBox.shrink();
             }
-
+        
             final item = service.seekersList[index];
-
-            return GestureDetector(
+        
+            return InkWell(
               onTap: () {
                 controller.nextImage(imageList: item.pictures);
               },
@@ -123,7 +137,7 @@ class _SeekerCardState extends State<SeekerCard> {
                   image: DecorationImage(
                     colorFilter: const ColorFilter.mode(AppColor.darkGreyColor, BlendMode.softLight),
                     image: NetworkImage(
-                      item.displayPicture[controller.currentIndex.value],
+                      item.pictures[controller.currentIndex.value],
                     ),
                     fit: BoxFit.cover,
                     filterQuality: FilterQuality.high,
@@ -153,7 +167,10 @@ class _SeekerCardState extends State<SeekerCard> {
                           SizedBox(width: 30.w),
                           InkWell(
                             onTap: () async{
-                              controller.isBookmarked.value = !controller.isBookmarked.value;
+                              setState(() {
+                                controller.isBookmarked.value = !controller.isBookmarked.value;
+                              });
+                              
                               if(controller.isBookmarked.value){
                                 await bookmarkService.createBookmark(
                                   context: context, 
@@ -185,36 +202,46 @@ class _SeekerCardState extends State<SeekerCard> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "${item.firstname} ${item.lastname}",
-                                    style: GoogleFonts.poppins(
-                                      color: AppColor.whiteColor,
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w500,
+        
+                              //expanded
+                              Expanded(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        "${item.firstname} ${item.lastname}",
+                                        style: GoogleFonts.poppins(
+                                          color: AppColor.whiteColor,
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        overflow: TextOverflow.clip,
+                                      ),
                                     ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  SizedBox(width: 10.w),
-                                  Icon(
-                                    CupertinoIcons.checkmark_seal_fill,
-                                    color: AppColor.blueColor,
-                                    size: 22.r,
-                                  ),
-                                  SizedBox(width: 10.w),
-                                  Text(
-                                    "${item.age}",
-                                    style: GoogleFonts.poppins(
-                                      color: AppColor.whiteColor,
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.w400,
+                                    SizedBox(width: 10.w),
+                                    Icon(
+                                      CupertinoIcons.checkmark_seal_fill,
+                                      color: AppColor.blueColor,
+                                      size: 22.r,
                                     ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
+                                    SizedBox(width: 10.w),
+                                    Text(
+                                      "${item.age}",
+                                      style: GoogleFonts.poppins(
+                                        color: AppColor.whiteColor,
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
                               ),
+        
+                              SizedBox(width: 15.w,),
+        
+                              //expanded
                               InkWell(
                                 onTap: () {
                                   Get.to(() => SeekerTabPage(user: item));

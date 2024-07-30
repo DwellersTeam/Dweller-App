@@ -106,8 +106,8 @@ class _HomePageState extends State<HomePage> {
     
                     InkWell(
                       onTap: () {
-                        notificationBottomsheet(context: context);  
-                        //authService.logoutUser();
+                        //notificationBottomsheet(context: context);  
+                        authService.logoutUser();
                       },
                       child: SvgPicture.asset('assets/svg/noti_icon.svg')
                     ),
@@ -151,7 +151,8 @@ class _HomePageState extends State<HomePage> {
                             }
                             else {
                               Get.to(() => ProfilePageHost(
-                                property: data.id,
+                                property: data.property,
+                                userId: data.id,
                               ));
                             }
 
