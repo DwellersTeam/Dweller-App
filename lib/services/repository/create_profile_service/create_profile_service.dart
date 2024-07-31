@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:dweller/model/auth/token_response.dart';
 import 'package:dweller/model/listing/property_model.dart';
+import 'package:dweller/model/profile/jwt_response.dart';
 import 'package:dweller/model/profile/user_profile_model.dart';
 import 'package:dweller/services/controller/main_page/mainpage_controller.dart';
 import 'package:dweller/services/repository/data_service/base_service/base_service.dart';
@@ -14,6 +15,8 @@ import 'package:get/get.dart' as getx;
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:get/get.dart';
+
+
 
 
 
@@ -40,24 +43,25 @@ class CreateProfileService extends getx.GetxController {
 
 
   //DECODE USER JWT
-  Future<UserModel> fetchUserDetailFromJWT(BuildContext context) async {
+  Future<JwtModel> fetchUserDetailFromJWT(BuildContext context) async {
     isLoading.value = true;
     try {  
 
       isLoading.value = false;
+      
       // Decode the JWT token with the awesome package {JWT Decoder}
       Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+
       log("Decoded jwt: $decodedToken");
-      UserModel jsonResponse = UserModel.fromJson(
-        {
-          'property': decodedToken['property'] ?? false,
-          'picture': decodedToken['picture'] ?? '',
-          'firstname': decodedToken['firstname'] ?? '',
-          'lastname': decodedToken['lastname'] ?? '',
-          'email': decodedToken['email'] ?? '',
-          '_id': decodedToken['_id'] ?? '',
-        }
-      );
+      final Map<String, dynamic> jwtMap = {
+        'property': decodedToken['property'] ?? false,
+        'picture': decodedToken['picture'] ?? '',
+        'firstname': decodedToken['firstname'] ?? '',
+        'lastname': decodedToken['lastname'] ?? '',
+        'email': decodedToken['email'] ?? '',
+        '_id': decodedToken['_id'] ?? '',
+      };
+      JwtModel jsonResponse = JwtModel.fromJson(jwtMap);
       return jsonResponse;
     }
 
@@ -83,11 +87,11 @@ class CreateProfileService extends getx.GetxController {
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
 
-        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
           log("x-access-token: ${res.headers['x-access-token']}");
           //save access token from header
           LocalStorage.saveToken(res.headers['x-access-token']!);
-        }
+        }*/
         
         //decode response from the server
         UserModel jsonResponse = UserModel.fromJson(json.decode(res.body));
@@ -133,11 +137,11 @@ class CreateProfileService extends getx.GetxController {
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
 
-        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
           log("x-access-token: ${res.headers['x-access-token']}");
           //save access token from header
           LocalStorage.saveToken(res.headers['x-access-token']!);
-        }
+        }*/
         
         //decode response from the server
         UserModel jsonResponse = UserModel.fromJson(json.decode(res.body));
@@ -277,11 +281,11 @@ class CreateProfileService extends getx.GetxController {
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
 
-        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
           log("x-access-token: ${res.headers['x-access-token']}");
           //save access token from header
           LocalStorage.saveToken(res.headers['x-access-token']!);
-        }
+        }*/
         
         //decode response from the server
         final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
@@ -348,11 +352,11 @@ class CreateProfileService extends getx.GetxController {
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
 
-        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
           log("x-access-token: ${res.headers['x-access-token']}");
           //save access token from header
           LocalStorage.saveToken(res.headers['x-access-token']!);
-        }
+        }*/
         
         //decode response from the server
         final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
@@ -428,11 +432,11 @@ class CreateProfileService extends getx.GetxController {
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
 
-        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
           log("x-access-token: ${res.headers['x-access-token']}");
           //save access token from header
           LocalStorage.saveToken(res.headers['x-access-token']!);
-        }
+        }*/
         
         //decode response from the server
         //final dynamic jsonResponse = json.decode(res.body);
@@ -490,11 +494,11 @@ class CreateProfileService extends getx.GetxController {
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
 
-        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
           log("x-access-token: ${res.headers['x-access-token']}");
           //save access token from header
           LocalStorage.saveToken(res.headers['x-access-token']!);
-        }
+        }*/
         
         //decode response from the server
         final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
@@ -551,11 +555,11 @@ class CreateProfileService extends getx.GetxController {
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
 
-        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
           log("x-access-token: ${res.headers['x-access-token']}");
           //save access token from header
           LocalStorage.saveToken(res.headers['x-access-token']!);
-        }
+        }*/
         
         //decode response from the server
         final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
@@ -614,11 +618,11 @@ class CreateProfileService extends getx.GetxController {
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
 
-        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
           log("x-access-token: ${res.headers['x-access-token']}");
           //save access token from header
           LocalStorage.saveToken(res.headers['x-access-token']!);
-        }
+        }*/
         
         //decode response from the server
         final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
@@ -691,11 +695,11 @@ class CreateProfileService extends getx.GetxController {
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
 
-        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
           log("x-access-token: ${res.headers['x-access-token']}");
           //save access token from header
           LocalStorage.saveToken(res.headers['x-access-token']!);
-        }
+        }*/
         
         //decode response from the server
         /*final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
@@ -769,11 +773,11 @@ class CreateProfileService extends getx.GetxController {
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
 
-        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
           log("x-access-token: ${res.headers['x-access-token']}");
           //save access token from header
           LocalStorage.saveToken(res.headers['x-access-token']!);
-        }
+        }*/
         
         //decode response from the server
         /*final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
@@ -818,11 +822,11 @@ class CreateProfileService extends getx.GetxController {
 
       if (res.statusCode == 200 || res.statusCode == 201) {
 
-        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
           log("x-access-token: ${res.headers['x-access-token']}");
           //save access token from header
           LocalStorage.saveToken(res.headers['x-access-token']!);
-        }
+        }*/
 
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dweller/model/profile/jwt_response.dart';
 import 'package:dweller/model/profile/user_profile_model.dart';
 import 'package:dweller/services/controller/search/searchpage_controller.dart';
 import 'package:dweller/services/repository/create_profile_service/create_profile_service.dart';
@@ -45,7 +46,7 @@ class _SearchPageState extends State<SearchPage> {
   final String dwellerKind = LocalStorage.getDwellerType();
 
 
-  late Future<UserModel> profileFuture;
+  late Future<JwtModel> profileFuture;
 
   @override
   void initState() {
@@ -55,7 +56,7 @@ class _SearchPageState extends State<SearchPage> {
 
 
   //REFRESH FUNCTIONALITY
-  Future<UserModel> _refresh() async{
+  Future<JwtModel> _refresh() async{
     await Future.delayed(const Duration(seconds: 2));
     final profileFuture = await profileService.fetchUserDetailFromJWT(context);
     return profileFuture;
@@ -96,7 +97,7 @@ class _SearchPageState extends State<SearchPage> {
                     ),
 
 
-                    FutureBuilder<UserModel>(
+                    FutureBuilder<JwtModel>(
                       future: profileFuture,
                       builder: (context, snapshot) {
                         if(snapshot.connectionState == ConnectionState.waiting){

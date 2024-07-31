@@ -29,7 +29,7 @@ class UserModel {
   final LocationInfo location;   //LocationInfo to be
   final String school;
   final KYCInfo kyc; //document, url
-   bool property;   //to check if a user has property
+  final String property;   //to check if a user has property
   final int age;
   final String zodiac;
   final String dwellerKind;
@@ -100,7 +100,7 @@ class UserModel {
       job: json['job'] ?? '',
       location: LocationInfo.fromJson(json['location'] ?? {}),
       school: json['school'] ?? '',
-      property: json['property'] ?? false,
+      property: json['property'] ?? 'non',
       age: json['age'] ?? 0,
       zodiac: json['zodiac'] ?? '',
       dwellerKind: json['dwellerKind'] ?? '',

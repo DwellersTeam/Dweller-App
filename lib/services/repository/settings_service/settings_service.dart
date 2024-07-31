@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dweller/model/settings/settings_response.dart';
 import 'package:dweller/services/controller/main_page/mainpage_controller.dart';
 import 'package:dweller/services/repository/data_service/base_service/base_service.dart';
+import 'package:dweller/services/repository/data_service/local_storage/local_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' as getx;
@@ -38,6 +39,12 @@ class SettingService extends getx.GetxController {
         debugPrint('this is response body ==> ${res.body}');
         //decode response from the server
         //final dynamic result = json.decode(res.body);
+
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }*/
         
         SettingsResponse jsonResponse = SettingsResponse.fromJson(json.decode(res.body));
 
@@ -112,6 +119,12 @@ class SettingService extends getx.GetxController {
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
+
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }*/
         onSuccess();
 
       }
@@ -232,6 +245,11 @@ class SettingService extends getx.GetxController {
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }*/
         onSuccess();
 
       }
@@ -282,6 +300,11 @@ class SettingService extends getx.GetxController {
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }*/
         onSuccess();
 
       }
@@ -327,6 +350,11 @@ class SettingService extends getx.GetxController {
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }*/
         onSuccess();
 
       }
@@ -371,6 +399,11 @@ class SettingService extends getx.GetxController {
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }*/
         onSuccess();
 
       }
@@ -415,6 +448,11 @@ class SettingService extends getx.GetxController {
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }*/
         onSuccess();
 
       }
@@ -459,6 +497,11 @@ class SettingService extends getx.GetxController {
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
+        /*if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }*/
         onSuccess();
 
       }

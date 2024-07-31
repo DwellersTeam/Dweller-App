@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:dweller/model/profile/jwt_response.dart';
 import 'package:dweller/model/profile/user_profile_model.dart';
 import 'package:dweller/services/controller/home/homepage_controller.dart';
 import 'package:dweller/services/controller/settings/settings_controller.dart';
@@ -9,10 +10,10 @@ import 'package:dweller/services/repository/notification_service/push_notificati
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/extractors.dart';
 import 'package:dweller/utils/components/loader.dart';
+import 'package:dweller/view/create_profile/page/intro/welcome_page.dart';
 import 'package:dweller/view/home/widget/feeds_card(h&s)/host_card.dart';
 import 'package:dweller/view/home/widget/feeds_card(h&s)/seeker_card.dart';
 import 'package:dweller/view/home/widget/notification/notification_sheet.dart';
-import 'package:dweller/view/settings/page/host_listing/add_property_screen.dart';
 import 'package:dweller/view/settings/page/profile_type/profile_settings_host.dart';
 import 'package:dweller/view/settings/page/profile_type/profile_settings_seeker.dart';
 import 'package:dweller/view/subscription/widget/subscription_bottomsheet.dart';
@@ -52,7 +53,7 @@ class _HomePageState extends State<HomePage> {
   final String dwellerKind = LocalStorage.getDwellerType();
 
                   
-  late Future<UserModel> profileFuture;
+  late Future<JwtModel> profileFuture;
 
   @override
   void initState() {
@@ -65,7 +66,7 @@ class _HomePageState extends State<HomePage> {
 
 
   //REFRESH FUNCTIONALITY
-  Future<UserModel> _refresh() async{
+  Future<JwtModel> _refresh() async{
     await Future.delayed(const Duration(seconds: 2));
     final profileFuture = await profileService.fetchUserDetailFromJWT(context);
     return profileFuture;
@@ -106,12 +107,13 @@ class _HomePageState extends State<HomePage> {
     
                     InkWell(
                       onTap: () {
-                        //notificationBottomsheet(context: context);  
-                        authService.logoutUser();
+                        notificationBottomsheet(context: context);  
+                        //authService.logoutUser();
+                        //Get.to(() => const WelcomePage());
                       },
                       child: SvgPicture.asset('assets/svg/noti_icon.svg')
                     ),
-                    FutureBuilder<UserModel>(
+                    FutureBuilder<JwtModel>(
                       future: profileFuture,
                       builder: (context, snapshot) {
                         if(snapshot.connectionState == ConnectionState.waiting){

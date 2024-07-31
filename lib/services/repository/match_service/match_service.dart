@@ -209,7 +209,7 @@ class MatchService extends getx.GetxController {
 
       http.Response res = await baseService.httpDelete(endPoint: "matches/$id",);
 
-      if (res.statusCode == 200 || res.statusCode == 201) {
+      if (res.statusCode == 200 || res.statusCode == 204) {
 
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');

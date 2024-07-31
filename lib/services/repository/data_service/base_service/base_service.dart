@@ -24,6 +24,8 @@ class BaseService extends getX.GetxController {
         return 'Success (POST)';
       case 201:
         return 'Success (PUT/PATCH)';
+      case 204:
+        return 'Success (Content Deleted)';
       case 400:
         //return 'Bad Request: The server could not understand the request due to invalid syntax.';
         return showMessagePopup(

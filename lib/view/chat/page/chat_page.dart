@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:dweller/model/profile/jwt_response.dart';
 import 'package:dweller/model/profile/user_profile_model.dart';
 import 'package:dweller/services/controller/bookmark/bookmark_controller.dart';
 import 'package:dweller/services/repository/create_profile_service/create_profile_service.dart';
@@ -36,7 +37,7 @@ class _ChatPageState extends State<ChatPage> {
   final controller = Get.put(BookmarkPageController());
   final profileService = Get.put(CreateProfileService());
   
-  late Future<UserModel> profileFuture;
+  late Future<JwtModel> profileFuture;
 
   @override
   void initState() {
@@ -46,7 +47,7 @@ class _ChatPageState extends State<ChatPage> {
 
 
   //REFRESH FUNCTIONALITY
-  Future<UserModel> _refresh() async{
+  Future<JwtModel> _refresh() async{
     await Future.delayed(const Duration(seconds: 2));
     final profileFuture = await profileService.fetchUserDetailFromJWT(context);
     return profileFuture;
@@ -85,7 +86,7 @@ class _ChatPageState extends State<ChatPage> {
                       child: SvgPicture.asset('assets/svg/noti_icon.svg')
                     ),
 
-                    FutureBuilder<UserModel>(
+                    FutureBuilder<JwtModel>(
                       future: profileFuture,
                       builder: (context, snapshot) {
                         if(snapshot.connectionState == ConnectionState.waiting){
