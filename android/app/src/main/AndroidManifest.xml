@@ -19,8 +19,6 @@
     <!-- Optional, you'll have to check this permission by yourself.--> 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-     <!-- Add the following line inside the <application> tag -->
-    <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCGMiS6iWX8jrYMXuFJj9GXyZcL9PWJgoc"/>
     
     <application
         android:label="Dweller"
@@ -56,9 +54,8 @@
             android:value="2" />
 
         <!-- for google maps integration-->
-
-        <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyCaAMaXu80RdN7VusRzN6U3_y4AwdJgt6M"/>
+        <!-- Add the following line inside the <application> tag -->
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCGMiS6iWX8jrYMXuFJj9GXyZcL9PWJgoc"/>
                
     </application>
     <!-- Required to query activities that can process text, see:

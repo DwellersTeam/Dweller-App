@@ -5,6 +5,7 @@ import 'package:dweller/services/repository/location_service/location_service.da
 import 'package:dweller/services/repository/notification_service/push_notifications.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/view/auth/login/page/login_page.dart';
+import 'package:dweller/view/auth/onboarding/page/intro_page.dart';
 import 'package:dweller/view/auth/splashscreen/splash_screen_updated.dart';
 import 'package:dweller/view/auth/onboarding/screen/onboarding_screen.dart';
 import 'package:dweller/view/main/mainpage.dart';
@@ -145,7 +146,7 @@ class _MyAppState extends State<MyApp> {
         defaultTransition: Transition.rightToLeft,
         
         //check if token is expired here with tenary operators
-        home: token == null ? const SplashScreenUpdated(next_screen: OnBoardingPage(),) : isExpiredVal ? const SplashScreenUpdated(next_screen: LoginPage(),) : const SplashScreenUpdated(next_screen: MainPage(),),
+        home: token == null ? const SplashScreenUpdated(next_screen: OnBoardingPage(),) : isExpiredVal ? const SplashScreenUpdated(next_screen: IntroPage(),) : const SplashScreenUpdated(next_screen: MainPage(),),
       ),
     );
   }

@@ -26,7 +26,7 @@ class _ViewPropertyOnMapState extends State<ViewPropertyOnMap> {
   Widget build(BuildContext context) {
     
     // Set the initial location
-    final LatLng _initialLocation = LatLng(widget.lat, widget.long); // Example: San Francisco
+    //final LatLng _initialLocation = LatLng(widget.lat, widget.long); // Example: San Francisco
 
     return Scaffold(
       extendBody: true,
@@ -35,13 +35,17 @@ class _ViewPropertyOnMapState extends State<ViewPropertyOnMap> {
       body: GoogleMap(
         onMapCreated: _onMapCreated,
         initialCameraPosition: CameraPosition(
+          target: LatLng(widget.lat, widget.long),
+          zoom: 12,
+        ),
+        /*initialCameraPosition: CameraPosition(
           target: _initialLocation,
           zoom: 12.0,
-        ),
+        ),*/
         markers: {
           Marker(
             markerId: const MarkerId('initial_location'),
-            position: _initialLocation,
+            position: LatLng(widget.lat, widget.long), // _initialLocation,
           ),
         },
       ),
