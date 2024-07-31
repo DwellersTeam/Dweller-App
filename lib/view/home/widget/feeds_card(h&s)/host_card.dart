@@ -112,11 +112,14 @@ class _HostCardState extends State<HostCard> {
                 onSuccess: () async{
                   await matchService.sendMatchRequest(
                     context: context, 
-                    userId: service.propertyList[previousIndex].id,
+                    userId: service.propertyList[previousIndex].propertyOwner.id,
                     onSuccess: () {
                       //call the notifications API to send a push notification and create data in db of the person
                       print('match sent');
-                    }
+                    },
+                    onFailure: () {
+                      Get.back();
+                    },
                   );
                 },
                 previousIndex: previousIndex,
@@ -201,7 +204,7 @@ class _HostCardState extends State<HostCard> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                item.location.address,
+                                "${item.location.address}",
                                 style: GoogleFonts.bricolageGrotesque(
                                   color: AppColor.whiteColor,
                                   fontSize: 22.sp,
@@ -271,101 +274,121 @@ class _HostCardState extends State<HostCard> {
                                   ),
                                 ],
                               ),
+
+
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+
+                              //here
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
+
                                   item.propertyOwner.displayPicture.isNotEmpty
-                                      ? CircleAvatar(
-                                          radius: 24.r,
-                                          backgroundColor: Colors.grey.withOpacity(0.1),
-                                          backgroundImage: NetworkImage(item.propertyOwner.displayPicture),
-                                        )
-                                      : CircleAvatar(
-                                          radius: 24.r,
-                                          backgroundColor: Colors.grey.withOpacity(0.1),
-                                          child: Text(
-                                            getFirstLetter(item.propertyOwner.firstname),
-                                            style: GoogleFonts.poppins(
-                                              color: AppColor.blackColor,
-                                              fontSize: 13.sp,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ),
+                                  ?CircleAvatar(
+                                    radius: 24.r,
+                                    backgroundColor: Colors.grey.withOpacity(0.1),
+                                    backgroundImage: NetworkImage(item.propertyOwner.displayPicture),
+                                  )
+                                  :CircleAvatar(
+                                    radius: 24.r,
+                                    backgroundColor: Colors.grey.withOpacity(0.1),
+                                    child: Text(
+                                      getFirstLetter(item.propertyOwner.firstname),
+                                      style: GoogleFonts.poppins(
+                                        color: AppColor.blackColor,
+                                        fontSize: 13.sp,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+
                                   SizedBox(width: 10.w),
+
+                                  //expanded
                                   Expanded(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "${item.propertyOwner.firstname} ${item.propertyOwner.lastname}",
-                                              style: GoogleFonts.poppins(
-                                                color: AppColor.whiteColor,
-                                                fontSize: 16.sp,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
+                                        Expanded(
+                                          child: Text(
+                                            "${item.propertyOwner.firstname} ${item.propertyOwner.lastname}",
+                                            style: GoogleFonts.poppins(
+                                              color: AppColor.whiteColor,
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w500,
                                             ),
-                                            SizedBox(width: 10.w),
-                                            Icon(
-                                              CupertinoIcons.checkmark_seal_fill,
-                                              color: AppColor.blueColor,
-                                              size: 22.r,
-                                            ),
-                                            SizedBox(width: 10.w),
-                                            Text(
-                                              "${item.propertyOwner.age}",
-                                              style: GoogleFonts.poppins(
-                                                color: AppColor.whiteColor,
-                                                fontSize: 16.sp,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ],
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            Get.to(() => HostTabPage(
-                                              property: item, 
-                                            ));
-                                          },
-                                          child: Container(
-                                            alignment: Alignment.center,
-                                            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
-                                            decoration: BoxDecoration(
-                                              color: AppColor.blueColorOp,
-                                              borderRadius: BorderRadius.circular(30.r),
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  'More',
-                                                  style: GoogleFonts.poppins(
-                                                    color: AppColor.blackColor,
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                  overflow: TextOverflow.ellipsis,
-                                                ),
-                                                SizedBox(width: 5.w),
-                                                Icon(
-                                                  size: 15.r,
-                                                  color: AppColor.blackColor,
-                                                  CupertinoIcons.chevron_forward,
-                                                ),
-                                              ],
-                                            ),
+                                            overflow: TextOverflow.clip,
                                           ),
+                                        ),
+                                        SizedBox(width: 10.w),
+                                        Icon(
+                                          CupertinoIcons.checkmark_seal_fill,
+                                          color: AppColor.blueColor,
+                                          size: 22.r,
+                                        ),
+                                        SizedBox(width: 10.w),
+                                        Text(
+                                          "${item.propertyOwner.age}",
+                                          style: GoogleFonts.poppins(
+                                            color: AppColor.whiteColor,
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ],
                                     ),
                                   ),
+
+                                  SizedBox(width: 15.w,),
+
+                                  InkWell(
+                                    onTap: () {
+                                      Get.to(() => HostTabPage(
+                                        property: item, 
+                                      ));
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
+                                      decoration: BoxDecoration(
+                                        color: AppColor.blueColorOp,
+                                        borderRadius: BorderRadius.circular(30.r),
+                                      ),
+                                      child: 
+                                      Text(
+                                        'More',
+                                        style: GoogleFonts.poppins(
+                                          color: AppColor.blackColor,
+                                          fontSize: 12.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                            
+                                      /*Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'More',
+                                            style: GoogleFonts.poppins(
+                                              color: AppColor.blackColor,
+                                              fontSize: 12.sp,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          SizedBox(width: 5.w),
+                                          Icon(
+                                          size: 15.r,
+                                            color: AppColor.blackColor,
+                                            CupertinoIcons.chevron_forward,
+                                          ),
+                                        ],
+                                      ),*/
+
+                                    ),
+                                  )
                                 ],
                               ),
                             ],

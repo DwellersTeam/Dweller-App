@@ -53,17 +53,22 @@ class HomePageController extends getx.GetxController {
         log('previous index: $previousIndex, target index: $targetIndex');
 
         if (activity.direction.name == "right") {
-          log('The card was swiped to the : ${activity.direction.name}');
-          // Increment the right swipe count
-          rightSwipeCount.value++;
-          onSuccess();
 
-          //call the api that matches straight up
-          if (rightSwipeCount.value == 5) { //5
-            // If 7 right swipes, call the alert function
-            rightSwipeAlert(context: context, user: userModel);
+          if (rightSwipeCount.value == 5) { 
             // Reset the counter back to default
             rightSwipeCount.value = 0;
+            // If 7 right swipes, call the alert function
+            rightSwipeAlert(context: context, user: userModel);
+          }
+          else if (rightSwipeCount.value <= 4){
+            //call the api that matches straight up
+            log('The card was swiped to the : ${activity.direction.name}');
+            // Increment the right swipe count
+            rightSwipeCount.value++;
+            onSuccess();
+          }
+          else{
+            log('nothing happening fam');
           }
         } 
         else {

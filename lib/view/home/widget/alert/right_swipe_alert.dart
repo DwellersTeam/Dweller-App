@@ -2,6 +2,7 @@ import 'package:dweller/model/profile/user_profile_model.dart';
 import 'package:dweller/services/repository/match_service/match_service.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/extractors.dart';
+import 'package:dweller/utils/components/loader.dart';
 import 'package:dweller/view/home/widget/alert/match_made_alert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -196,7 +197,8 @@ Future<void> rightSwipeAlert({required BuildContext context, required UserModel 
                             onSuccess: () {
                               Get.back();
                               matchMadeAlert(user: user);
-                            }
+                            },
+                            onFailure: () {},
                           );
                     
                         },
@@ -213,11 +215,11 @@ Future<void> rightSwipeAlert({required BuildContext context, required UserModel 
                             children: [
                               Obx(
                                 () {
-                                  return matchService.isLoading.value ? const CircularProgressIndicator.adaptive(
+                                  return matchService.isLoading.value ? const Loader2()/*CircularProgressIndicator.adaptive(
                                     strokeWidth: 2.0,
                                     backgroundColor: AppColor.darkPurpleColor,
                                     strokeCap: StrokeCap.round,
-                                  ) : Text(
+                                  )*/ : Text(
                                     "Yes Match!",
                                     style: GoogleFonts.poppins(
                                       color: AppColor.blackColor,

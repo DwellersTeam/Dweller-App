@@ -106,7 +106,10 @@ class _SeekerCardState extends State<SeekerCard> {
                     onSuccess: () {
                       //call the notifications API to send a push notification and create data in db of the person
                       print('match sent');
-                    }
+                    },
+                    onFailure: () {
+                      Get.back();
+                    },
                   );
                 },
                 previousIndex: previousIndex,
@@ -278,7 +281,7 @@ class _SeekerCardState extends State<SeekerCard> {
                           ),
                           SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                           Text(
-                            item.location.address,
+                            "${item.location.address}",
                             style: GoogleFonts.poppins(
                               color: AppColor.whiteColor,
                               fontSize: 12,

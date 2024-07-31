@@ -18,6 +18,9 @@
     <!--<uses-permission  android:name="android.permission.BLUETOOTH"  />-->
     <!-- Optional, you'll have to check this permission by yourself.--> 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+     <!-- Add the following line inside the <application> tag -->
+    <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCGMiS6iWX8jrYMXuFJj9GXyZcL9PWJgoc"/>
     
     <application
         android:label="Dweller"

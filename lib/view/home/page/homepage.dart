@@ -206,6 +206,8 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
                   //CHECK IF THE LOGGED-IN USER IS A HOST OR SEEKER
                   child: dwellerKind == 'seeker' ? const HostCard() : const SeekerCard()
+
+                  //child: HostCard()
                 ),
               ), 
                    

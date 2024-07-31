@@ -84,7 +84,10 @@ class HostPropertyInfo extends StatelessWidget {
                 SizedBox(width: 20.w,),
                 GestureDetector(
                   onTap:() {
-                    Get.to(() => ViewPropertyOnMap());
+                    Get.to(() => ViewPropertyOnMap(
+                      lat: model.location.latitude.toDouble(),
+                      long: model.location.latitude.toDouble(),
+                    ));
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),

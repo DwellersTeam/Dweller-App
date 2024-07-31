@@ -9,6 +9,7 @@ import 'package:dweller/services/repository/notification_service/push_notificati
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/extractors.dart';
 import 'package:dweller/utils/components/loader.dart';
+import 'package:dweller/utils/components/my_snackbar.dart';
 import 'package:dweller/view/bookmark/widget/empty_state.dart';
 import 'package:dweller/view/bookmark/widget/popup_menu.dart';
 import 'package:dweller/view/home/widget/profiel_by_id/get_profile_page.dart';
@@ -167,7 +168,15 @@ class _BookmarkListState extends State<BookmarkList> {
                                     body: 'you just got a match request from $currentUsername',
                                   );
                                   //create notification in the receiver db
-                                }
+                                },
+                                onFailure: () {
+                                  showMessagePopup(
+                                    title: 'Uh oh!', 
+                                    message: "request already sent or user already sent you a request", 
+                                    buttonText: "Okay", 
+                                    context: context
+                                  );
+                                },
                               );
                             },
                             onDeleteBookmark: () async{

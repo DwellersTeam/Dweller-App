@@ -244,6 +244,7 @@ class MatchService extends getx.GetxController {
     required BuildContext context,
     required String userId,
     required VoidCallback onSuccess,
+    required VoidCallback onFailure,
     }) async {
     isLoading.value = true;
     try {
@@ -271,10 +272,11 @@ class MatchService extends getx.GetxController {
         debugPrint('this is response status ==>${res.statusCode}');
         debugPrint('this is response body ==>${res.body}');
         debugPrint('this is response reason ==> ${res.reasonPhrase}');
-        baseService.showErrorMessage(
+        /*baseService.showErrorMessage(
           httpStatusCode: res.statusCode,
           context: context
-        );
+        );*/
+        onFailure();
         throw Exception("failed to send match request");
       }
 
