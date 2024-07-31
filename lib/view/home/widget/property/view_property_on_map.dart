@@ -13,3 +13,4 @@ class ViewPropertyOnMap extends StatelessWidget {
     return const Placeholder();
   }
 }
+

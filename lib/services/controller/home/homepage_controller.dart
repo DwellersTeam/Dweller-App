@@ -54,9 +54,10 @@ class HomePageController extends getx.GetxController {
 
         if (activity.direction.name == "right") {
           log('The card was swiped to the : ${activity.direction.name}');
-          onSuccess();
           // Increment the right swipe count
           rightSwipeCount.value++;
+          onSuccess();
+
           //call the api that matches straight up
           if (rightSwipeCount.value == 5) { //5
             // If 7 right swipes, call the alert function
