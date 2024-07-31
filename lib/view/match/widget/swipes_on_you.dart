@@ -7,6 +7,7 @@ import 'package:dweller/services/repository/notification_service/push_notificati
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/extractors.dart';
 import 'package:dweller/utils/components/loader.dart';
+import 'package:dweller/view/home/widget/profiel_by_id/get_profile_page.dart';
 import 'package:dweller/view/match/widget/empty_state.dart';
 import 'package:dweller/view/match/widget/popup_menu.dart';
 import 'package:flutter/cupertino.dart';
@@ -79,18 +80,18 @@ class _SwipesOnYouState extends State<SwipesOnYou> {
             future: swipesOnYouFuture,
             builder: (context, snapshot) {
               if(snapshot.connectionState == ConnectionState.waiting){
-                return LoaderS();
+                return const LoaderS();
               }
               if(snapshot.hasError){
                 log("snapshot err: ${snapshot.error}");
-                return MatchEmptyState(
+                return const MatchEmptyState(
                   title: "No one has swiped on you yet",
                   subtitle: "When you get potential matches, they will show up here",
                 );
               }
               if(!snapshot.hasData){
                 log("snapshot has data?: ${snapshot.hasData}");
-                return MatchEmptyState(
+                return const MatchEmptyState(
                   title: "No one has swiped on you yet",
                   subtitle: "When you get potential matches, they will show up here",
                 );
@@ -98,7 +99,7 @@ class _SwipesOnYouState extends State<SwipesOnYou> {
 
               final data = snapshot.data!;
               if(data.isEmpty){
-                return MatchEmptyState(
+                return const MatchEmptyState(
                   title: "No one has swiped on you yet",
                   subtitle: "When you get potential matches, they will show up here",
                 );
@@ -128,7 +129,7 @@ class _SwipesOnYouState extends State<SwipesOnYou> {
                             color: AppColor.lightGreyColor.withOpacity(0.4),
                             spreadRadius: 2,
                             blurRadius: 2,
-                            offset: Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ], //32 500w
                       ),
@@ -168,12 +169,12 @@ class _SwipesOnYouState extends State<SwipesOnYou> {
                               ),*/
                               MatchListSwipesOnYouMenu(
                                 onOpenProfile: () {
-                                  //Get.to(() => GetUserByIdPage());
+                                  Get.to(() => GetUserByIdPage(userId: item.from.id,));
                                 },
                                 onAcceptMatch: () async{
                                   await matchService.acceptMatchRequest(
                                     context: context, 
-                                    id: item.from.id, 
+                                    id: item.id, 
                                     onSuccess: () {
                                       _handleRefresh();
                                       notificationService.sendNotification(
@@ -188,7 +189,7 @@ class _SwipesOnYouState extends State<SwipesOnYou> {
                                 onDeclineMatch: () async{
                                   await matchService.declineMatchRequest(
                                     context: context, 
-                                    id: item.from.id, 
+                                    id: item.id, 
                                     onSuccess: () {
                                       _handleRefresh();
                                       notificationService.sendNotification(

@@ -19,15 +19,15 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 //Get Profile by id
-class ProfileInfo extends StatefulWidget {
-  const ProfileInfo({super.key, required this.user});
-  final UserModel user;
+class ProfileInfoForUser extends StatefulWidget {
+  const ProfileInfoForUser({super.key, required this.userId});
+  final String userId;
 
   @override
-  State<ProfileInfo> createState() => _ProfileInfoState();
+  State<ProfileInfoForUser> createState() => _ProfileInfoForUserState();
 }
 
-class _ProfileInfoState extends State<ProfileInfo> {
+class _ProfileInfoForUserState extends State<ProfileInfoForUser> {
 
   final profileService = Get.put(CreateProfileService());
 
@@ -44,7 +44,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
   //REFRESH FUNCTIONALITY
   Future<UserModel> _refresh() async{
     await Future.delayed(const Duration(seconds: 2));
-    final profileFuture = await profileService.getUserByIdEndpoint(context: context, id: widget.user.id);
+    final profileFuture = await profileService.getUserByIdEndpoint(context: context, id: widget.userId);
     return profileFuture;
   }
 

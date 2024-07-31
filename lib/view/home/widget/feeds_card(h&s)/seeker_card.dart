@@ -104,7 +104,7 @@ class _SeekerCardState extends State<SeekerCard> {
                     context: context, 
                     userId: service.seekersList[previousIndex].id,
                     onSuccess: () {
-                      //call the notifications API to send a push notification and create data in db
+                      //call the notifications API to send a push notification and create data in db of the person
                       print('match sent');
                     }
                   );
@@ -159,7 +159,7 @@ class _SeekerCardState extends State<SeekerCard> {
                             child: LinearProgressIndicator(
                               backgroundColor: AppColor.semiDarkGreyColor,
                               valueColor: const AlwaysStoppedAnimation<Color>(AppColor.whiteColor),
-                              value: (controller.currentIndex.value + 1) / service.seekersList.length,
+                              value: (controller.currentIndex.value + 1) / item.pictures.length,
                               minHeight: 1.5,
                               borderRadius: BorderRadius.circular(20.r),
                             )

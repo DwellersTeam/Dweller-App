@@ -11,6 +11,7 @@ import 'package:dweller/utils/components/extractors.dart';
 import 'package:dweller/utils/components/loader.dart';
 import 'package:dweller/view/bookmark/widget/empty_state.dart';
 import 'package:dweller/view/bookmark/widget/popup_menu.dart';
+import 'package:dweller/view/home/widget/profiel_by_id/get_profile_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -151,7 +152,7 @@ class _BookmarkListState extends State<BookmarkList> {
                           ),
                           BookmarkMenu(
                             onOpenProfile: () {
-                              //Get.to(() => GetUserByIdPage());
+                              Get.to(() => GetUserByIdPage(userId: item.profile.id,));
                             },
                             onSendMatchRequest: () async{
                               await matchService.sendMatchRequest(

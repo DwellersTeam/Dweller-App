@@ -5,6 +5,7 @@ import 'package:dweller/services/repository/notification_service/notification_se
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/extractors.dart';
 import 'package:dweller/utils/components/loader.dart';
+import 'package:dweller/view/home/widget/profiel_by_id/get_profile_page.dart';
 import 'package:dweller/view/match/widget/empty_state.dart';
 import 'package:dweller/view/match/widget/popup_menu.dart';
 import 'package:flutter/cupertino.dart';
@@ -139,17 +140,17 @@ class _YourSwipesState extends State<YourSwipes> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              item.from.displayPicture.isNotEmpty 
+                              item.to.displayPicture.isNotEmpty 
                               ?CircleAvatar(
                                 radius: 24.r,
                                 backgroundColor: Colors.grey.withOpacity(0.1),
-                                backgroundImage: NetworkImage(item.from.displayPicture),
+                                backgroundImage: NetworkImage(item.to.displayPicture),
                               )
                               :CircleAvatar(
                                 radius: 24.r,
                                 backgroundColor: Colors.grey.withOpacity(0.1),
                                 child: Text(
-                                  getFirstLetter(item.from.firstname),
+                                  getFirstLetter(item.to.firstname),
                                   style: GoogleFonts.poppins(
                                     color: AppColor.blackColor,
                                     fontSize: 13.sp,
@@ -170,12 +171,12 @@ class _YourSwipesState extends State<YourSwipes> {
 
                               MatchListYourSwipesMenu(
                                 onOpenProfile: () {
-                                  //Get.to(() => GetUserByIdPage());
+                                  Get.to(() => GetUserByIdPage(userId: item.to.id,));
                                 },
                                 onUndoMatch: () async {
                                   await matchService.deleteMatchRequest(
                                     context: context, 
-                                    id: item.from.id, 
+                                    id: item.id, 
                                     onSuccess: () => _handleRefresh(),
                                   );
                                 },
@@ -188,7 +189,7 @@ class _YourSwipesState extends State<YourSwipes> {
                             children: [
                               Flexible(
                                 child: Text(
-                                  '${item.from.firstname} ${item.from.lastname}',
+                                  '${item.to.firstname} ${item.to.lastname}',
                                   style: GoogleFonts.poppins(
                                     color: AppColor.blackColor,
                                     fontSize: 16.sp,
@@ -205,7 +206,7 @@ class _YourSwipesState extends State<YourSwipes> {
                               ),
                               SizedBox(width: 10.w),
                               Text(
-                                '${item.from.age}',
+                                '${item.to.age}',
                                 style: GoogleFonts.poppins(
                                   color: AppColor.blackColor,
                                   fontSize: 16.sp,
@@ -217,7 +218,7 @@ class _YourSwipesState extends State<YourSwipes> {
                           ),
                           SizedBox(height: 10.h),
                           Text(
-                            item.from.location.address,
+                            item.to.location.address,
                             style: GoogleFonts.poppins(
                               color: AppColor.blackColor,
                               fontSize: 12.sp,

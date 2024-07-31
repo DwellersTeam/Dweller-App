@@ -114,7 +114,7 @@ class _HostCardState extends State<HostCard> {
                     context: context, 
                     userId: service.propertyList[previousIndex].id,
                     onSuccess: () {
-                      //call the notifications API to send a push notification and create data in db
+                      //call the notifications API to send a push notification and create data in db of the person
                       print('match sent');
                     }
                   );
@@ -163,7 +163,7 @@ class _HostCardState extends State<HostCard> {
                               child: LinearProgressIndicator(
                                 backgroundColor: AppColor.semiDarkGreyColor,
                                 valueColor: const AlwaysStoppedAnimation<Color>(AppColor.whiteColor),
-                                value: (controller.currentIndex.value + 1) / service.propertyList.length,
+                                value: (controller.currentIndex.value + 1) / item.propertyPics.length,
                                 minHeight: 1.5,
                                 borderRadius: BorderRadius.circular(20.r),
                               ),
