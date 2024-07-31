@@ -141,7 +141,7 @@ class MatchListSwipesOnYouMenu extends StatelessWidget {
               //SvgPicture.asset('assets/svg/chat_clear.svg'),
               Icon(
                 CupertinoIcons.check_mark_circled_solid,
-                size: 20.r,
+                size: 16.r,
                 color: AppColor.darkPurpleColor,
               ),
               SizedBox(width: 10.w,),
