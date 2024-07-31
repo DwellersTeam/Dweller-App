@@ -83,10 +83,11 @@ class CreateProfileService extends getx.GetxController {
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
 
-        /*if(res.headers['x-accessToken']!.isNotEmpty || res.headers['x-accessToken'] != null){
+        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
           //save access token from header
-          LocalStorage.saveToken(res.headers['x-accessToken']!);
-        }*/
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }
         
         //decode response from the server
         UserModel jsonResponse = UserModel.fromJson(json.decode(res.body));
@@ -131,6 +132,12 @@ class CreateProfileService extends getx.GetxController {
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
+
+        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }
         
         //decode response from the server
         UserModel jsonResponse = UserModel.fromJson(json.decode(res.body));
@@ -269,6 +276,12 @@ class CreateProfileService extends getx.GetxController {
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
+
+        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }
         
         //decode response from the server
         final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
@@ -334,6 +347,12 @@ class CreateProfileService extends getx.GetxController {
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
+
+        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }
         
         //decode response from the server
         final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
@@ -408,6 +427,12 @@ class CreateProfileService extends getx.GetxController {
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
+
+        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }
         
         //decode response from the server
         //final dynamic jsonResponse = json.decode(res.body);
@@ -464,6 +489,12 @@ class CreateProfileService extends getx.GetxController {
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
+
+        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }
         
         //decode response from the server
         final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
@@ -519,6 +550,12 @@ class CreateProfileService extends getx.GetxController {
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
+
+        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }
         
         //decode response from the server
         final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
@@ -576,6 +613,12 @@ class CreateProfileService extends getx.GetxController {
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
+
+        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }
         
         //decode response from the server
         final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
@@ -647,6 +690,12 @@ class CreateProfileService extends getx.GetxController {
         isLoadingAdd.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
+
+        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }
         
         //decode response from the server
         /*final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
@@ -719,6 +768,12 @@ class CreateProfileService extends getx.GetxController {
         isLoadingAdd.value  = false;
         debugPrint('this is response status ==> ${res.statusCode}');
         debugPrint('this is response body ==> ${res.body}');
+
+        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }
         
         //decode response from the server
         /*final TokenResponse jsonResponse = TokenResponse.fromJson(jsonDecode(res.body));
@@ -762,6 +817,12 @@ class CreateProfileService extends getx.GetxController {
       http.Response res = await baseService.httpGet(endPoint: "properties/$id",);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
+
+        if(res.headers['x-access-token']!.isNotEmpty || res.headers['x-access-token'] != null){
+          log("x-access-token: ${res.headers['x-access-token']}");
+          //save access token from header
+          LocalStorage.saveToken(res.headers['x-access-token']!);
+        }
 
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
