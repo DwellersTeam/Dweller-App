@@ -16,7 +16,6 @@ import 'package:dweller/view/home/widget/feeds_card(h&s)/seeker_card.dart';
 import 'package:dweller/view/home/widget/notification/notification_sheet.dart';
 import 'package:dweller/view/settings/page/profile_type/profile_settings_host.dart';
 import 'package:dweller/view/settings/page/profile_type/profile_settings_seeker.dart';
-import 'package:dweller/view/subscription/widget/subscription_bottomsheet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -89,8 +88,7 @@ class _HomePageState extends State<HomePage> {
       extendBody: true,
       extendBodyBehindAppBar: true,
       backgroundColor: AppColor.whiteColor,
-      body: SafeArea(
-      
+      body: dwellerKind.isEmpty || dwellerKind == null ? const WelcomePage() : SafeArea(
         child: CustomPaint(
           painter: TopRedSectionPainter(),
           //wrap with profile GET request FutureBuilder
@@ -205,7 +203,7 @@ class _HomePageState extends State<HomePage> {
                   //scrollDirection: Axis.vertical,
                   padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
                   //CHECK IF THE LOGGED-IN USER IS A HOST OR SEEKER
-                  child: dwellerKind == 'seeker' ? const HostCard() : const SeekerCard()
+                  child: dwellerKind == 'seeker' ? const HostCard() : const SeekerCard(),
 
                   //child: HostCard()
                 ),
