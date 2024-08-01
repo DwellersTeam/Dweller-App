@@ -71,6 +71,19 @@ class SelectDwellerPage extends StatelessWidget {
                     
                   ],
                 ),
+                
+                SizedBox(height: size.height * 0.12,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: SvgPicture.asset('assets/svg/get_back.svg')
+                    ),   
+                  ],
+                ),
               
                 SizedBox(height: size.height * 0.12,),
               

@@ -111,6 +111,19 @@ class _SeekerPhase1PageState extends State<SeekerPhase1Page> {
                 minHeight: 2.5,
                 borderRadius: BorderRadius.horizontal(right: Radius.circular(10.r)),
               ),
+
+              SizedBox(height: size.height * 0.025,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: SvgPicture.asset('assets/svg/get_back.svg')
+                  ),   
+                ],
+              ),
         
               SizedBox(height: size.height * 0.025,),
               
