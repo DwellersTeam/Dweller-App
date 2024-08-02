@@ -72,7 +72,7 @@ class SelectDwellerPage extends StatelessWidget {
                   ],
                 ),
                 
-                SizedBox(height: size.height * 0.12,),
+                SizedBox(height: size.height * 0.02,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -85,7 +85,7 @@ class SelectDwellerPage extends StatelessWidget {
                   ],
                 ),
               
-                SizedBox(height: size.height * 0.12,),
+                SizedBox(height: size.height * 0.04,),
               
                 RichText(
                   textAlign: TextAlign.center,

@@ -1,6 +1,7 @@
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -11,10 +12,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class SearchTextfield extends StatefulWidget {
-  const SearchTextfield({super.key,required this.onChanged, required this.hintText, required this.keyboardType, required this.textInputAction, required this.textController, this.onFocusChanged, required this.suffixIcon, this.validator,});
+  const SearchTextfield({super.key, this.inputFormatters, required this.onChanged, required this.hintText, required this.keyboardType, required this.textInputAction, required this.textController, this.onFocusChanged, required this.suffixIcon, this.validator,});
   final TextEditingController textController;
   final TextInputType keyboardType;
   final String hintText;
+  final List<TextInputFormatter>? inputFormatters;
   final TextInputAction textInputAction;
   final void Function(String)? onChanged;
   final void Function(bool)? onFocusChanged;
@@ -38,7 +40,7 @@ class _SearchTextfieldState extends State<SearchTextfield> {
         maxLines: 2,
         minLines: 1,
         autocorrect: true,
-        inputFormatters: const [],
+        inputFormatters: widget.inputFormatters,
         enableSuggestions: true,
         enableInteractiveSelection: true,
         cursorColor: AppColor.blackColor,
@@ -88,10 +90,11 @@ class _SearchTextfieldState extends State<SearchTextfield> {
 
 
 class MessageTextInputfield extends StatefulWidget {
-  const MessageTextInputfield({super.key,required this.onChanged, required this.hintText, required this.keyboardType, required this.textInputAction, required this.textController, this.onFocusChanged, this.suffixIcon, this.onFieldSubmitted, this.prefixIcon,});
+  const MessageTextInputfield({super.key,this.inputFormatters, required this.onChanged, required this.hintText, required this.keyboardType, required this.textInputAction, required this.textController, this.onFocusChanged, this.suffixIcon, this.onFieldSubmitted, this.prefixIcon,});
   final TextEditingController textController;
   final TextInputType keyboardType;
   final String hintText;
+  final List<TextInputFormatter>? inputFormatters;
   final TextInputAction textInputAction;
   final void Function(String)? onChanged;
   final void Function(String)? onFieldSubmitted;
@@ -117,7 +120,7 @@ class _MessageTextInputfieldState extends State<MessageTextInputfield> {
         maxLines: 10,
         minLines: 1,
         autocorrect: true,
-        inputFormatters: const [],
+        inputFormatters: widget.inputFormatters,
         enableSuggestions: true,
         enableInteractiveSelection: true,
         cursorColor: AppColor.blackColor,
@@ -168,11 +171,12 @@ class _MessageTextInputfieldState extends State<MessageTextInputfield> {
 
 
 class TaskTextInputfield extends StatefulWidget {
-  const TaskTextInputfield({super.key,required this.onChanged, required this.hintText, required this.keyboardType, required this.textInputAction, required this.textController, this.onFocusChanged, this.onFieldSubmitted,});
+  const TaskTextInputfield({super.key,this.inputFormatters, required this.onChanged, required this.hintText, required this.keyboardType, required this.textInputAction, required this.textController, this.onFocusChanged, this.onFieldSubmitted,});
   final TextEditingController textController;
   final TextInputType keyboardType;
   final String hintText;
   final TextInputAction textInputAction;
+  final List<TextInputFormatter>? inputFormatters;
   final void Function(String)? onChanged;
   final void Function(String)? onFieldSubmitted;
   final void Function(bool)? onFocusChanged;
@@ -196,7 +200,7 @@ class _TaskTextInputfieldState extends State<TaskTextInputfield> {
         maxLines: 8,
         minLines: 1,
         autocorrect: true,
-        inputFormatters: const [],
+        inputFormatters: widget.inputFormatters,
         enableSuggestions: true,
         enableInteractiveSelection: true,
         cursorColor: AppColor.blackColor,
@@ -244,11 +248,12 @@ class _TaskTextInputfieldState extends State<TaskTextInputfield> {
 
 
 class TaskTextInputfieldEdit extends StatefulWidget {
-  const TaskTextInputfieldEdit({super.key,required this.onChanged, required this.hintText, required this.keyboardType, required this.textInputAction, this.onFocusChanged, this.onFieldSubmitted, required this.initialValue,});
+  const TaskTextInputfieldEdit({super.key, this.inputFormatters, required this.onChanged, required this.hintText, required this.keyboardType, required this.textInputAction, this.onFocusChanged, this.onFieldSubmitted, required this.initialValue,});
   final String initialValue;
   final TextInputType keyboardType;
   final String hintText;
   final TextInputAction textInputAction;
+  final List<TextInputFormatter>? inputFormatters;
   final void Function(String)? onChanged;
   final void Function(String)? onFieldSubmitted;
   final void Function(bool)? onFocusChanged;
@@ -272,7 +277,7 @@ class _TaskTextInputfieldEditState extends State<TaskTextInputfieldEdit> {
         maxLines: 8,
         minLines: 1,
         autocorrect: true,
-        inputFormatters: const [],
+        inputFormatters: widget.inputFormatters,
         enableSuggestions: true,
         enableInteractiveSelection: true,
         cursorColor: AppColor.blackColor,

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,8 @@ class ThirdPage extends StatelessWidget {
       children: [
         //SizedBox(height: 20.h,), //20.h
         //image
-        Image.network(
-          'https://res.cloudinary.com/dwvcga8sn/image/upload/v1721822433/onb_3_j0mzw6.png',
+        CachedNetworkImage(
+          imageUrl:'https://res.cloudinary.com/dwvcga8sn/image/upload/v1721822433/onb_3_j0mzw6.png',
           height: 350.h,
           width: double.infinity,
           fit: BoxFit.contain,

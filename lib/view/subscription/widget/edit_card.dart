@@ -1,8 +1,10 @@
 import 'package:dweller/services/controller/settings/settings_controller.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
+import 'package:dweller/utils/components/text_input_formatters.dart';
 import 'package:dweller/view/search/widget/search_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -68,6 +70,10 @@ void editCardBottomsheet({
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
                 initialValue:  cardNumber,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  CreditCardNumberFormatter(),
+                ],
               ),
 
               SizedBox(height: MediaQuery.of(context).size.height * 0.04),
@@ -99,6 +105,10 @@ void editCardBottomsheet({
                           keyboardType: TextInputType.datetime,
                           textInputAction: TextInputAction.next,
                           initialValue:  expiryDate,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            CreditCardExpiryDateFormatter()
+                          ],
                         ),
 
                       ],
@@ -128,6 +138,10 @@ void editCardBottomsheet({
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.next,
                           initialValue:  cvv,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            CreditCardCVVFormatter()
+                          ],
                         ),
 
                       ],

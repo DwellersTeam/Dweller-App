@@ -1,9 +1,11 @@
 import 'package:dweller/services/controller/settings/settings_controller.dart';
 import 'package:dweller/main.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
+import 'package:dweller/utils/components/text_input_formatters.dart';
 import 'package:dweller/view/search/widget/search_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -65,6 +67,10 @@ void payWithCardBottomsheet({
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
                 textController: controller.cardNumberController,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  CreditCardNumberFormatter(),
+                ],
               ),
 
               SizedBox(height: MediaQuery.of(context).size.height * 0.04),
@@ -95,7 +101,11 @@ void payWithCardBottomsheet({
                           hintText: "Expiry date",
                           keyboardType: TextInputType.datetime,
                           textInputAction: TextInputAction.next,
-                          textController: controller.expiryDateController
+                          textController: controller.expiryDateController,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            CreditCardExpiryDateFormatter()
+                          ],
                         ),
 
                       ],
@@ -125,6 +135,10 @@ void payWithCardBottomsheet({
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.next,
                           textController: controller.CVVController,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            CreditCardCVVFormatter()
+                          ],
                         ),
 
                       ],
