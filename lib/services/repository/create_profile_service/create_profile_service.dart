@@ -33,7 +33,7 @@ class CreateProfileService extends getx.GetxController {
   final baseService = getx.Get.put(BaseService());
   final mainPageController = Get.put(MainPageController());
   final FCMToken = LocalStorage.getFCMToken();
-  final token = LocalStorage.getToken();
+  final String token = LocalStorage.getToken();
   final tokenExpDateInt = LocalStorage.getTokenExpDate() ?? 0;
   final userId = LocalStorage.getUserID();
   final isLoading = false.obs;  
@@ -60,6 +60,7 @@ class CreateProfileService extends getx.GetxController {
         'lastname': decodedToken['lastname'] ?? '',
         'email': decodedToken['email'] ?? '',
         '_id': decodedToken['_id'] ?? '',
+        'dwellerKind': decodedToken['dwellerKind'] ?? '',
       };
       JwtModel jsonResponse = JwtModel.fromJson(jwtMap);
       return jsonResponse;

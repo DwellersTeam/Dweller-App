@@ -1,10 +1,4 @@
-
-
-
-
-
 import 'dart:developer';
-
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:dweller/model/listing/property_model.dart';
 import 'package:dweller/services/controller/home/homepage_controller.dart';
@@ -21,6 +15,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+
+
 
 
 
@@ -136,9 +133,9 @@ class _HostCardState extends State<HostCard> {
             if (index < 0 || index >= service.propertyList.length) {
               return const SizedBox.shrink();
             }
-
+        
             final item = service.propertyList[index];
-
+        
             return InkWell(
               onTap: () {
                 controller.nextImage(imageList: item.propertyPics);
@@ -274,15 +271,15 @@ class _HostCardState extends State<HostCard> {
                                   ),
                                 ],
                               ),
-
-
+        
+        
                               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-
+        
                               //here
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-
+        
                                   item.propertyOwner.displayPicture.isNotEmpty
                                   ?CircleAvatar(
                                     radius: 24.r,
@@ -301,9 +298,9 @@ class _HostCardState extends State<HostCard> {
                                       ),
                                     ),
                                   ),
-
+        
                                   SizedBox(width: 10.w),
-
+        
                                   //expanded
                                   Expanded(
                                     child: Row(
@@ -339,9 +336,9 @@ class _HostCardState extends State<HostCard> {
                                       ],
                                     ),
                                   ),
-
+        
                                   SizedBox(width: 15.w,),
-
+        
                                   InkWell(
                                     onTap: () {
                                       Get.to(() => HostTabPage(
@@ -386,7 +383,7 @@ class _HostCardState extends State<HostCard> {
                                           ),
                                         ],
                                       ),*/
-
+        
                                     ),
                                   )
                                 ],
