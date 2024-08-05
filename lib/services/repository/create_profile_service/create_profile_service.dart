@@ -33,7 +33,7 @@ class CreateProfileService extends getx.GetxController {
   final baseService = getx.Get.put(BaseService());
   final mainPageController = Get.put(MainPageController());
   final FCMToken = LocalStorage.getFCMToken();
-  final String token = LocalStorage.getToken();
+  final token = LocalStorage.getToken();
   final tokenExpDateInt = LocalStorage.getTokenExpDate() ?? 0;
   final userId = LocalStorage.getUserID();
   final isLoading = false.obs;  
