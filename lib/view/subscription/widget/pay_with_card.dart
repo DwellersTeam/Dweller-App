@@ -158,8 +158,9 @@ void payWithCardBottomsheet({
                 height: 60.h,
                 width: double.infinity,
                 child: GradientElevatedButton(
-                  onPressed: () async{
-                    await service.subscribeToPro(
+                  onPressed: () async{ 
+                    if(controller.cardNumberController.text.isNotEmpty && controller.CVVController.text.isNotEmpty && controller.expiryDateController.text.isNotEmpty)  {
+                      await service.subscribeToPro(
                       context: context, 
                       cardNumber: controller.cardNumberController.text,
                       carrdCVV:  controller.CVVController.text,
@@ -208,6 +209,11 @@ void payWithCardBottomsheet({
                         );
                       }
                     );
+                    }
+                    else {
+                      showMySnackBar(context: context, message: "fields must not be empty", backgroundColor: AppColor.redColor);
+                    }
+                    
                   },
                   style: GradientElevatedButton.styleFrom(
                     gradient: const LinearGradient(
@@ -388,7 +394,8 @@ void payWithCardBottomsheetAdvancedSearch({
                 width: double.infinity,
                 child: GradientElevatedButton(
                   onPressed: () async{
-                    await service.subscribeToPro(
+                    if(controller.cardNumberController.text.isNotEmpty && controller.CVVController.text.isNotEmpty && controller.expiryDateController.text.isNotEmpty) {
+                      await service.subscribeToPro(
                       context: context, 
                       cardNumber: controller.cardNumberController.text,
                       carrdCVV:  controller.CVVController.text,
@@ -436,6 +443,11 @@ void payWithCardBottomsheetAdvancedSearch({
                         );
                       }
                     );
+                    }
+                    else {
+                      showMySnackBar(context: context, message: "fields must not be empty", backgroundColor: AppColor.redColor);
+                    }
+                    
                   },
                   style: GradientElevatedButton.styleFrom(
                     gradient: const LinearGradient(

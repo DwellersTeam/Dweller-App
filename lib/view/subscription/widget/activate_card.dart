@@ -48,7 +48,7 @@ void activateCardDialog({
                 ),
                 SizedBox(height: 10.h,),
                 Text(
-                  'Want to activate this card?',
+                  'Want to re-activate this card?',
                   style: GoogleFonts.poppins(
                     color: AppColor.darkPurpleColor,
                     fontSize: 14.sp,

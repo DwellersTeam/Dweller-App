@@ -781,6 +781,99 @@ class SettingService extends getx.GetxController {
     }
   }
 
+  //deactivate existing credit card
+  Future<void> deactivateCreditCard({
+    required BuildContext context,
+    required VoidCallback onSuccess,
+    required VoidCallback onFailure,
+    }) async {
 
+    isLoading.value = true;
+
+    try {
+
+      final body =  {
+        "active": false,
+      };
+
+      http.Response res = await baseService.httpPatch(endPoint: "card", body: body);
+
+      if (res.statusCode == 200 || res.statusCode == 201) {
+
+        isLoading.value = false;
+        debugPrint('this is response status ==> ${res.statusCode}');
+        debugPrint('this is response body ==> ${res.body}');
+        onSuccess();
+
+      }
+      else{
+        isLoading.value = false;
+        debugPrint('this is response status ==>${res.statusCode}');
+        debugPrint('this is response body ==>${res.body}');
+        debugPrint('this is response reason ==> ${res.reasonPhrase}');
+        onFailure();
+        /*baseService.showErrorMessage(
+          httpStatusCode: res.statusCode,
+          context: context
+        );*/
+        throw Exception("failed to deactivate user credit card");
+      }
+
+    }
+    catch(e, stackTrace) {
+      isLoading.value = false;
+      debugPrint("$e");
+      debugPrint("trace: $stackTrace");
+      throw Exception("$e");
+    }
+  }
+
+
+  //re-activate existing credit card
+  Future<void> reactivateCreditCard({
+    required BuildContext context,
+    required VoidCallback onSuccess,
+    required VoidCallback onFailure,
+    }) async {
+
+    isLoading.value = true;
+
+    try {
+
+      final body =  {
+        "active": true,
+      };
+
+      http.Response res = await baseService.httpPatch(endPoint: "card", body: body);
+
+      if (res.statusCode == 200 || res.statusCode == 201) {
+
+        isLoading.value = false;
+        debugPrint('this is response status ==> ${res.statusCode}');
+        debugPrint('this is response body ==> ${res.body}');
+        onSuccess();
+
+      }
+      else{
+        isLoading.value = false;
+        debugPrint('this is response status ==>${res.statusCode}');
+        debugPrint('this is response body ==>${res.body}');
+        debugPrint('this is response reason ==> ${res.reasonPhrase}');
+        onFailure();
+        /*baseService.showErrorMessage(
+          httpStatusCode: res.statusCode,
+          context: context
+        );*/
+        throw Exception("failed to re-activate user credit card");
+      }
+
+    }
+    catch(e, stackTrace) {
+      isLoading.value = false;
+      debugPrint("$e");
+      debugPrint("trace: $stackTrace");
+      throw Exception("$e");
+    }
+  }
 
 }

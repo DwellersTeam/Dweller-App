@@ -8,6 +8,8 @@ import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/custom_appbar.dart';
 import 'package:dweller/utils/components/custom_paint.dart';
 import 'package:dweller/utils/components/loader.dart';
+import 'package:dweller/utils/components/my_snackbar.dart';
+import 'package:dweller/view/subscription/widget/activate_card.dart';
 import 'package:dweller/view/subscription/widget/deactivate_card.dart';
 import 'package:dweller/view/subscription/widget/debit_card.dart';
 import 'package:dweller/view/subscription/widget/edit_card.dart';
@@ -402,12 +404,64 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                       SizedBox(width: 5.w,),
                                       InkWell(
                                         onTap: () {
-                                          deactivateCardDialog(
-                                            onConfirm: () {},
-                                            onCancel: () {
-                                              Get.back();
-                                            },
-                                          );
+                                          if(data.active) {
+                                            deactivateCardDialog(
+                                              onConfirm: () async{
+                                                await service.deactivateCreditCard(
+                                                  context: context, 
+                                                  onSuccess: () {
+                                                    _handleRefresh();
+                                                    Get.back();
+                                                    showMySnackBar(
+                                                      context: context, 
+                                                      message: "credit card de-activated successfully", 
+                                                      backgroundColor: AppColor.greenColor,
+                                                    );
+                                                  }, 
+                                                  onFailure: () {
+                                                    Get.back();
+                                                    showMySnackBar(
+                                                      context: context, 
+                                                      message: "failed to de-activate credit card", 
+                                                      backgroundColor: AppColor.redColor
+                                                    );
+                                                  }
+                                                );
+                                              },
+                                              onCancel: () {
+                                                Get.back();
+                                              },
+                                            );
+                                          }
+                                          else{
+                                            activateCardDialog(
+                                              onConfirm: () async{
+                                                await service.reactivateCreditCard(
+                                                  context: context, 
+                                                  onSuccess: () {
+                                                    _handleRefresh();
+                                                    Get.back();
+                                                    showMySnackBar(
+                                                      context: context, 
+                                                      message: "credit card re-activated successfully", 
+                                                      backgroundColor: AppColor.greenColor,
+                                                    );
+                                                  }, 
+                                                  onFailure: () {
+                                                    Get.back();
+                                                    showMySnackBar(
+                                                      context: context, 
+                                                      message: "failed to re-activate credit card", 
+                                                      backgroundColor: AppColor.redColor
+                                                    );
+                                                  }
+                                                );
+                                              },
+                                              onCancel: () {
+                                                Get.back();
+                                              },
+                                            );
+                                          }
                                         },
                                         child: Icon(
                                           size: 19.r,
