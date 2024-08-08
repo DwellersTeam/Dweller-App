@@ -10,71 +10,92 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 
-
 void activateCardDialog({
   required VoidCallback onCancel, 
   required VoidCallback onConfirm
   }) {
-  Get.defaultDialog(
-    barrierDismissible: true,
-    backgroundColor: Color.fromRGBO(235, 252, 255, 1),
-    contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 20.w, vertical: 20.h),
-    title: '',
-    content: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        //SizedBox(height: 10.h,),
-        Text(
-          'Activate card',
-          style: GoogleFonts.bricolageGrotesque(
-            color: AppColor.darkPurpleColor,
-            fontSize: 20.sp,
-            fontWeight: FontWeight.w600
-          ),
-        ),
-        SizedBox(height: 10.h,),
-        Text(
-          'Want to activate this card?',
-          style: GoogleFonts.poppins(
-            color: AppColor.darkPurpleColor,
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w400
-          ),
-        ),
-        SizedBox(height: 30.h,),
-        //buttons
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            InkWell(
-              onTap: onCancel,
-              child: Text(
-                "Cancel",
-                style: GoogleFonts.poppins(
-                  color: AppColor.darkPurpleColor,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w500
-                ),
-              ),
-            ),
+  Get.dialog(
+    transitionCurve: const ElasticOutCurve(),
+    useSafeArea: true,
+    barrierDismissible: false,
+    //backgroundColor: Color.fromRGBO(214, 248, 255, 1),
+    //contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 20.w, vertical: 20.h),
   
-            SizedBox(width: 20.w,),
-
-            InkWell(
-              onTap: onConfirm,
-              child: Text(
-                "Yes",
-                style: GoogleFonts.poppins(
-                  color: AppColor.darkPurpleColor,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w500
+    AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(20.r),
+        ),
+      ),
+      backgroundColor: Color.fromRGBO(214, 248, 255, 1),
+      //wrap with Wrap
+      content: Wrap(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(horizontal: 0.w, vertical: 0.h), //EdgeInsetsDirectional.symmetric(horizontal: 20.w, vertical: 20.h), //EdgeInsets.symmetric(horizontal: 0.w, vertical: 0.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //SizedBox(height: 10.h,),
+                Text(
+                  'Activate card',
+                  style: GoogleFonts.bricolageGrotesque(
+                    color: AppColor.darkPurpleColor,
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w600
+                  ),
                 ),
-              ),
+                SizedBox(height: 10.h,),
+                Text(
+                  'Want to activate this card?',
+                  style: GoogleFonts.poppins(
+                    color: AppColor.darkPurpleColor,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400
+                  ),
+                ),
+                SizedBox(height: 30.h,),
+                //buttons
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: onCancel,
+                      child: Text(
+                        "Cancel",
+                        style: GoogleFonts.poppins(
+                          color: AppColor.darkPurpleColor,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500
+                        ),
+                      ),
+                    ),
+  
+                    SizedBox(width: 20.w,),
+
+                    InkWell(
+                      onTap: onConfirm,
+                      child: Text(
+                        "Yes",
+                        style: GoogleFonts.poppins(
+                          color: AppColor.darkPurpleColor,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+            
+              ],
             ),
-        
-          ],
-        )
-      ],
+          ),
+        ],
+      ),
     ),
   );
 }
+
+
+

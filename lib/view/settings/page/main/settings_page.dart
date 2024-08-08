@@ -283,7 +283,10 @@ class _SettingsPageState extends State<SettingsPage> {
                             SizedBox(height: 50.h,),
                             SettingsSelector(
                               onTap: () {
-                                Get.to(() => SubscriptionPage());
+                                Get.to(() => SubscriptionPage(
+                                  pro: data.pro,
+                                  onSettingRefresh: () => _handleRefresh(),
+                                ));
                               },
                               svgImage: SvgPicture.asset("assets/svg/subscription.svg"),
                               text: "Subscriptions and Payments",

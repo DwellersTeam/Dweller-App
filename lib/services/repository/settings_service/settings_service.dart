@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:dweller/model/settings/credit_card_response.dart';
 import 'package:dweller/model/settings/settings_response.dart';
 import 'package:dweller/services/controller/main_page/mainpage_controller.dart';
 import 'package:dweller/services/repository/data_service/base_service/base_service.dart';
@@ -527,5 +528,259 @@ class SettingService extends getx.GetxController {
   }
 
   
+
+  
+
+  ///SUBSCRIPTION APIS///////////////////////////////////
+  //FETCH CURRENT USER ACCOUNT SUBSCRIPTION/CREDIT CARD DATA
+  Future<CardResponse> getUserCard() async {
+    isLoading.value = true;
+    try {
+
+      http.Response res = await baseService.httpGet(endPoint: "card",);
+
+      if (res.statusCode == 200 || res.statusCode == 201) {
+
+        isLoading.value = false;
+        debugPrint('this is response status ==> ${res.statusCode}');
+        debugPrint('this is response body ==> ${res.body}');
+        //decode response from the server
+        //final dynamic result = json.decode(res.body);
+        CardResponse jsonResponse = CardResponse.fromJson(json.decode(res.body));
+
+        return jsonResponse;
+
+      }
+      else{
+        isLoading.value = false;
+        debugPrint('this is response body ==>${res.body}');
+        debugPrint('this is response status ==>${res.statusCode}');
+        debugPrint('this is response reason ==> ${res.reasonPhrase}');
+        //.showErrorMessage(httpStatusCode: res.statusCode, context: context);
+        throw Exception("failed to fetch your account credit card information");
+      }
+
+    }
+
+    catch(e, stackTrace) {
+      isLoading.value = false;
+      debugPrint("$e");
+      debugPrint("trace: $stackTrace");
+      throw Exception("$e");
+    }
+  }
+
+
+
+  //Suscribe to pro dweller
+  Future<void> subscribeToPro({
+    required BuildContext context,
+    required String cardNumber,
+    required String carrdCVV,
+    required String carrdExpiry,
+    required String cardType,
+    required VoidCallback onSuccess,
+    required VoidCallback onFailure,
+    }) async {
+
+    isLoading.value = true;
+
+    try {
+
+      final body =  {
+        "number": cardNumber,
+        "expiry": carrdExpiry,
+        "cvv": carrdCVV,
+        "type": cardType
+      };
+
+      http.Response res = await baseService.httpPost(endPoint: "subscription/subscribe", body: body);
+
+      if (res.statusCode == 200 || res.statusCode == 201) {
+
+        isLoading.value = false;
+        debugPrint('this is response status ==> ${res.statusCode}');
+        debugPrint('this is response body ==> ${res.body}');
+        onSuccess();
+
+      }
+      else{
+        isLoading.value = false;
+        debugPrint('this is response status ==>${res.statusCode}');
+        debugPrint('this is response body ==>${res.body}');
+        debugPrint('this is response reason ==> ${res.reasonPhrase}');
+        onFailure();
+        baseService.showErrorMessage(
+          httpStatusCode: res.statusCode,
+          context: context
+        );
+        throw Exception("failed to update user to pro dweller subscription");
+      }
+
+    }
+    catch(e, stackTrace) {
+      isLoading.value = false;
+      debugPrint("$e");
+      debugPrint("trace: $stackTrace");
+      throw Exception("$e");
+    }
+  }
+
+
+  //create credit card
+  Future<void> createCreditCard({
+    required BuildContext context,
+    required String cardNumber,
+    required String carrdCVV,
+    required String carrdExpiry,
+    required String cardType,
+    required VoidCallback onSuccess,
+    required VoidCallback onFailure,
+    }) async {
+
+    isLoading.value = true;
+
+    try {
+
+      final body =  {
+        "number": cardNumber,
+        "expiry": carrdExpiry,
+        "cvv": carrdCVV,
+        "type": cardType
+      };
+
+      http.Response res = await baseService.httpPost(endPoint: "card", body: body);
+
+      if (res.statusCode == 200 || res.statusCode == 201) {
+
+        isLoading.value = false;
+        debugPrint('this is response status ==> ${res.statusCode}');
+        debugPrint('this is response body ==> ${res.body}');
+        onSuccess();
+
+      }
+      else{
+        isLoading.value = false;
+        debugPrint('this is response status ==>${res.statusCode}');
+        debugPrint('this is response body ==>${res.body}');
+        debugPrint('this is response reason ==> ${res.reasonPhrase}');
+        onFailure();
+        baseService.showErrorMessage(
+          httpStatusCode: res.statusCode,
+          context: context
+        );
+        throw Exception("failed to create credit card");
+      }
+
+    }
+    catch(e, stackTrace) {
+      isLoading.value = false;
+      debugPrint("$e");
+      debugPrint("trace: $stackTrace");
+      throw Exception("$e");
+    }
+  }
+
+  //update or edit existing credit card
+  Future<void> updateCreditCard({
+    required BuildContext context,
+    required String cardNumber,
+    required String carrdCVV,
+    required String carrdExpiry,
+    required String cardType,
+    required VoidCallback onSuccess,
+    required VoidCallback onFailure,
+    }) async {
+
+    isLoading.value = true;
+
+    try {
+
+      final body =  {
+        "number": cardNumber,
+        "expiry": carrdExpiry,
+        "cvv": carrdCVV,
+        "type": cardType
+      };
+
+      http.Response res = await baseService.httpPatch(endPoint: "card", body: body);
+
+      if (res.statusCode == 200 || res.statusCode == 201) {
+
+        isLoading.value = false;
+        debugPrint('this is response status ==> ${res.statusCode}');
+        debugPrint('this is response body ==> ${res.body}');
+        onSuccess();
+
+      }
+      else{
+        isLoading.value = false;
+        debugPrint('this is response status ==>${res.statusCode}');
+        debugPrint('this is response body ==>${res.body}');
+        debugPrint('this is response reason ==> ${res.reasonPhrase}');
+        onFailure();
+        baseService.showErrorMessage(
+          httpStatusCode: res.statusCode,
+          context: context
+        );
+        throw Exception("failed to update/edit user credit card");
+      }
+
+    }
+    catch(e, stackTrace) {
+      isLoading.value = false;
+      debugPrint("$e");
+      debugPrint("trace: $stackTrace");
+      throw Exception("$e");
+    }
+  }
+
+
+
+  //delete existing credit card of a user
+  Future<void> deleteCreditCard({
+    required BuildContext context,
+    required VoidCallback onSuccess,
+    required VoidCallback onFailure,
+    }) async {
+
+    isLoading.value = true;
+
+    try {
+
+
+      http.Response res = await baseService.httpDelete(endPoint: "card",);
+
+      if (res.statusCode == 200 || res.statusCode == 204) {
+
+        isLoading.value = false;
+        debugPrint('this is response status ==> ${res.statusCode}');
+        debugPrint('this is response body ==> ${res.body}');
+        onSuccess();
+
+      }
+      else{
+        isLoading.value = false;
+        debugPrint('this is response status ==>${res.statusCode}');
+        debugPrint('this is response body ==>${res.body}');
+        debugPrint('this is response reason ==> ${res.reasonPhrase}');
+        onFailure();
+        baseService.showErrorMessage(
+          httpStatusCode: res.statusCode,
+          context: context
+        );
+        throw Exception("failed to delete user credit card");
+      }
+
+    }
+    catch(e, stackTrace) {
+      isLoading.value = false;
+      debugPrint("$e");
+      debugPrint("trace: $stackTrace");
+      throw Exception("$e");
+    }
+  }
+
+
 
 }

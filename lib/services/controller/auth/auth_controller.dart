@@ -102,8 +102,8 @@ class AuthController extends getx.GetxController {
     if (!GetUtils.isPhoneNumber(value)) {
       return "Please enter a valid phone number";
     }
-    if (GetUtils.isLengthLessThan(value.trim(), 8)) {
-      return "Phone number must be atleast 8 characters long";
+    if (GetUtils.isLengthLessThan(value.trim(), 6)) { //8
+      return "Phone number must be atleast 6 characters long";
     }
     return null;
   }

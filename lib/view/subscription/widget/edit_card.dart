@@ -1,5 +1,7 @@
 import 'package:dweller/services/controller/settings/settings_controller.dart';
+import 'package:dweller/services/repository/settings_service/settings_service.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
+import 'package:dweller/utils/components/my_snackbar.dart';
 import 'package:dweller/utils/components/text_input_formatters.dart';
 import 'package:dweller/view/search/widget/search_field.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,11 +21,13 @@ import 'package:gradient_elevated_button/gradient_elevated_button.dart';
 
 void editCardBottomsheet({
   required SettingsController controller,
+  required SettingService service,
   required BuildContext context,
   required String cardHolderName,
   required String cardNumber,
   required String expiryDate,
   required String cvv,
+  required VoidCallback onRefresh,
 }) {
   Get.bottomSheet(
     isDismissible: true,
@@ -157,7 +161,33 @@ void editCardBottomsheet({
                 height: 60.h,
                 width: double.infinity,
                 child: GradientElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async{
+                    await service.updateCreditCard(
+                      context: context, 
+                      cardNumber: controller.editCardNumberController.text.isNotEmpty ? controller.editCardNumberController.text : cardNumber, 
+                      carrdCVV:  controller.editCVVController.text.isNotEmpty ?  controller.editCVVController.text : cvv, 
+                      carrdExpiry: controller.editExpiryDateController.text.isNotEmpty ? controller.editExpiryDateController.text : expiryDate, 
+                      cardType: "master card", 
+                      onSuccess: () {
+                        Get.back();
+                        onRefresh();
+                        showMySnackBar(
+                          context: context, 
+                          message: "credit card updated successfully", 
+                          backgroundColor: AppColor.greenColor,
+                        );
+                      }, 
+                      onFailure: () {
+                        Get.back();
+                        onRefresh();
+                        showMySnackBar(
+                          context: context, 
+                          message: "failed to update credit card", 
+                          backgroundColor: AppColor.redColor
+                        );
+                      }
+                    );
+                  },
                   style: GradientElevatedButton.styleFrom(
                     gradient: const LinearGradient(
                       colors: [
@@ -170,14 +200,18 @@ void editCardBottomsheet({
                       end: Alignment.centerRight,
                     ),
                   ),
-                  child: Text(
-                    'Save Changes',
-                    style: GoogleFonts.bricolageGrotesque(
-                      color: AppColor.whiteColor,
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    overflow: TextOverflow.ellipsis,
+                  child: Obx(
+                    () {
+                      return service.isLoading.value ? const CircularProgressIndicator.adaptive(backgroundColor: AppColor.whiteColor,) : Text(
+                        'Save Changes',
+                        style: GoogleFonts.bricolageGrotesque(
+                          color: AppColor.whiteColor,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      );
+                    }
                   ),
                 ),
               ),

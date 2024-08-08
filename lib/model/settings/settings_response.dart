@@ -31,6 +31,7 @@ class SettingsResponse{
     required this.emailNotification,
     required this.showOnDweller,
     required this.showOnline,
+    required this.pro,
     required this.createdAt,
   });
   final KYC kyc;
@@ -41,6 +42,7 @@ class SettingsResponse{
   bool emailNotification;
   bool showOnDweller;
   bool showOnline;
+  bool pro;
 
 
   factory SettingsResponse.fromJson(Map<String, dynamic> json) {
@@ -52,7 +54,8 @@ class SettingsResponse{
       pushNotification: json['pushNotification'] ?? false,
       emailNotification: json['emailNotification'] ?? false,
       showOnDweller: json['showOnDweller'] ?? false,
-      showOnline: json['showOnline'] ?? false
+      showOnline: json['showOnline'] ?? false,
+      pro: json['pro'] ?? false,
     );
   }
 
@@ -66,6 +69,7 @@ class SettingsResponse{
       'emailNotification': emailNotification,
       'showOnDweller': showOnDweller,
       'showOnline': showOnline,
+      'pro': pro
     };
   }
 }

@@ -323,9 +323,11 @@ Future<void> enhancedSearchBottomsheetSeeker({
                                     },
                                     onFailure: () {
                                       Get.back();
-                                      subscriptionBottomsheet(
+                                      //////////
+                                      subscriptionBottomsheetAdvancedSearch(
                                         context: context,
-                                        settingsController: settingsControl
+                                        settingsController: settingsControl,
+                                        service: service,
                                       );
                                     },
                                   );
@@ -744,9 +746,10 @@ Future<void> enhancedSearchBottomsheetHost({
                                     },
                                     onFailure: () {
                                       Get.back();
-                                      subscriptionBottomsheet(
+                                      subscriptionBottomsheetAdvancedSearch(
                                         context: context,
-                                        settingsController: settingsControl
+                                        settingsController: settingsControl,
+                                        service: service,
                                       );
                                     },
                                   );
