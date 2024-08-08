@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dweller/services/controller/settings/settings_controller.dart';
 import 'package:dweller/main.dart';
 import 'package:dweller/services/repository/settings_service/settings_service.dart';
@@ -168,7 +170,6 @@ void payWithCardBottomsheet({
                       cardType: "master card", 
                       onSuccess: () async{
                         await service.createCreditCard(
-                          context: context, 
                           cardNumber: controller.cardNumberController.text,
                           carrdCVV:  controller.CVVController.text,
                           carrdExpiry: controller.expiryDateController.text,
@@ -180,38 +181,39 @@ void payWithCardBottomsheet({
                             controller.CVVController.clear();
                             controller.expiryDateController.clear();
                             onSettingRefresh();
-                            showMySnackBar(
+                            /*showMySnackBar(
                               context: context, 
                               message: "subscription successful", 
                               backgroundColor: AppColor.greenColor,
-                            );
+                            );*/
                           },
                           onFailure: () {
                             Get.back();
                             controller.cardNumberController.clear();
                             controller.CVVController.clear();
                             controller.expiryDateController.clear();
-                            showMySnackBar(
+                            /*showMySnackBar(
                               context: context, 
                               message: "failed to create card details", 
                               backgroundColor: AppColor.redColor
-                            );
+                            );*/
                           }
                         );
 
                       }, 
                       onFailure: () {
                         Get.back();
-                        showMySnackBar(
+                        /*showMySnackBar(
                           context: context, 
                           message: "failed to subscribe to dweller pro", 
                           backgroundColor: AppColor.redColor
-                        );
+                        );*/
                       }
                     );
                     }
                     else {
-                      showMySnackBar(context: context, message: "fields must not be empty", backgroundColor: AppColor.redColor);
+                      log("fields must not be empty");
+                      //showMySnackBar(context: context, message: "fields must not be empty", backgroundColor: AppColor.redColor);
                     }
                     
                   },
@@ -403,7 +405,6 @@ void payWithCardBottomsheetAdvancedSearch({
                       cardType: "master card", 
                       onSuccess: () async{
                         await service.createCreditCard(
-                          context: context, 
                           cardNumber: controller.cardNumberController.text,
                           carrdCVV:  controller.CVVController.text,
                           carrdExpiry: controller.expiryDateController.text,
@@ -414,38 +415,39 @@ void payWithCardBottomsheetAdvancedSearch({
                             controller.CVVController.clear();
                             controller.expiryDateController.clear();
                         
-                            showMySnackBar(
+                            /*showMySnackBar(
                               context: context, 
                               message: "subscription successful", 
                               backgroundColor: AppColor.greenColor,
-                            );
+                            );*/
                           },
                           onFailure: () {
                             Get.back();
                             controller.cardNumberController.clear();
                             controller.CVVController.clear();
                             controller.expiryDateController.clear();
-                            showMySnackBar(
+                            /*showMySnackBar(
                               context: context, 
                               message: "failed to create card details", 
                               backgroundColor: AppColor.redColor
-                            );
+                            );*/
                           }
                         );
 
                       }, 
                       onFailure: () {
                         Get.back();
-                        showMySnackBar(
+                        /*showMySnackBar(
                           context: context, 
                           message: "failed to subscribe to dweller pro", 
                           backgroundColor: AppColor.redColor
-                        );
+                        );*/
                       }
                     );
                     }
                     else {
-                      showMySnackBar(context: context, message: "fields must not be empty", backgroundColor: AppColor.redColor);
+                      log("fields must not be empty");
+                      //showMySnackBar(context: context, message: "fields must not be empty", backgroundColor: AppColor.redColor);
                     }
                     
                   },

@@ -768,8 +768,6 @@ Future<void> enhancedSearchBottomsheetHost({
                                   () {
                                     return service.isLoading.value 
                                     ? const CircularProgressIndicator.adaptive(
-                                      strokeCap: StrokeCap.round,
-                                      strokeWidth: 2.0,
                                       backgroundColor: AppColor.whiteColor,
                                     )
                                     : Text(

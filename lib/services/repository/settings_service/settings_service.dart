@@ -610,10 +610,10 @@ class SettingService extends getx.GetxController {
         debugPrint('this is response body ==>${res.body}');
         debugPrint('this is response reason ==> ${res.reasonPhrase}');
         onFailure();
-        baseService.showErrorMessage(
+        /*baseService.showErrorMessage(
           httpStatusCode: res.statusCode,
           context: context
-        );
+        );*/
         throw Exception("failed to update user to pro dweller subscription");
       }
 
@@ -629,7 +629,7 @@ class SettingService extends getx.GetxController {
 
   //create credit card
   Future<void> createCreditCard({
-    required BuildContext context,
+    //required BuildContext context,
     required String cardNumber,
     required String carrdCVV,
     required String carrdExpiry,
@@ -665,10 +665,10 @@ class SettingService extends getx.GetxController {
         debugPrint('this is response body ==>${res.body}');
         debugPrint('this is response reason ==> ${res.reasonPhrase}');
         onFailure();
-        baseService.showErrorMessage(
+        /*baseService.showErrorMessage(
           httpStatusCode: res.statusCode,
           context: context
-        );
+        );*/
         throw Exception("failed to create credit card");
       }
 
@@ -719,10 +719,10 @@ class SettingService extends getx.GetxController {
         debugPrint('this is response body ==>${res.body}');
         debugPrint('this is response reason ==> ${res.reasonPhrase}');
         onFailure();
-        baseService.showErrorMessage(
+        /*baseService.showErrorMessage(
           httpStatusCode: res.statusCode,
           context: context
-        );
+        );*/
         throw Exception("failed to update/edit user credit card");
       }
 
@@ -765,10 +765,6 @@ class SettingService extends getx.GetxController {
         debugPrint('this is response body ==>${res.body}');
         debugPrint('this is response reason ==> ${res.reasonPhrase}');
         onFailure();
-        baseService.showErrorMessage(
-          httpStatusCode: res.statusCode,
-          context: context
-        );
         throw Exception("failed to delete user credit card");
       }
 
