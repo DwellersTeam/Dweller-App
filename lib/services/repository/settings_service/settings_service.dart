@@ -73,7 +73,7 @@ class SettingService extends getx.GetxController {
 
 
   //UPDATE USER ADVANCED SEARCH (BOTH FOR Seeker)
-  Future<void> advancedSeacrchForSeekers({
+  Future<void> advancedSearchForHost({
     required BuildContext context,
     required String address,
     required String placeId,
@@ -82,6 +82,13 @@ class SettingService extends getx.GetxController {
   
     required int minAge,
     required int maxAge,
+
+    required int minRoomSize,
+    required int maxRoomSize,
+    required int minRent,
+    required int maxRent,
+    required int maximumNumberOfRooms,
+
     required int distance,
     required List<dynamic> facilities,
     required List<dynamic> interests,
@@ -101,10 +108,19 @@ class SettingService extends getx.GetxController {
             "longitude": longitude,
             "latitude":latitude,
           },
-           "age": {
+          "age": {
             "min": minAge,
             "max": maxAge
           },
+          "roomSize": {
+            "min": minRoomSize,
+            "max": maxRoomSize
+          },
+          "price": {
+            "min": minRent,
+            "max": minRent
+          },
+          "maxRooms": maximumNumberOfRooms,
           "distance": distance, //i do not know if this distance is long and latitude or what muyiwa has in mind
           "facilities": facilities,
           "interests": interests,
@@ -153,22 +169,20 @@ class SettingService extends getx.GetxController {
 
 
   
-  //UPDATE USER ADVANCED SEARCH (BOTH FOR HOST)
-  Future<void> advancedSeacrch({
+  //UPDATE USER ADVANCED SEARCH (BOTH FOR HOST & SEEKER)
+
+  Future<void> advancedSearchForSeeker({
     required BuildContext context,
     required String address,
     required String placeId,
     required num longitude,
     required num latitude,
-    required int minRoomSize,
-    required int maxRoomSize,
-    required int minRent,
-    required int maxRent,
+
     required int minAge,
     required int maxAge,
-    required int maximumNumberOfRooms,
+
     required int distance,
-    required List<dynamic> facilities,
+
     required List<dynamic> interests,
     required List<dynamic> pets,
     required List<dynamic> genders,
@@ -180,65 +194,26 @@ class SettingService extends getx.GetxController {
 
       final body = {
         //userFilter
-        "propertiesFilter": {
+        "usersFilter": {
           "location":{
             "address": address,
             "placeId": placeId,
             "longitude": longitude,
             "latitude":latitude,
           },
-          "roomSize": {
-            "min": minRoomSize,
-            "max": maxRoomSize
-          },
-          "price": {
-            "min": minRent,
-            "max": maxRent
-          },
+
            "age": {
             "min": minAge,
             "max": maxAge
           },
-          "distance": distance, //i do not know if this distance is long and latitude or what muyiwa has in mind
-          "maxRooms": maximumNumberOfRooms,
-          "facilities": facilities,
+          "distance": distance, 
           "interests": interests,
           "genders": genders,
           "pets": pets
         },
       };
 
-      /*final body = {
-        "propertiesFilter": {
-          "roomSize": {
-            "min": 0,
-            "max": 500
-          },
-          "price": {
-            "min": 2000,
-            "max": 2500
-          },
-           "age": {
-            "min": 7,
-            "max": 23
-          },
-          "distance": 5,
-          "maxRooms": 5,
-          "facilities": ["park"],
-          "interests": [],
-          "genders": [],
-          "pets": []
-        },
-
-        "kyc": {
-          "document": "",
-          "url": ""
-        },
-        "pushNotification": true,
-        "emailNotification": false,
-        "showOnDweller": true,
-        "showOnline": true,
-      };*/
+      
 
       http.Response res = await baseService.httpPatch(endPoint: "settings", body: body);
 
@@ -265,7 +240,7 @@ class SettingService extends getx.GetxController {
           context: context
         );*/
         onFailure();
-        throw Exception("failed to update user advanced search for hosts (PATCH)");
+        throw Exception("failed to update user advanced search for seekers (PATCH)");
       }
 
     }

@@ -285,7 +285,7 @@ Future<void> enhancedSearchBottomsheetSeeker({
                               child: GradientElevatedButton(
                                 onPressed: () async{
                                   //call the filter api to filter the users home page
-                                  await service.advancedSeacrchForSeekers(
+                                  await service.advancedSearchForSeeker(
                                     context: context,
                                     address: settingsController.locationController.text,
                                     placeId: locationService.placeId.value,
@@ -296,7 +296,6 @@ Future<void> enhancedSearchBottomsheetSeeker({
                                     maxAge: settingsController.uppervalueAge.value.toInt(),
                                     
                                     distance: settingsController.lowervalueDS.value.toInt(),
-                                    facilities: settingsController.selectedFacilitiesList,
                                     interests: settingsController.selectedMainHobbiesList,
                                     pets: settingsController.selectedPetController.text.isNotEmpty ? [settingsController.selectedPetController.text] : [],
                                     genders: settingsController.selectedGenderList,
@@ -705,7 +704,7 @@ Future<void> enhancedSearchBottomsheetHost({
                               child: GradientElevatedButton(
                                 onPressed: () async{
                                   //call the filter api to filter the users home page
-                                  await service.advancedSeacrch(
+                                  await service.advancedSearchForHost(
                                     context: context,
                                     address: settingsController.locationController.text,
                                     placeId: locationService.placeId.value,
