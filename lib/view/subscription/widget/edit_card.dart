@@ -66,7 +66,9 @@ void editCardBottomsheet({
               ),
               SizedBox(height: 6.h,),
               TaskTextInputfieldEdit(
-                onChanged: (val) {},
+                onChanged: (val) {
+                  controller.editCardNumberController.text = val;
+                },
                 onFieldSubmitted: (val) {
                   controller.editCardNumberController.text = val;
                 },
@@ -101,7 +103,9 @@ void editCardBottomsheet({
                         ),
                         SizedBox(height: 6.h,),
                         TaskTextInputfieldEdit(
-                          onChanged: (val) {},
+                          onChanged: (val) {
+                            controller.editExpiryDateController.text = val;
+                          },
                           onFieldSubmitted: (val) {
                             controller.editExpiryDateController.text = val;
                           },
@@ -134,7 +138,9 @@ void editCardBottomsheet({
                         ),
                         SizedBox(height: 6.h,),
                         TaskTextInputfieldEdit(
-                          onChanged: (val) {},
+                          onChanged: (val) {
+                            controller.editCVVController.text = val;
+                          },
                           onFieldSubmitted: (val) {
                             controller.editCVVController.text = val;
                           },

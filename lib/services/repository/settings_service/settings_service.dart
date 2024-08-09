@@ -152,7 +152,7 @@ class SettingService extends getx.GetxController {
   }
 
 
-
+  
   //UPDATE USER ADVANCED SEARCH (BOTH FOR HOST)
   Future<void> advancedSeacrch({
     required BuildContext context,
@@ -179,6 +179,7 @@ class SettingService extends getx.GetxController {
     try {
 
       final body = {
+        //userFilter
         "propertiesFilter": {
           "location":{
             "address": address,

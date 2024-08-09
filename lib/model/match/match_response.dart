@@ -21,7 +21,7 @@ class MatchResponse{
 
   factory MatchResponse.fromJson(Map<String, dynamic> json) {
     return MatchResponse(
-      status: json['status'] ?? '', //pending //approved //check is kyc status is not empty
+      status: json['status'] ?? false, //pending //accepted
       id: json['_id'] ?? '',
       createdAt: json['createdAt'] ?? '',
       from: UserModel.fromJson(json['from'] ?? {}),

@@ -65,7 +65,9 @@ void payWithCardBottomsheet({
               ),
               SizedBox(height: 6.h,),
               TaskTextInputfield(
-                onChanged: (val) {},
+                onChanged: (val) {
+                  controller.cardNumberController.text = val;
+                },
                 onFieldSubmitted: (val) {
                   controller.cardNumberController.text = val;
                 },
@@ -100,7 +102,9 @@ void payWithCardBottomsheet({
                         ),
                         SizedBox(height: 6.h,),
                         TaskTextInputfield(
-                          onChanged: (val) {},
+                          onChanged: (val) {
+                            controller.expiryDateController.text = val;
+                          },
                           onFieldSubmitted: (val) {
                             controller.expiryDateController.text = val;
                           },
@@ -133,7 +137,9 @@ void payWithCardBottomsheet({
                         ),
                         SizedBox(height: 6.h,),
                         TaskTextInputfield(
-                          onChanged: (val) {},
+                          onChanged: (val) {
+                            controller.CVVController.text = val;
+                          },
                           onFieldSubmitted: (val) {
                             controller.CVVController.text = val;
                           },
@@ -300,7 +306,9 @@ void payWithCardBottomsheetAdvancedSearch({
               ),
               SizedBox(height: 6.h,),
               TaskTextInputfield(
-                onChanged: (val) {},
+                onChanged: (val) {
+                  controller.cardNumberController.text = val;
+                },
                 onFieldSubmitted: (val) {
                   controller.cardNumberController.text = val;
                 },
@@ -335,7 +343,9 @@ void payWithCardBottomsheetAdvancedSearch({
                         ),
                         SizedBox(height: 6.h,),
                         TaskTextInputfield(
-                          onChanged: (val) {},
+                          onChanged: (val) {
+                            controller.expiryDateController.text = val;
+                          },
                           onFieldSubmitted: (val) {
                             controller.expiryDateController.text = val;
                           },
@@ -368,7 +378,9 @@ void payWithCardBottomsheetAdvancedSearch({
                         ),
                         SizedBox(height: 6.h,),
                         TaskTextInputfield(
-                          onChanged: (val) {},
+                          onChanged: (val) {
+                            controller.CVVController.text = val;
+                          },
                           onFieldSubmitted: (val) {
                             controller.CVVController.text = val;
                           },
