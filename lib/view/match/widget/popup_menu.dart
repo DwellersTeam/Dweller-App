@@ -60,6 +60,24 @@ class MatchListYourSwipesMenu extends StatelessWidget {
             ],
           )
         ),
+        PopupMenuItem<String>(
+          value: 'Undo Match',
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SvgPicture.asset('assets/svg/chat_clear.svg'),
+              SizedBox(width: 10.w,),
+              Text(
+                status == "pending" ? 'Undo Match' : "Delete Match",
+                style: GoogleFonts.poppins(
+                  color: AppColor.blackColor,
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w400
+                )
+              )
+            ],
+          )
+        ),
         status == "pending" ? const PopupMenuItem<String>(child: SizedBox.shrink(),) : PopupMenuItem<String>(
           value: 'Chat',
           child: Row(
@@ -74,24 +92,6 @@ class MatchListYourSwipesMenu extends StatelessWidget {
               SizedBox(width: 10.w,),
               Text(
                 'Chat',
-                style: GoogleFonts.poppins(
-                  color: AppColor.blackColor,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w400
-                )
-              )
-            ],
-          )
-        ),
-        PopupMenuItem<String>(
-          value: 'Undo Match',
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SvgPicture.asset('assets/svg/chat_clear.svg'),
-              SizedBox(width: 10.w,),
-              Text(
-                status == "pending" ? 'Undo Match' : "Delete Match",
                 style: GoogleFonts.poppins(
                   color: AppColor.blackColor,
                   fontSize: 12.sp,
@@ -165,29 +165,7 @@ class MatchListSwipesOnYouMenu extends StatelessWidget {
             ],
           )
         ),
-        status == "pending" ? const PopupMenuItem<String>(child: SizedBox.shrink(),) : PopupMenuItem<String>(
-          value: 'Chat',
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              //SvgPicture.asset('assets/svg/chat_clear.svg'),
-              Icon(
-                CupertinoIcons.chat_bubble_text_fill,
-                size: 16.r,
-                color: AppColor.darkPurpleColor,
-              ),
-              SizedBox(width: 10.w,),
-              Text(
-                'Chat',
-                style: GoogleFonts.poppins(
-                  color: AppColor.blackColor,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w400
-                )
-              )
-            ],
-          )
-        ),
+        
         status != "pending" ? const PopupMenuItem<String>(child: SizedBox.shrink(),) : PopupMenuItem<String>(
           value: 'Accept Match',
           child: Row(
@@ -211,6 +189,7 @@ class MatchListSwipesOnYouMenu extends StatelessWidget {
             ],
           )
         ),
+
         status != "pending" ? const PopupMenuItem<String>(child: SizedBox.shrink(),) : PopupMenuItem<String>(
           value: 'Decline Match',
           child: Row(
@@ -220,6 +199,30 @@ class MatchListSwipesOnYouMenu extends StatelessWidget {
               SizedBox(width: 10.w,),
               Text(
                 'Decline Match',
+                style: GoogleFonts.poppins(
+                  color: AppColor.blackColor,
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w400
+                )
+              )
+            ],
+          )
+        ),
+
+        status == "pending" ? const PopupMenuItem<String>(child: SizedBox.shrink(),) : PopupMenuItem<String>(
+          value: 'Chat',
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              //SvgPicture.asset('assets/svg/chat_clear.svg'),
+              Icon(
+                CupertinoIcons.chat_bubble_text_fill,
+                size: 16.r,
+                color: AppColor.darkPurpleColor,
+              ),
+              SizedBox(width: 10.w,),
+              Text(
+                'Chat',
                 style: GoogleFonts.poppins(
                   color: AppColor.blackColor,
                   fontSize: 12.sp,
