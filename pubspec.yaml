@@ -36,7 +36,8 @@ dependencies:
   #for swiping just like Tinder(Awesome Package)
   appinio_swiper: ^2.1.1
   
-  #for nice loadimg animation
+  #for nice loadimg animation and shimmer effect
+  shimmer: ^3.0.0
   loading_animation_widget: ^1.2.0+4
   animated_splash_screen: ^1.3.0
   smooth_page_indicator: ^1.0.0+2

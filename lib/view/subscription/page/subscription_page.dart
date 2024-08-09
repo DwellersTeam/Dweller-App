@@ -356,8 +356,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         future: cardFuture,
                         builder: (context, snapshot) {
                           if(snapshot.connectionState == ConnectionState.waiting) {
-                            //return LoaderS();
-                            return const BlueCardEmpty();
+                            return const BlueCardEmptyLoading(); //BlueCardEmptyLoading(); //BlueCardEmpty()
                           }
                           if(snapshot.hasError) {
                             log("snapshot err: ${snapshot.error}");
