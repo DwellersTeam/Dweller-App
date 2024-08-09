@@ -5,6 +5,7 @@ import 'package:dweller/services/repository/notification_service/notification_se
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/extractors.dart';
 import 'package:dweller/utils/components/loader.dart';
+import 'package:dweller/view/chat/message_widget/message_screen.dart';
 import 'package:dweller/view/home/widget/profiel_by_id/get_profile_page.dart';
 import 'package:dweller/view/match/widget/empty_state.dart';
 import 'package:dweller/view/match/widget/popup_menu.dart';
@@ -170,6 +171,10 @@ class _YourSwipesState extends State<YourSwipes> {
                               ),*/
 
                               MatchListYourSwipesMenu(
+                                status: item.status,
+                                onChat: () {
+                                  Get.to(()=> const MessageScreen());
+                                },
                                 onOpenProfile: () {
                                   Get.to(() => GetUserByIdPage(userId: item.to.id,));
                                 },
