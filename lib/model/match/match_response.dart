@@ -21,7 +21,7 @@ class MatchResponse{
 
   factory MatchResponse.fromJson(Map<String, dynamic> json) {
     return MatchResponse(
-      status: json['status'] ?? false, //pending //accepted
+      status: json['status'] ?? "null", //pending //accepted
       id: json['_id'] ?? '',
       createdAt: json['createdAt'] ?? '',
       from: UserModel.fromJson(json['from'] ?? {}),
