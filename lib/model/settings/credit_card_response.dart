@@ -33,7 +33,7 @@ class CardResponse{
       number: json['number'] ?? '',
       expMonth: json['expMonth'] ?? 0,
       expYear: json['expYear'] ?? 0,
-      cvc: json['cvc'] ?? "",
+      cvc: json['cvc'] ?? "000",
       cardHolderName: json['cardholderName'] ?? "Dweller",
       //type: json['type'] ?? "",
       active: json['active'] ?? false,
