@@ -101,8 +101,8 @@ dependencies:
   googleapis_auth: ^1.6.0
   firebase_auth: ^4.15.0
 
-  #(foreground)local notifications
-  flutter_local_notifications: ^16.3.2
+  #(foreground)local notifications)
+  flutter_local_notifications: ^17.2.2
 
   #stripe payment api (do stripe configuration for android & iOS first)
   #flutter_stripe: ^10.1.1
