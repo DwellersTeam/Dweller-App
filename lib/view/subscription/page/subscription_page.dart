@@ -394,8 +394,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                             controller: controller,
                                             cardNumber: data.number,
                                             cardHolderName: data.cardHolderName,
-                                            expiryDate: data.expiry,
-                                            cvv: data.cvv,
+                                            expiryDate: "${data.expMonth}/${data.expYear}",
+                                            cvv: data.cvc,
                                           );
                                         },
                                         child: SvgPicture.asset('assets/svg/edit_icon.svg'),
@@ -478,8 +478,9 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                               BlueCard(
                                 cardNumber: data.number,
                                 cardHolderName: data.cardHolderName,
-                                expiryDate: data.expiry,
-                                cvv: data.cvv,
+                                expiryMonth: data.expMonth,
+                                expiryYear: data.expYear,
+                                cvc: data.cvc,
                               ),
                             ],
                           );

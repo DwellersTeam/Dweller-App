@@ -175,7 +175,14 @@ void payWithCardBottomsheet({
                       carrdExpiry: controller.expiryDateController.text,
                       cardType: "master card", 
                       onSuccess: () async{
-                        await service.createCreditCard(
+                        Get.back();
+                        Get.back();
+                        controller.cardNumberController.clear();
+                        controller.CVVController.clear();
+                        controller.expiryDateController.clear();
+                        onSettingRefresh();
+                        
+                        /*await service.createCreditCard(
                           cardNumber: controller.cardNumberController.text,
                           carrdCVV:  controller.CVVController.text,
                           carrdExpiry: controller.expiryDateController.text,
@@ -204,11 +211,14 @@ void payWithCardBottomsheet({
                               backgroundColor: AppColor.redColor
                             );*/
                           }
-                        );
+                        );*/
 
                       }, 
                       onFailure: () {
                         Get.back();
+                        controller.cardNumberController.clear();
+                        controller.CVVController.clear();
+                        controller.expiryDateController.clear();
                         /*showMySnackBar(
                           context: context, 
                           message: "failed to subscribe to dweller pro", 
@@ -416,7 +426,11 @@ void payWithCardBottomsheetAdvancedSearch({
                       carrdExpiry: controller.expiryDateController.text,
                       cardType: "master card", 
                       onSuccess: () async{
-                        await service.createCreditCard(
+                        Get.back();
+                        controller.cardNumberController.clear();
+                        controller.CVVController.clear();
+                        controller.expiryDateController.clear();
+                        /*await service.createCreditCard(
                           cardNumber: controller.cardNumberController.text,
                           carrdCVV:  controller.CVVController.text,
                           carrdExpiry: controller.expiryDateController.text,
@@ -444,11 +458,14 @@ void payWithCardBottomsheetAdvancedSearch({
                               backgroundColor: AppColor.redColor
                             );*/
                           }
-                        );
+                        );*/
 
                       }, 
                       onFailure: () {
                         Get.back();
+                        controller.cardNumberController.clear();
+                        controller.CVVController.clear();
+                        controller.expiryDateController.clear();
                         /*showMySnackBar(
                           context: context, 
                           message: "failed to subscribe to dweller pro", 
