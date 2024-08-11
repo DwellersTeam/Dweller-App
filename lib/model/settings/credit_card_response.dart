@@ -7,7 +7,7 @@ class CardResponse{
     required this.number,
     required this.expMonth,
     required this.expYear,
-    required this.cvc,
+    required this.cvv,
     required this.cardHolderName,
     //required this.type,
     required this.active,
@@ -19,7 +19,7 @@ class CardResponse{
   final String number;
   final int expMonth;
   final int expYear;
-  final String cvc;
+  final String cvv;
   final String cardHolderName;
   //final String type;
   bool active;
@@ -33,7 +33,7 @@ class CardResponse{
       number: json['number'] ?? '',
       expMonth: json['expMonth'] ?? 0,
       expYear: json['expYear'] ?? 0,
-      cvc: json['cvc'] ?? "000",
+      cvv: json['cvv'] ?? "000",
       cardHolderName: json['cardholderName'] ?? "Dweller",
       //type: json['type'] ?? "",
       active: json['active'] ?? false,
@@ -48,8 +48,8 @@ class CardResponse{
       "number": number,
       "expMonth": expMonth,
       "expYear": expYear,
-      "cvv": cvc,
-      "name": cardHolderName,
+      "cvv": cvv,
+      "cardholderName": cardHolderName,
       //"type": type,
       "active": active,
       "createdAt": createdAt

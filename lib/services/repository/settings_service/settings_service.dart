@@ -551,6 +551,7 @@ class SettingService extends getx.GetxController {
   //Suscribe to pro dweller
   Future<void> subscribeToPro({
     required BuildContext context,
+    required String cardholderName,
     required String cardNumber,
     required String carrdCVV,
     required String carrdExpiry,
@@ -564,6 +565,7 @@ class SettingService extends getx.GetxController {
     try {
 
       final body =  {
+        "cardholderName": cardholderName,
         "number": cardNumber,
         "expiry": carrdExpiry,
         "cvv": carrdCVV,
@@ -661,6 +663,7 @@ class SettingService extends getx.GetxController {
   Future<void> updateCreditCard({
     required BuildContext context,
     required String cardNumber,
+    required String cardholderName,
     required String carrdCVV,
     required String carrdExpiry,
     required String cardType,
@@ -673,6 +676,7 @@ class SettingService extends getx.GetxController {
     try {
 
       final body =  {
+        "cardholderName": cardholderName,
         "number": cardNumber,
         "expiry": carrdExpiry,
         "cvv": carrdCVV,

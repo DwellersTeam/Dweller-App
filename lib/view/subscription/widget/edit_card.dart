@@ -54,7 +54,33 @@ void editCardBottomsheet({
                   ),
                 ),
               ),
+              
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+
+              Text(
+                'Cardholder Name',
+                style: GoogleFonts.poppins(
+                  color: AppColor.blackColor,
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500
+                ),
+              ),
+              SizedBox(height: 6.h,),
+              TaskTextInputfieldEdit(
+                onChanged: (val) {
+                  controller.editCardHolderNameController.text = val;
+                },
+                onFieldSubmitted: (val) {
+                  controller.editCardHolderNameController.text = val;
+                },
+                hintText: 'Cardholder Name',
+                keyboardType: TextInputType.name,
+                textInputAction: TextInputAction.next,
+                initialValue:  cardHolderName,
+                inputFormatters: [],
+              ),
+
+              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
               
               Text(
                 'Card Number',
@@ -170,6 +196,7 @@ void editCardBottomsheet({
                   onPressed: () async{
                     await service.updateCreditCard(
                       context: context, 
+                      cardholderName: controller.editCardHolderNameController.text.isNotEmpty ? controller.editCardHolderNameController.text : cardHolderName,
                       cardNumber: controller.editCardNumberController.text.isNotEmpty ? controller.editCardNumberController.text : cardNumber, 
                       carrdCVV:  controller.editCVVController.text.isNotEmpty ?  controller.editCVVController.text : cvv, 
                       carrdExpiry: controller.editExpiryDateController.text.isNotEmpty ? controller.editExpiryDateController.text : expiryDate, 

@@ -10,12 +10,12 @@ import 'package:shimmer/shimmer.dart';
 
 
 class BlueCard extends StatelessWidget {
-  const BlueCard({super.key, required this.cardNumber, required this.cardHolderName, required this.expiryMonth, required this.expiryYear, required this.cvc,});
+  const BlueCard({super.key, required this.cardNumber, required this.cardHolderName, required this.expiryMonth, required this.expiryYear, required this.cvv,});
   final String cardNumber;
   final String cardHolderName;
   final int expiryMonth;
   final int expiryYear;
-  final String cvc;
+  final String cvv;
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +128,7 @@ class BlueCard extends StatelessWidget {
           ),
           SizedBox(height: 5.h,),
           Text(
-            "$cvc",
+            "$cvv",
             style: GoogleFonts.poppins(
               color: AppColor.whiteColor,
               fontSize: 17.sp,

@@ -54,6 +54,31 @@ void payWithCardBottomsheet({
               ),
 
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+
+              Text(
+                'Cardholder Name',
+                style: GoogleFonts.poppins(
+                  color: AppColor.blackColor,
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500
+                ),
+              ),
+              SizedBox(height: 6.h,),
+              TaskTextInputfield(
+                onChanged: (val) {
+                  controller.cardHolderNameController.text = val;
+                },
+                onFieldSubmitted: (val) {
+                  controller.cardHolderNameController.text = val;
+                },
+                hintText: "Cardholder Name",
+                keyboardType: TextInputType.name,
+                textInputAction: TextInputAction.next,
+                textController: controller.cardHolderNameController,
+                inputFormatters: [],
+              ),
+
+              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
               
               Text(
                 'Card Number',
@@ -167,9 +192,10 @@ void payWithCardBottomsheet({
                 width: double.infinity,
                 child: GradientElevatedButton(
                   onPressed: () async{ 
-                    if(controller.cardNumberController.text.isNotEmpty && controller.CVVController.text.isNotEmpty && controller.expiryDateController.text.isNotEmpty)  {
+                    if(controller.cardHolderNameController.text.isNotEmpty && controller.cardNumberController.text.isNotEmpty && controller.CVVController.text.isNotEmpty && controller.expiryDateController.text.isNotEmpty)  {
                       await service.subscribeToPro(
                       context: context, 
+                      cardholderName: controller.cardHolderNameController.text,
                       cardNumber: controller.cardNumberController.text,
                       carrdCVV:  controller.CVVController.text,
                       carrdExpiry: controller.expiryDateController.text,
@@ -177,6 +203,7 @@ void payWithCardBottomsheet({
                       onSuccess: () async{
                         Get.back();
                         Get.back();
+                        controller.cardHolderNameController.clear();
                         controller.cardNumberController.clear();
                         controller.CVVController.clear();
                         controller.expiryDateController.clear();
@@ -216,6 +243,7 @@ void payWithCardBottomsheet({
                       }, 
                       onFailure: () {
                         Get.back();
+                        controller.cardHolderNameController.clear();
                         controller.cardNumberController.clear();
                         controller.CVVController.clear();
                         controller.expiryDateController.clear();
@@ -245,7 +273,7 @@ void payWithCardBottomsheet({
                   ),
                   child: Obx(
                     () {
-                      return service.isLoading.value ? CircularProgressIndicator.adaptive(backgroundColor: AppColor.whiteColor,) : Text(
+                      return service.isLoading.value ? const CircularProgressIndicator.adaptive(backgroundColor: AppColor.whiteColor,) : Text(
                         'Pay ${currency(context).currencySymbol}9.99',
                         //'Make Payment',
                         style: GoogleFonts.bricolageGrotesque(
@@ -305,6 +333,31 @@ void payWithCardBottomsheetAdvancedSearch({
               ),
 
               SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+
+              Text(
+                'Cardholder Name',
+                style: GoogleFonts.poppins(
+                  color: AppColor.blackColor,
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500
+                ),
+              ),
+              SizedBox(height: 6.h,),
+              TaskTextInputfield(
+                onChanged: (val) {
+                  controller.cardHolderNameController.text = val;
+                },
+                onFieldSubmitted: (val) {
+                  controller.cardHolderNameController.text = val;
+                },
+                hintText: "Cardholder Name",
+                keyboardType: TextInputType.name,
+                textInputAction: TextInputAction.next,
+                textController: controller.cardHolderNameController,
+                inputFormatters: [],
+              ),
+
+              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
               
               Text(
                 'Card Number',
@@ -418,15 +471,17 @@ void payWithCardBottomsheetAdvancedSearch({
                 width: double.infinity,
                 child: GradientElevatedButton(
                   onPressed: () async{
-                    if(controller.cardNumberController.text.isNotEmpty && controller.CVVController.text.isNotEmpty && controller.expiryDateController.text.isNotEmpty) {
+                    if(controller.cardHolderNameController.text.isNotEmpty && controller.cardNumberController.text.isNotEmpty && controller.CVVController.text.isNotEmpty && controller.expiryDateController.text.isNotEmpty) {
                       await service.subscribeToPro(
                       context: context, 
+                      cardholderName: controller.cardHolderNameController.text,
                       cardNumber: controller.cardNumberController.text,
                       carrdCVV:  controller.CVVController.text,
                       carrdExpiry: controller.expiryDateController.text,
                       cardType: "master card", 
                       onSuccess: () async{
                         Get.back();
+                        controller.cardHolderNameController.clear();
                         controller.cardNumberController.clear();
                         controller.CVVController.clear();
                         controller.expiryDateController.clear();
@@ -463,6 +518,7 @@ void payWithCardBottomsheetAdvancedSearch({
                       }, 
                       onFailure: () {
                         Get.back();
+                        controller.cardHolderNameController.clear();
                         controller.cardNumberController.clear();
                         controller.CVVController.clear();
                         controller.expiryDateController.clear();
@@ -492,7 +548,7 @@ void payWithCardBottomsheetAdvancedSearch({
                   ),
                   child: Obx(
                     () {
-                      return service.isLoading.value ? CircularProgressIndicator.adaptive(backgroundColor: AppColor.whiteColor,) : Text(
+                      return service.isLoading.value ? const CircularProgressIndicator.adaptive(backgroundColor: AppColor.whiteColor,) : Text(
                         'Pay ${currency(context).currencySymbol}9.99',
                         //'Make Payment',
                         style: GoogleFonts.bricolageGrotesque(

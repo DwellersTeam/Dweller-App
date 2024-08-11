@@ -29,6 +29,10 @@ import 'package:gradient_elevated_button/gradient_elevated_button.dart';
 
 
 
+
+
+
+
 class SubscriptionPage extends StatefulWidget {
   const SubscriptionPage({super.key, required this.pro, required this.onSettingRefresh});
   final bool pro;
@@ -395,7 +399,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                             cardNumber: data.number,
                                             cardHolderName: data.cardHolderName,
                                             expiryDate: "${data.expMonth}/${data.expYear}",
-                                            cvv: data.cvc,
+                                            cvv: data.cvv,
                                           );
                                         },
                                         child: SvgPicture.asset('assets/svg/edit_icon.svg'),
@@ -480,7 +484,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                 cardHolderName: data.cardHolderName,
                                 expiryMonth: data.expMonth,
                                 expiryYear: data.expYear,
-                                cvc: data.cvc,
+                                cvv: data.cvv,
                               ),
                             ],
                           );
