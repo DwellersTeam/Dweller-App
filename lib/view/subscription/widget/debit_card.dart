@@ -61,10 +61,11 @@ class BlueCard extends StatelessWidget {
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400
                       ),
+                      overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(height: 5.h,),
                     Text(
-                      cardHolderName,
+                      "$cardHolderName",
                       style: GoogleFonts.poppins(
                         color: AppColor.whiteColor,
                         fontSize: 17.sp,
