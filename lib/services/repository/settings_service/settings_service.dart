@@ -677,11 +677,11 @@ class SettingService extends getx.GetxController {
     try {
 
       final body =  {
-        "cardholderName": cardholderName,
+        "holderName": cardholderName,
         "number": cardNumber,
         "expiry": carrdExpiry,
-        "cvv": carrdCVV,
-        "type": cardType
+        "cvc": carrdCVV,
+        //"type": cardType
       };
 
       http.Response res = await baseService.httpPatch(endPoint: "card", body: body);
