@@ -10,7 +10,6 @@ import 'package:dweller/utils/components/custom_paint.dart';
 import 'package:dweller/utils/components/loader.dart';
 import 'package:dweller/utils/components/my_snackbar.dart';
 import 'package:dweller/utils/invention/use_stripe_for_checkout.dart';
-import 'package:dweller/utils/invention/use_stripe_for_subscription.dart';
 import 'package:dweller/view/subscription/widget/activate_card.dart';
 import 'package:dweller/view/subscription/widget/deactivate_card.dart';
 import 'package:dweller/view/subscription/widget/debit_card.dart';
