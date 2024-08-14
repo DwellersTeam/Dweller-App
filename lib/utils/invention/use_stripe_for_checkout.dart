@@ -46,9 +46,9 @@ class StripeCheckoutClass {
           customerEphemeralKeySecret: paymentIntent["ephemeralKey"],*/
 
           //Extra Options
-          applePay: PaymentSheetApplePay(
+          /*applePay: PaymentSheetApplePay(
             merchantCountryCode: "EUR",
-          ),
+          ),*/
           googlePay: PaymentSheetGooglePay(
             merchantCountryCode: "EUR"
           ),
