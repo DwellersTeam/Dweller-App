@@ -1,0 +1,27 @@
+#mainactivity.kt file
+__ package com.dweller
+
+import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
+
+class MainActivity: FlutterActivity()
+
+
+
+
+////Stripe configs for it to work on android and ios////
+
+#added permission for camera for card scanning to info.plist
+
+#added proguard-rules.pro to the app/proguard-rules.pro
+
+#changed the MainActivity.kt file to "FlutterFragmentActivity" instead of "FlutterActivity"
+
+#changed both target and compile sdk to 34
+
+#changed the Theme.MaterialComponent in my android/app/src/main/res/values/style.xml and "values-night" folder too
+//before value
+"This Theme is only used starting with V2 of Flutter's Android embedding. -->
+    <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">"
+
+#upgraded the kotlin version in my settings.gradle file to "2.0.10"

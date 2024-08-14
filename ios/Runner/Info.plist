@@ -66,6 +66,11 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
     <string>This app needs access to your location to show nearby places.</string>
 
+	<key>NSCameraUsageDescription</key>
+    <string>Scan your card to add it automatically</string>
+    <key>NSCameraUsageDescription&lt;string&gt;To scan cards&lt;/string&gt;</key>
+    <string>To scan cards</string>
+
 
 
 	<key>LSApplicationQueriesSchemes</key>

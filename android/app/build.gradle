@@ -38,8 +38,8 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "com.dweller"
-    compileSdk = flutter.compileSdkVersion //33
-    //compileSdk = 34
+    //compileSdk = flutter.compileSdkVersion //33
+    compileSdk = 34
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

@@ -5,11 +5,13 @@ import 'package:dweller/model/settings/settings_response.dart';
 import 'package:dweller/services/controller/main_page/mainpage_controller.dart';
 import 'package:dweller/services/repository/data_service/base_service/base_service.dart';
 import 'package:dweller/services/repository/data_service/local_storage/local_storage.dart';
+import 'package:dweller/utils/components/my_snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart' as getx;
 import 'package:http/http.dart' as http;
-import 'package:get/get.dart';
+//import 'package:get/get.dart';
 
 
 
@@ -21,8 +23,9 @@ class SettingService extends getx.GetxController {
   
 
   final baseService = getx.Get.put(BaseService());
-  final mainPageController = Get.put(MainPageController());
+  final mainPageController = getx.Get.put(MainPageController());
   final isLoading = false.obs;  
+
 
   
 

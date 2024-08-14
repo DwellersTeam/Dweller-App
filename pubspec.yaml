@@ -82,11 +82,7 @@ dependencies:
   cached_network_image: ^3.3.0
   cloudinary: ^1.2.0
   image_picker: ^1.0.7
-  #image_picker_web: ^3.1.1
   
-
-  #for generating qr codes
-  #qr_flutter: ^4.1.0
 
   #rating_bar indicator and screen util
   flutter_rating_bar: ^4.0.1
@@ -105,7 +101,7 @@ dependencies:
   flutter_local_notifications: ^17.2.2
 
   #stripe payment api (do stripe configuration for android & iOS first)
-  #flutter_stripe: ^10.1.1
+  flutter_stripe: ^11.0.0
 
   #google maps the oga
   google_maps_flutter: ^2.7.0

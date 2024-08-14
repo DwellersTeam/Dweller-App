@@ -9,6 +9,8 @@ import 'package:dweller/utils/components/custom_appbar.dart';
 import 'package:dweller/utils/components/custom_paint.dart';
 import 'package:dweller/utils/components/loader.dart';
 import 'package:dweller/utils/components/my_snackbar.dart';
+import 'package:dweller/utils/invention/use_stripe_for_checkout.dart';
+import 'package:dweller/utils/invention/use_stripe_for_subscription.dart';
 import 'package:dweller/view/subscription/widget/activate_card.dart';
 import 'package:dweller/view/subscription/widget/deactivate_card.dart';
 import 'package:dweller/view/subscription/widget/debit_card.dart';
@@ -47,6 +49,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
   final controller = Get.put(SettingsController());
   final service = Get.put(SettingService());
+  final subscriptionService = StripeCheckoutClass();
 
   late Future<CardResponse> cardFuture;
 
@@ -144,7 +147,9 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                     height: 25.h,
                                     //width: 50.w,
                                     child: GradientElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () async{
+                                        await subscriptionService.makePayment();
+                                      },
                                       style: GradientElevatedButton.styleFrom(
                                         gradient: const LinearGradient(
                                           colors: [

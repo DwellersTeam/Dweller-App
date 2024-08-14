@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_session_jwt/flutter_session_jwt.dart';
@@ -62,6 +63,10 @@ void main() async{
       systemNavigationBarColor: AppColor.blackColor, //AppColor.whiteColor,
     ),
   );
+
+  //stripe intialization
+  Stripe.publishableKey = 'pk_test_51PklDDP0RYiilDZ6kCdkRzigUmDOF9vqDKxKpxQfRncUbXnNFwCxA5uxlRN089uvkD6tlwh31ecKsc2h8Q3H4fZn001Rd8079N';
+  await Stripe.instance.applySettings();
 
   //initialize get_storage
   await GetStorage.init();
