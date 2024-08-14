@@ -99,12 +99,12 @@ class StripeCheckoutClass {
 
       //save what ever you want to save in your database to mark successful payment
  
-    } on Exception catch (e) {
-      if (e is StripeException) {
-        log('Error from Stripe: ${e.error.localizedMessage}');
-      } else {
-        log('Unforeseen error: $e');
-      }
+    } 
+    on StripeException catch (e) {
+      print('Error is from stripe:---> $e'); 
+    } 
+    catch (e) {
+      print('$e');
     }
   } 
 
