@@ -30,9 +30,29 @@ class StripeCheckoutClass {
       //initializes the payment sheet
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
-          paymentIntentClientSecret: paymentIntent!['client_secret'],
+
+          // Theme style
           style: ThemeMode.light,
+
+          // Set to true for custom flow
+          customFlow: false,
+
+          // Main params
+          paymentIntentClientSecret: paymentIntent!['client_secret'],
           merchantDisplayName: 'Dweller',
+          
+          // Customer Keys
+          /*customerId: paymentIntent["customer"],
+          customerEphemeralKeySecret: paymentIntent["ephemeralKey"],*/
+
+          //Extra Options
+          applePay: PaymentSheetApplePay(
+            merchantCountryCode: "EUR",
+          ),
+          googlePay: PaymentSheetGooglePay(
+            merchantCountryCode: "EUR"
+          ),
+
           //for the merchant
           /*billingDetails: const BillingDetails(
             name: 'YOUR NAME',
@@ -59,45 +79,33 @@ class StripeCheckoutClass {
             CardBrand.Discover
           ]
         )
-      ).then((value) {
+      ).then((value) async{
         log("$value");
+        //display payment sheet
+        await displayPaymentSheet();
+      })
+      .onError((error, stackTrace) {
+        throw Exception("failded to init payment sheet: $error");
       });
 
-      //display payment sheet
-      await displayPaymentSheet(paymentIntentClientSecret: paymentIntent!['client_secret']);
     } catch (e) {
       log('Error: $e');
     }
   }
 
 
-  Future displayPaymentSheet({required String paymentIntentClientSecret}) async {
+  Future displayPaymentSheet() async {
     try {
 
-      await Stripe.instance.presentPaymentSheet().then((value) {
-        
+      await Stripe.instance.presentPaymentSheet()
+      .then((value) {
         //Clear paymentIntent variable after successful payment
         paymentIntent = null;
-      
+        //save what ever you want to save in your database to mark successful payment
       })
       .onError((error, stackTrace) {
-        throw Exception(error);
+        throw Exception("failded to display payment sheet: $error");
       });
-    
-      /* data = await Stripe.instance.createToken(CreateTokenParams.card(params: CardTokenParams(type: TokenType.Card)));
-      /*confirmPayment(
-        paymentIntentClientSecret: paymentIntentClientSecret,
-        data: const PaymentMethodParams.card(paymentMethodData: PaymentMethodData())
-      );*/
-
-      if(data.id.isNotEmpty || data.id != null){
-        log("token id: ${data.id}");
-      }
-      else{
-        log("token is null or empty");
-      }*/
-
-      //save what ever you want to save in your database to mark successful payment
  
     } 
     on StripeException catch (e) {
