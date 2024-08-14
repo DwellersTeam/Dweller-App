@@ -70,9 +70,10 @@ class StripeCheckoutClass {
     }
   }
 
+
   Future displayPaymentSheet({required String paymentIntentClientSecret}) async {
     try {
-      
+
       await Stripe.instance.presentPaymentSheet().then((value) {
         
         //Clear paymentIntent variable after successful payment
