@@ -552,7 +552,7 @@ class AuthService extends getx.GetxController {
           LocalStorage.saveTokenExpDate(expDate);
           LocalStorage.saveUserID(userId);
           LocalStorage.saveUserEmail(email);
-          //LocalStorage.saveUsername(displayName);
+          LocalStorage.saveUsername("$firstName $lastName");
         } 
         else {
           log("Failed to decode JWT token.");
@@ -573,15 +573,18 @@ class AuthService extends getx.GetxController {
             );
           }
         );
+
         //void call back
         onSuccess();
 
+        //send push notification
         await pushNotiController.sendNotification(
           targetUserToken: FCMToken, 
           title: 'Hey, $firstName $lastName', 
-          body: 'welcome to Dweller.', 
+          body: 'welcome to Dweller.🎊', 
           type: 'home' //navigate to home screen
         );
+
         showMySnackBar(
           context: context,
           backgroundColor: AppColor.darkPurpleColor,
