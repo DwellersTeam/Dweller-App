@@ -19,9 +19,9 @@ class MainActivity: FlutterActivity()
 
 #changed both target and compile sdk to 34
 
-#changed the Theme.MaterialComponent in my android/app/src/main/res/values/style.xml and "values-night" folder too
+#changed to Theme.MaterialComponent from normal theme in my android/app/src/main/res/values/style.xml and "values-night" folder too
 //before value
 "This Theme is only used starting with V2 of Flutter's Android embedding. -->
     <style name="NormalTheme" parent="@android:style/Theme.Light.NoTitleBar">"
 
-#upgraded the kotlin version in my settings.gradle file to "2.0.10"
+#upgraded the kotlin version in my settings.gradle file to "2.0.10", which is the latest at the time
