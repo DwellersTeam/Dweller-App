@@ -17,110 +17,29 @@ class StripeCheckoutClass {
   
   
   final baseService = getx.Get.put(BaseService());
+  final isLoading = false.obs; 
+
+
   //ALL YOU NEED TO PULL UP STRIPE CHECK OUT IN YOUR APP
 
   //create the payment intent variable (nullable)
-  Map<String, dynamic>? paymentIntent;
+  //Map<String, dynamic>? paymentIntent;
 
-  Future<void> makePayment() async {
-    try {
-      //we first create the payment intent
-      final paymentIntent = await createPaymentIntent('10', 'EUR');
 
-      //initializes the payment sheet
-      await Stripe.instance.initPaymentSheet(
-        paymentSheetParameters: SetupPaymentSheetParameters(
-
-          // Theme style
-          style: ThemeMode.light,
-
-          // Set to true for custom flow
-          customFlow: false,
-
-          // Main params
-          paymentIntentClientSecret: paymentIntent!['client_secret'],
-          merchantDisplayName: 'Dweller',
-          
-          // Customer Keys
-          /*customerId: paymentIntent["customer"],
-          customerEphemeralKeySecret: paymentIntent["ephemeralKey"],*/
-
-          //Extra Options
-          /*applePay: PaymentSheetApplePay(
-            merchantCountryCode: "EUR",
-          ),*/
-          googlePay: PaymentSheetGooglePay(
-            merchantCountryCode: "EUR"
-          ),
-
-          //for the merchant
-          /*billingDetails: const BillingDetails(
-            name: 'YOUR NAME',
-            email: 'YOUREMAIL@gmail.com',
-            phone: 'YOUR NUMBER',
-            address: Address(
-              city: 'YOUR CITY',
-              country: 'YOUR COUNTRY',
-              line1: 'YOUR ADDRESS 1',
-              line2: 'YOUR ADDRESS 2',
-              postalCode: 'YOUR PINCODE',
-              state: 'YOUR STATE',
-            )
-          ),*/
-          preferredNetworks: [
-            CardBrand.Mastercard,
-            CardBrand.Visa,
-            CardBrand.Amex,
-            CardBrand.UnionPay,
-            CardBrand.CartesBancaires,
-            CardBrand.JCB,
-            CardBrand.Unknown,
-            CardBrand.DinersClub,
-            CardBrand.Discover
-          ]
-        )
-      ).then((value) async{
-        log("$value");
-        //display payment sheet
-        await displayPaymentSheet();
-      })
-      .onError((error, stackTrace) {
-        throw Exception("failded to init payment sheet: $error");
-      });
-
-    } catch (e) {
-      log('Error: $e');
-    }
+  
+  //function to calculate the amount to be sent to stripe
+  String calculateAmount(String amount) {
+    final calculatedAmount = (int.parse(amount)) * 100;
+    return calculatedAmount.toString();
   }
 
 
-  Future displayPaymentSheet() async {
+  //this should be created first before anything else (create payment intent to generate "client_secret")
+  Future<Map<String, dynamic>> createPaymentIntent(String amount, String currency) async {
+    isLoading.value = true;
     try {
 
-      await Stripe.instance.presentPaymentSheet()
-      .then((value) {
-        //Clear paymentIntent variable after successful payment
-        paymentIntent = null;
-        //save what ever you want to save in your database to mark successful payment
-      })
-      .onError((error, stackTrace) {
-        throw Exception("failded to display payment sheet: $error");
-      });
- 
-    } 
-    on StripeException catch (e) {
-      print('Error is from stripe:---> $e'); 
-    } 
-    catch (e) {
-      print('$e');
-    }
-  } 
-
-
-
-  //this should be created first before anything else
-  Future createPaymentIntent(String amount, String currency) async {
-    try {
+      //payload
       Map<String, dynamic> body = {
         'amount': calculateAmount(amount),
         'currency': currency,
@@ -134,23 +53,95 @@ class StripeCheckoutClass {
         },
         body: body,
       );
+
       if(response.statusCode == 200 || response.statusCode == 201){
+        isLoading.value = false;
         log("Payment intent Response: ${response.body}");
         final jsonResponse = json.decode(response.body);
+        //you can create payment intent on the get go and store the info to db so the user would not 
+        //have to be calling this api everytime they want to make payment for a purchase on your platform/app.
         return jsonResponse;
       }
       else{
+        isLoading.value = false;
         log("${response.statusCode} || ${response.body}");
+        throw Exception("failed to fetch user payment intent details");
       }
-    } catch (err) {
+    } 
+    catch (err) {
+      isLoading.value = false;
       throw Exception(err.toString());
     }
   }
-  
-  //function to calculate the amount to be sent to stripe
-  String calculateAmount(String amount) {
-    final calculatedAmount = (int.parse(amount)) * 100;
-    return calculatedAmount.toString();
+
+
+
+  //this comes last in the makePayment Function
+  Future displayPaymentSheet() async {
+    try {
+      await Stripe.instance.presentPaymentSheet();
+    } on Exception catch (e) {
+      if (e is StripeException) {
+        log('Error from Stripe: ${e.error.localizedMessage}');
+      } else {
+        log('Unforeseen error: $e');
+      }
+    }
+  } 
+
+  //call this in your UI
+  Future<void> makePayment() async {
+    try {
+
+      //we first create the payment intent
+      final paymentIntent = await createPaymentIntent('10', 'EUR');
+
+      //initializes the payment sheet to collect card info
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+
+          //Theme style
+          style: ThemeMode.light,
+
+          //Set to true for custom flow
+          customFlow: false,
+
+          //Main params
+          paymentIntentClientSecret: paymentIntent['client_secret'],
+          merchantDisplayName: 'Dweller',
+          
+          //Customer Keys
+          /*customerId: paymentIntent["customer"],
+          customerEphemeralKeySecret: paymentIntent["ephemeralKey"],*/
+
+          //Extra Options (you have to config with apple to make Apple Pay work)
+          /*applePay: PaymentSheetApplePay(
+            merchantCountryCode: "EUR",
+          ),*/
+          googlePay: PaymentSheetGooglePay(
+            merchantCountryCode: "EUR"
+          ),
+
+          preferredNetworks: [
+            CardBrand.Mastercard,
+            CardBrand.Visa,
+            CardBrand.Amex,
+            CardBrand.UnionPay,
+            CardBrand.CartesBancaires,
+            CardBrand.JCB,
+            CardBrand.Unknown,
+            CardBrand.DinersClub,
+            CardBrand.Discover
+          ]
+        )
+      );
+
+      //display payment sheet to collect card info, processes the one-time payment and then disposes the payment sheet
+      await displayPaymentSheet();
+
+    } catch (e) {
+      log('Error: $e');
+    }
   }
 
 

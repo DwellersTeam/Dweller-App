@@ -15,105 +15,63 @@ import 'package:http/http.dart' as http;
 
 class StripeSubscriptionClass {
   
-  
+  final isLoading = false.obs; 
   final baseService = getx.Get.put(BaseService());
 
 
+  //FETCH CURRENT USER SUBSCRIPTION DATA FROM BACKEND
+  /*The steps included to get subscription are:
+    1. use stripe customer REST API to create a customer and store the customer id in your db
+    2. use stripe subscription REST API to create a subscription for that customer using the id stored to database and
+      store the whole stripe subscription object to database.(you can decide to store only the key thing which is the "latest_invoice" object)
+    3. if you are using firebase, find a way to create a stripe web-hook or cloud function with firebase to keep charging the user monthly or yearly with reference to his/her sub details.
+       if you are using raw backend, create a stripe web-hook that will keep charging the user with reference to his/her sub details in database.
+    4. fetch the user/customer subscription details from your database and use them below.
+  */
 
-  //function to calculate the amount to be sent to stripe
-  String calculateAmount(String amount) {
-    final calculatedAmount = (int.parse(amount)) * 100;
-    return calculatedAmount.toString();
-  }
-
-  //this should be created first before anything else
-  Future<Map<String, dynamic>> createCustomer({required String name,required String email}) async {
+  Future<Map<String,dynamic>> getUserSub(BuildContext context) async {
+    isLoading.value = true;
     try {
-      Map<String, dynamic> body = {
-        'name': name,
-        'email': email
-      };
 
-      final response = await http.post(
-        Uri.parse('https://api.stripe.com/v1/customers'),
-        headers: {
-          'Authorization': 'Bearer sk_test_51PklDDP0RYiilDZ68faMeQmqx1yrBJ493B9KXDSMAeIi0BH1qwPIAa1VbpB9yQBvw0emNRNoB7MENkkMgRlMZidX00LVTmKeQZ',
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: body,
-      );
+      http.Response res = await baseService.httpGet(endPoint: "subscription/subscribe",);
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final jsonResponse = json.decode(response.body);
-        log("Customer Response: ${response.body}");
-        return jsonResponse;
-        //store the customer id i.e "id" and any other thing that you want to store in the users database
-        //call the create subscription endpoint to create a subscription for your customer
-        /*await createSubscription(
-          customerId: jsonResponse["id"], 
-          //default_payment_method: jsonResponse["invoice_settings"]["default_payment_method"] ?? "null"
-        );*/
-        //return {"yayy": "customer and subscription targeted at customer created"};
-      } else {
-        log("${response.statusCode} || ${response.body}");
-        throw Exception("failed to create subscription");
+      if (res.statusCode == 200 || res.statusCode == 201) {
+
+        isLoading.value = false;
+        debugPrint('this is response status ==> ${res.statusCode}');
+        debugPrint('this is response body ==> ${res.body}');
+        //decode response from the server
+        final Map<String,dynamic> result = json.decode(res.body);
+        
+        //SubscriptionResponse jsonResponse = SubscriptionResponse.fromJson(result);
+
+        return result;
+
       }
-    } catch (err) {
-      throw Exception(err.toString());
-    }
-  }
-
-
-  //this should be created second after creating customers
-  Future<Map<String, dynamic>> createSubscription({
-    required String customerId, 
-    // String default_payment_method
-    }) async {
-    try {
-      Map<String, dynamic> body = {
-        'customer': customerId,
-        'items[0][price]': "price_1PmiEtP0RYiilDZ6mJZJ1mLl", // Replace with your Price ID from Stripe
-        'payment_behavior': 'default_incomplete',
-        "expand[]": 'latest_invoice.payment_intent'
-        //"default_payment_method": default_payment_method,
-        //'expand[]': 'latest_invoice.payment_intent',
-      };
-
-      final response = await http.post(
-        Uri.parse('https://api.stripe.com/v1/subscriptions'),
-        headers: {
-          'Authorization': 'Bearer sk_test_51PklDDP0RYiilDZ68faMeQmqx1yrBJ493B9KXDSMAeIi0BH1qwPIAa1VbpB9yQBvw0emNRNoB7MENkkMgRlMZidX00LVTmKeQZ',
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: body,
-      );
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final jsonResponse = json.decode(response.body);
-        log("Subscription Response: ${response.body}");
-        return jsonResponse;
-      } else {
-        log("${response.statusCode}");
-        log("${response.body}");
-        throw Exception("failed to create subscription");
+      else{
+        isLoading.value = false;
+        debugPrint('this is response body ==>${res.body}');
+        debugPrint('this is response status ==>${res.statusCode}');
+        debugPrint('this is response reason ==> ${res.reasonPhrase}');
+        baseService.showErrorMessage(httpStatusCode: res.statusCode, context: context);
+        throw Exception("failed to fetch user subscription details");
       }
-    } catch (err) {
-      throw Exception(err.toString());
+
     }
-  }
+
+    catch(e, stackTrace) {
+      isLoading.value = false;
+      debugPrint("$e");
+      debugPrint("trace: $stackTrace");
+      throw Exception("$e");
+    }
+  } 
+        
 
   //this comes last in the makePayment Function
-  displayPaymentSheet(//{required String paymentIntentClientSecret}
-  ) async {
+  Future displayPaymentSheet() async {
     try {
       await Stripe.instance.presentPaymentSheet();
-      /*await Stripe.instance.confirmPayment(
-        paymentIntentClientSecret: paymentIntentClientSecret,
-        data: const PaymentMethodParams.card(paymentMethodData: PaymentMethodData())
-      );*/
-      log('Payment successful');
-      //save what ever you want to save in your database to mark successful payment
-    
     } on Exception catch (e) {
       if (e is StripeException) {
         log('Error from Stripe: ${e.error.localizedMessage}');
@@ -123,36 +81,33 @@ class StripeSubscriptionClass {
     }
   } 
 
-  //ALL YOU NEED TO PULL UP STRIPE SUBSCRIPTION IN YOUR APP
-  Future<void> makePayment({required String customerName, required String customerEmail}) async {
+
+  //ALL YOU NEED TO PULL UP STRIPE SUBSCRIPTION IN YOUR FLUTTER APP
+  Future<void> makePayment({required BuildContext context}) async {
 
     try {
 
-      //we create customer first, then upon 200 OK, we go ahead to create subscription
-      //final subscription = await createCustomer(name: customerName, email: customerEmail);
-      final customer = await createCustomer(name: customerName, email: customerEmail);
-      print("ssssss");
+      //get the latest_invoice ->> payment_intent ->> client_secret
+      final subData =  await getUserSub(context);
+  
       //initializes the payment sheet and set up payment params
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
-          //paymentIntentClientSecret: subscription['latest_invoice']['payment_intent']['client_secret'],
+          paymentIntentClientSecret: subData["client_secret"],
           style: ThemeMode.light,
           merchantDisplayName: 'Dweller',
-          customerId: customer["id"],
-          //for the merchant
-          /*billingDetails: const BillingDetails(
-            name: 'YOUR NAME',
-            email: 'YOUREMAIL@gmail.com',
-            phone: 'YOUR NUMBER',
-            address: Address(
-              city: 'YOUR CITY',
-              country: 'YOUR COUNTRY',
-              line1: 'YOUR ADDRESS 1',
-              line2: 'YOUR ADDRESS 2',
-              postalCode: 'YOUR PINCODE',
-              state: 'YOUR STATE',
-            )
+          customerId: subData["customer_id"],
+          //Customer Keys
+          /*customerId: paymentIntent["customer"],
+          customerEphemeralKeySecret: subData["ephemeralKey"],*/
+
+          //Extra Options (you have to config with apple to make Apple Pay work)
+          /*applePay: PaymentSheetApplePay(
+            merchantCountryCode: "EUR",
           ),*/
+          googlePay: PaymentSheetGooglePay(
+            merchantCountryCode: "EUR"
+          ),
           preferredNetworks: [
             CardBrand.Mastercard,
             CardBrand.Visa,
@@ -166,12 +121,11 @@ class StripeSubscriptionClass {
           ]
         ),
       );
-      print("next");
-      //display payment sheet
-      displayPaymentSheet(
-        //paymentIntentClientSecret: subscription['latest_invoice']['payment_intent']['client_secret']
-      );
-      print("done");
+  
+      //display payment sheet to collect card info, processes the subscription payment and then disposes the payment sheet
+      await displayPaymentSheet();
+
+
     } catch (e) {
       log('Error: $e');
     }
