@@ -2,6 +2,7 @@ import 'package:dweller/services/controller/settings/settings_controller.dart';
 import 'package:dweller/main.dart';
 import 'package:dweller/services/repository/settings_service/settings_service.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
+import 'package:dweller/utils/invention/use_stripe_for_subscription.dart';
 import 'package:dweller/view/subscription/widget/features_box.dart';
 import 'package:dweller/view/subscription/widget/pay_with_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,6 +24,7 @@ Future<void> subscriptionBottomsheet({
   required SettingsController settingsController,
   required SettingService service,
   required VoidCallback onSettingRefresh,
+  required StripeSubscriptionClass subscriptionService,
 
   }) async{
 
@@ -191,14 +193,18 @@ Future<void> subscriptionBottomsheet({
                           height: 50.h,
                           width: double.infinity,
                           child: GradientElevatedButton(
-                            onPressed: () {
-                              Get.back();
+                            onPressed: () async{
+                              await subscriptionService.makePayment(context: context)
+                              .whenComplete((){
+                                Get.back();
+                              });
+                              /*Get.back();
                               payWithCardBottomsheet(
                                 onSettingRefresh: onSettingRefresh,
                                 context: context,
                                 controller: settingsController,
                                 service: service
-                              );
+                              );*/
                             },
                             style: GradientElevatedButton.styleFrom(
                               gradient: const LinearGradient(
@@ -210,44 +216,48 @@ Future<void> subscriptionBottomsheet({
                                 end: Alignment.centerRight,
                               ),
                             ),
-                            child: RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Join ',
-                                    style: GoogleFonts.bricolageGrotesque(
-                                      color: AppColor.whiteColor,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: 'PRO ',
-                                    style: GoogleFonts.bricolageGrotesque(
-                                      color: AppColor.whiteColor,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: 'for ',
-                                    style: GoogleFonts.bricolageGrotesque(
-                                      color: AppColor.whiteColor,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: '${currency(context).currencySymbol}9.99/month',
-                                    style: GoogleFonts.bricolageGrotesque(
-                                      color: AppColor.whiteColor,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                  ),
-                                ]
-                              )
+                            child: Obx(
+                              () {
+                                return subscriptionService.isLoading.value ? const CircularProgressIndicator.adaptive(backgroundColor: AppColor.whiteColor,) : RichText(
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: 'Join ',
+                                        style: GoogleFonts.bricolageGrotesque(
+                                          color: AppColor.whiteColor,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: 'PRO ',
+                                        style: GoogleFonts.bricolageGrotesque(
+                                          color: AppColor.whiteColor,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: 'for ',
+                                        style: GoogleFonts.bricolageGrotesque(
+                                          color: AppColor.whiteColor,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: '${currency(context).currencySymbol}9.99/month',
+                                        style: GoogleFonts.bricolageGrotesque(
+                                          color: AppColor.whiteColor,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                    ]
+                                  )
+                                );
+                              }
                             )
                           ),
                         ),
@@ -276,7 +286,7 @@ Future<void> subscriptionBottomsheetAdvancedSearch({
   required BuildContext context,
   required SettingsController settingsController,
   required SettingService service,
-
+  required StripeSubscriptionClass subscriptionService,
   }) async{
 
   showModalBottomSheet(
@@ -444,13 +454,17 @@ Future<void> subscriptionBottomsheetAdvancedSearch({
                           height: 50.h,
                           width: double.infinity,
                           child: GradientElevatedButton(
-                            onPressed: () {
-                              Get.back();
+                            onPressed: () async{
+                              await subscriptionService.makePayment(context: context)
+                              .whenComplete((){
+                                Get.back();
+                              });
+                              /*Get.back();
                               payWithCardBottomsheetAdvancedSearch(
                                 context: context,
                                 controller: settingsController,
                                 service: service
-                              );
+                              );*/
                             },
                             style: GradientElevatedButton.styleFrom(
                               gradient: const LinearGradient(
@@ -462,44 +476,48 @@ Future<void> subscriptionBottomsheetAdvancedSearch({
                                 end: Alignment.centerRight,
                               ),
                             ),
-                            child: RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Join ',
-                                    style: GoogleFonts.bricolageGrotesque(
-                                      color: AppColor.whiteColor,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: 'PRO ',
-                                    style: GoogleFonts.bricolageGrotesque(
-                                      color: AppColor.whiteColor,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: 'for ',
-                                    style: GoogleFonts.bricolageGrotesque(
-                                      color: AppColor.whiteColor,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: '${currency(context).currencySymbol}9.99/month',
-                                    style: GoogleFonts.bricolageGrotesque(
-                                      color: AppColor.whiteColor,
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                  ),
-                                ]
-                              )
+                            child: Obx(
+                              () {
+                                return subscriptionService.isLoading.value ? const CircularProgressIndicator.adaptive(backgroundColor: AppColor.whiteColor,) : RichText(
+                                  textAlign: TextAlign.center,
+                                  text: TextSpan(
+                                    children: [
+                                      TextSpan(
+                                        text: 'Join ',
+                                        style: GoogleFonts.bricolageGrotesque(
+                                          color: AppColor.whiteColor,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: 'PRO ',
+                                        style: GoogleFonts.bricolageGrotesque(
+                                          color: AppColor.whiteColor,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: 'for ',
+                                        style: GoogleFonts.bricolageGrotesque(
+                                          color: AppColor.whiteColor,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: '${currency(context).currencySymbol}9.99/month',
+                                        style: GoogleFonts.bricolageGrotesque(
+                                          color: AppColor.whiteColor,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                    ]
+                                  )
+                                );
+                              }
                             )
                           ),
                         ),

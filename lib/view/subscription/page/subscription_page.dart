@@ -51,28 +51,28 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   final service = Get.put(SettingService());
   final subscriptionService = StripeSubscriptionClass();
 
-  late Future<CardResponse> cardFuture;
+  //late Future<CardResponse> cardFuture;
 
   @override
   void initState() {
-    cardFuture = _refresh();
+    //cardFuture = _refresh();
     super.initState();
   }
 
 
   //REFRESH FUNCTIONALITY
-  Future<CardResponse> _refresh() async{
+  /*Future<CardResponse> _refresh() async{
     await Future.delayed(const Duration(seconds: 2));
     final cardFuture = await service.getUserCard();
     return cardFuture;
-  }
+  }*/
 
 
-  Future<void> _handleRefresh() async{
+  /*Future<void> _handleRefresh() async{
     setState(() {
       cardFuture = _refresh();
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -147,9 +147,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                                     height: 25.h,
                                     //width: 50.w,
                                     child: GradientElevatedButton(
-                                      onPressed: () async{
-                                        await subscriptionService.makePayment(context: context);
-                                      },
+                                      onPressed: () {},
                                       style: GradientElevatedButton.styleFrom(
                                         gradient: const LinearGradient(
                                           colors: [
@@ -292,70 +290,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         ],
                       ),
 
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                      
-                      //edit and delete actions
-                      /*widget.pro ? Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Your Card',
-                            style: GoogleFonts.bricolageGrotesque(
-                              color: AppColor.darkPurpleColor,
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  editCardBottomsheet(
-                                    context: context,
-                                    controller: controller,
-                                    cardNumber: '2345 5657 3456 1233',
-                                    cardHolderName: 'Calvin Harris',
-                                    expiryDate: '10/28',
-                                    cvv: '234',
-                                  );
-                                },
-                                child: SvgPicture.asset('assets/svg/edit_icon.svg'),
-                              ),
-                              SizedBox(width: 5.w,),
-                              InkWell(
-                                onTap: () {
-                                  deactivateCardDialog(
-                                    onConfirm: () {},
-                                    onCancel: () {
-                                      Get.back();
-                                    },
-                                  );
-                                },
-                                child: Icon(
-                                  size: 19.r,
-                                  color: AppColor.darkGreyColor,
-                                  CupertinoIcons.info_circle
-                                ),
-                              ),
-                              
-                            ],
-                          ),
-                          //active / deactivate card
-                        ],
-                      )
-                      :Text(
-                        'No active card',
-                        style: GoogleFonts.bricolageGrotesque(
-                          color: AppColor.darkPurpleColor,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),*/
-                      
+                      /*SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                    
                       
                       //Wrap with Future Builder
                       //card
@@ -494,23 +430,29 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                             ],
                           );
                         }
-                      ),
+                      ),*/
 
                       SizedBox(height: MediaQuery.of(context).size.height * 0.04),
 
                       //UPGRADE TO PRO gradient button
-                      widget.pro ? const SizedBox.shrink() : SizedBox(
+                      widget.pro 
+                      ?const SizedBox.shrink():
+                      SizedBox(
                         height: 60.h,
                         width: double.infinity,
                         child: GradientElevatedButton(
-                          onPressed: () {
-                            subscriptionBottomsheet(
+                          onPressed: () async{
+                            await subscriptionService.makePayment(context: context);
+                          },
+                          
+                          /*onPressed: () {
+                            /*subscriptionBottomsheet(
                               context: context, 
                               settingsController: controller,
                               service: service,
                               onSettingRefresh: widget.onSettingRefresh
-                            );
-                          },
+                            );*/
+                          },*/
                           style: GradientElevatedButton.styleFrom(
                             gradient: const LinearGradient(
                               colors: [
@@ -521,17 +463,23 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                               end: Alignment.centerRight,
                             ),
                           ),
-                          child: Text(
-                            'Upgrade to PRO',
-                            style: GoogleFonts.bricolageGrotesque(
-                              color: AppColor.whiteColor,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            overflow: TextOverflow.ellipsis,
+                          child: Obx(
+                            () {
+                              return subscriptionService.isLoading.value ? const CircularProgressIndicator.adaptive(backgroundColor: AppColor.whiteColor,) : Text(
+                                'Upgrade to PRO',
+                                style: GoogleFonts.bricolageGrotesque(
+                                  color: AppColor.whiteColor,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              );
+                            }
                           ),
                         ),
                       ),
+                      
+                      
 
 
                     ]

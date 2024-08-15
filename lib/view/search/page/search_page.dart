@@ -10,6 +10,7 @@ import 'package:dweller/utils/components/custom_paint.dart';
 import 'package:dweller/utils/components/extractors.dart';
 import 'package:dweller/utils/components/loader.dart';
 import 'package:dweller/utils/components/shader_mask_text.dart';
+import 'package:dweller/utils/invention/use_stripe_for_subscription.dart';
 import 'package:dweller/view/home/widget/notification/notification_sheet.dart';
 import 'package:dweller/view/search/widget/filter_bottomsheet.dart';
 import 'package:dweller/view/search/widget/search_field.dart';
@@ -30,7 +31,7 @@ import 'package:gradient_elevated_button/gradient_elevated_button.dart';
 
 
 class SearchPage extends StatefulWidget {
-  SearchPage({super.key});
+  const SearchPage({super.key});
 
   @override
   State<SearchPage> createState() => _SearchPageState();
@@ -41,6 +42,8 @@ class _SearchPageState extends State<SearchPage> {
   final controller = Get.put(SearchPageController());
   
   final profileService = Get.put(CreateProfileService());
+
+  final subscriptionService = StripeSubscriptionClass();
 
   //get dweller kind
   final String dwellerKind = LocalStorage.getDwellerType();
@@ -239,11 +242,13 @@ class _SearchPageState extends State<SearchPage> {
                             dwellerKind == 'seeker'
                             ?enhancedSearchBottomsheetHost(
                               context: context,
-                              settingsController: controller
+                              settingsController: controller,
+                              subscriptionService: subscriptionService
                             )
                             :enhancedSearchBottomsheetSeeker(
                               context: context,
-                              settingsController: controller
+                              settingsController: controller,
+                              subscriptionService: subscriptionService
                             );
                           },
                           style: GradientElevatedButton.styleFrom(

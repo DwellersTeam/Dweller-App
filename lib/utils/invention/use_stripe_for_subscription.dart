@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:dweller/model/settings/subscription_response.dart';
 import 'package:dweller/services/repository/data_service/base_service/base_service.dart';
 import 'package:dweller/utils/components/my_snackbar.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,7 +30,7 @@ class StripeSubscriptionClass {
     4. fetch the user/customer subscription details from your database and use them below.
   */
 
-  Future<Map<String,dynamic>> getUserSub(BuildContext context) async {
+  Future<SubscriptionResponse> getUserSub(BuildContext context) async {
     isLoading.value = true;
     try {
 
@@ -43,9 +44,9 @@ class StripeSubscriptionClass {
         //decode response from the server
         final Map<String,dynamic> result = json.decode(res.body);
         
-        //SubscriptionResponse jsonResponse = SubscriptionResponse.fromJson(result);
+        SubscriptionResponse jsonResponse = SubscriptionResponse.fromJson(result);
 
-        return result;
+        return jsonResponse;
 
       }
       else{
@@ -69,12 +70,46 @@ class StripeSubscriptionClass {
         
 
   //this comes last in the makePayment Function
-  Future displayPaymentSheet() async {
+  Future displayPaymentSheet({required BuildContext context}) async {
     try {
       await Stripe.instance.presentPaymentSheet();
     } on Exception catch (e) {
       if (e is StripeException) {
         log('Error from Stripe: ${e.error.localizedMessage}');
+         log('Error Code from Stripe: ${e.error.code}');
+        if(e.error.code == FailureCode.Failed) {
+          showMessagePopup(
+            title: "Uh oh!", 
+            message: "you are already subscribed to Dweller PRO", 
+            buttonText: "Okay", 
+            context: context
+          );
+        }
+        else if(e.error.code == FailureCode.Canceled) {
+          showMessagePopup(
+            title: "Uh oh!", 
+            message: "payment intent was cancelled", 
+            buttonText: "Okay", 
+            context: context
+          );
+        }
+        else if(e.error.code == FailureCode.Timeout) {
+          showMessagePopup(
+            title: "Uh oh!", 
+            message: "payment intent timed out", 
+            buttonText: "Okay", 
+            context: context
+          );
+        }
+        else{
+          showMessagePopup(
+            title: "Uh oh!", 
+            message: "something went wrong", 
+            buttonText: "Okay", 
+            context: context
+          );
+
+        }
       } else {
         log('Unforeseen error: $e');
       }
@@ -93,10 +128,10 @@ class StripeSubscriptionClass {
       //initializes the payment sheet and set up payment params
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
-          paymentIntentClientSecret: subData["client_secret"],
+          paymentIntentClientSecret: subData.clientSecret,
           style: ThemeMode.light,
           merchantDisplayName: 'Dweller',
-          customerId: subData["customer_id"],
+          customerId: subData.customerId,
           //Customer Keys
           /*customerId: paymentIntent["customer"],
           customerEphemeralKeySecret: subData["ephemeralKey"],*/
@@ -123,7 +158,7 @@ class StripeSubscriptionClass {
       );
   
       //display payment sheet to collect card info, processes the subscription payment and then disposes the payment sheet
-      await displayPaymentSheet();
+      await displayPaymentSheet(context: context);
 
 
     } catch (e) {

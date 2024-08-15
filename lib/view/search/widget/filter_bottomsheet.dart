@@ -10,6 +10,7 @@ import 'package:dweller/utils/components/loader.dart';
 import 'package:dweller/utils/components/my_snackbar.dart';
 import 'package:dweller/utils/components/range_slider_widget.dart';
 import 'package:dweller/utils/constants/google_map_apikey.dart';
+import 'package:dweller/utils/invention/use_stripe_for_subscription.dart';
 import 'package:dweller/view/create_profile/widget/phase_1/textfield.dart';
 import 'package:dweller/view/main/mainpage.dart';
 import 'package:dweller/view/search/widget/facilities_filter.dart';
@@ -44,6 +45,7 @@ final MainPageController mainController = Get.put(MainPageController());
 Future<void> enhancedSearchBottomsheetSeeker({
   required BuildContext context,
   required SearchPageController settingsController,
+  required StripeSubscriptionClass subscriptionService
   }) async{
 
   showModalBottomSheet(
@@ -327,6 +329,7 @@ Future<void> enhancedSearchBottomsheetSeeker({
                                         context: context,
                                         settingsController: settingsControl,
                                         service: service,
+                                        subscriptionService: subscriptionService
                                       );
                                     },
                                   );
@@ -402,6 +405,7 @@ Future<void> enhancedSearchBottomsheetSeeker({
 Future<void> enhancedSearchBottomsheetHost({
   required BuildContext context,
   required SearchPageController settingsController,
+  required StripeSubscriptionClass subscriptionService
   }) async{
 
   showModalBottomSheet(
@@ -749,6 +753,7 @@ Future<void> enhancedSearchBottomsheetHost({
                                         context: context,
                                         settingsController: settingsControl,
                                         service: service,
+                                        subscriptionService: subscriptionService
                                       );
                                     },
                                   );
