@@ -69,90 +69,108 @@ Future<void> sendPhotoTextBottomsheet({
                   ),
                 ),
                 SizedBox(height: size.height * 0.04,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    //1
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              /*controller.pickDisplayImageFromGallery(context: context)
-                              .whenComplete(() => Get.back());*/
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: size.height * 0.2,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                //image: DecorationImage(image: AssetImage(''),),
-                                color: AppColor.greyColor, ///pureLightGreyColor,
-                                borderRadius: BorderRadius.circular(20.r)
+                Obx(
+                  () {
+                    return controller.isMessageImageLoading.value ? CircularProgressIndicator.adaptive(backgroundColor: AppColor.darkPurpleColor,) : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        //1
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () async{
+                                  await controller.pickMessageImageFromGallery(
+                                    context: context,
+                                    onSuccess: () {
+                                      Get.back();
+                                    },
+                                    onFailure: () {
+                                      Get.back();
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: size.height * 0.2,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    //image: DecorationImage(image: AssetImage(''),),
+                                    color: AppColor.greyColor, ///pureLightGreyColor,
+                                    borderRadius: BorderRadius.circular(20.r)
+                                  ),
+                                  child: Icon(
+                                    size: 40.r,
+                                    CupertinoIcons.folder_solid,
+                                    color: AppColor.blackColor,
+                                  ),
+                                ),
                               ),
-                              child: Icon(
-                                size: 40.r,
-                                CupertinoIcons.folder_solid,
-                                color: AppColor.blackColor,
+                              SizedBox(height: 20.h,),
+                              Text(
+                                'Your Gallery',
+                                style: GoogleFonts.poppins(
+                                  color: AppColor.blackColor,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500
+                                ),
                               ),
-                            ),
+                            ],
                           ),
-                          SizedBox(height: 20.h,),
-                          Text(
-                            'Your Gallery',
-                            style: GoogleFonts.poppins(
-                              color: AppColor.blackColor,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    SizedBox(width: 20.w,),
-
-                    //2
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              /*controller.pickDisplayImageFromCamera(context: context)
-                              .whenComplete(() => Get.back());*/
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: size.height * 0.2,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                //image: DecorationImage(image: AssetImage(''),),
-                                color: AppColor.greyColor,  //.pureLightGreyColor,
-                                borderRadius: BorderRadius.circular(20.r)
+                        ),
+                    
+                        SizedBox(width: 20.w,),
+                    
+                        //2
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () async{
+                                  await controller.pickMessageImageFromCamera(
+                                    context: context,
+                                    onSuccess: () {
+                                      Get.back();
+                                    },
+                                    onFailure: () {
+                                      Get.back();
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: size.height * 0.2,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    //image: DecorationImage(image: AssetImage(''),),
+                                    color: AppColor.greyColor,  //.pureLightGreyColor,
+                                    borderRadius: BorderRadius.circular(20.r)
+                                  ),
+                                  child: Icon(
+                                    size: 40.r,
+                                    CupertinoIcons.camera_fill,
+                                    color: AppColor.blackColor,
+                                  ),
+                                ),
                               ),
-                              child: Icon(
-                                size: 40.r,
-                                CupertinoIcons.camera_fill,
-                                color: AppColor.blackColor,
+                              SizedBox(height: 20.h,),
+                              Text(
+                                'Your Camera',
+                                style: GoogleFonts.poppins(
+                                  color: AppColor.blackColor,
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w500
+                                ),
                               ),
-                            ),
+                            ],
                           ),
-                          SizedBox(height: 20.h,),
-                          Text(
-                            'Your Camera',
-                            style: GoogleFonts.poppins(
-                              color: AppColor.blackColor,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w500
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                  ],
+                        ),
+                    
+                      ],
+                    );
+                  }
                 ),
                 SizedBox(height: size.height * 0.02,),
               ],

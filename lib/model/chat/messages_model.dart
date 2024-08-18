@@ -5,7 +5,7 @@ class MessageResponse{
     required this.from,
     required this.to,
     required this.content,
-    required this.type,
+    required this.imageUrl,
     required this.isHidden,
     required this.createdAt,
   });
@@ -13,7 +13,7 @@ class MessageResponse{
   final String from;
   final String to;
   final String content;
-  final String type;
+  final String imageUrl;
   final List<dynamic> isHidden;
   final String createdAt;
 
@@ -25,7 +25,7 @@ class MessageResponse{
       from: json['from'] ?? '',
       to: json['to'] ?? '',
       content: json["content"] ?? "",
-      type: json['type'] ?? 'null',
+      imageUrl: json['imageUrl'] ?? '',
       isHidden: json["isHidden"] ?? "",
       createdAt: json['createdAt'] ?? '',
     );
@@ -38,7 +38,7 @@ class MessageResponse{
       'to': to,
       "isHidden": isHidden,
       'content': content,
-      'type': type,
+      'imageUrl': imageUrl,
       'createdAt': createdAt,
     };
   }

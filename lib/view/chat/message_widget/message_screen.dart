@@ -128,16 +128,44 @@ class _MessageScreenState extends State<MessageScreen> {
 
   void sendMessage({required TextEditingController messageController}) {
     if (messageController.text.isNotEmpty) {
-      socket.emit('direct-message', {
-        //'from': widget.userId,
-        'to': widget.receipientId,
-        'content': messageController.text,
-        //'type': "text",
-      });
-      /*setState(() {
-        _messages.add('You: ${_messageController.text}');
-      });*/
+
+      socket.emit(
+        'direct-message', 
+        controller.imageUrlController.value.isEmpty ?
+        {
+          //'from': widget.userId,
+          'to': widget.receipientId,
+          'content': messageController.text,
+        }
+        :{
+          //'from': widget.userId,
+          'to': widget.receipientId,
+          'content': messageController.text,
+          'imageUrl': controller.imageUrlController.value,
+        }
+      );
+      
+      //clear the clearables
       messageController.clear();
+      controller.imageUrlController.value = "";
+    }
+    else{
+      if(controller.imageUrlController.value.isEmpty) {
+        log("do nothing");
+      }
+      else{
+        socket.emit(
+          'direct-message', 
+          {
+            //'from': widget.userId,
+            'to': widget.receipientId,
+            'content': "",
+            'imageUrl': controller.imageUrlController.value,
+          }
+        );
+        //clear the image url
+        controller.imageUrlController.value = "";
+      }
     }
   }
 

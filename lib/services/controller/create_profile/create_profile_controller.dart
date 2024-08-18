@@ -306,7 +306,6 @@ class CreateProfileController extends getx.GetxController {
     // You can perform any other actions based on the selected animal here
   }
 
-
   //PHASE 4//
   //HOST PHASE 4 (SETTING UP YOUR PROFILE)//
   /// checks if any image is selected at all

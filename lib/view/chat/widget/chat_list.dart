@@ -33,10 +33,11 @@ class _ChatListState extends State<ChatList> {
   //
   Future<void> _refresh() async {
     await Future.delayed(const Duration(seconds: 1));
+    connectToServer();
   }
 
   late IO.Socket socket;
-  final List<ChatListResponse> _listofChats = [];
+  //final List<ChatListResponse> _listofChats = [];
   final StreamController<List<ChatListResponse>> _chatsStreamController = StreamController<List<ChatListResponse>>.broadcast();
   final String accessToken = LocalStorage.getToken();
   final String refreshToken = LocalStorage.getXrefreshToken();
@@ -90,10 +91,8 @@ class _ChatListState extends State<ChatList> {
       }
       final List<dynamic> chatList = data;
       final result = chatList.map((e) => ChatListResponse.fromJson(e)).toList();
-      //setState(() {
-        _listofChats.addAll(result); 
-      //});
-      _chatsStreamController.add(_listofChats);
+      //_listofChats.addAll(result); 
+      _chatsStreamController.add(result);
     });
     
     //listening to disconnections

@@ -6,6 +6,7 @@ import 'package:dweller/utils/components/converters.dart';
 import 'package:dweller/utils/components/loader.dart';
 import 'package:dweller/view/chat/message_widget/chat_box.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,14 +31,32 @@ class _MessageBodyState extends State<MessageBody> {
 
   final ScrollController messageScrollController = ScrollController();
   final String userId = LocalStorage.getUserID();
+  bool _isUserScrolling = false;
 
   @override
   void initState() {
-    // TODO: implement initState
-    //it makes messages list automatically scroll up after a message has been sen
-    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      messageScrollController.jumpTo(messageScrollController.position.maxScrollExtent);
+
+    // Add a listener to track if the user is manually scrolling
+    messageScrollController.addListener(() {
+      if (messageScrollController.position.userScrollDirection != ScrollDirection.idle) {
+        _isUserScrolling = true;
+      }
+
+      // If the user scrolls back to the bottom, reset the manual scroll flag
+      if (messageScrollController.position.pixels >= messageScrollController.position.maxScrollExtent) {
+        _isUserScrolling = false;
+      }
     });
+
+    widget.messagesStream.listen((messages) {
+      // Auto-scroll only if the user is not manually scrolling
+      if (!_isUserScrolling && messageScrollController.hasClients) {
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          messageScrollController.jumpTo(messageScrollController.position.maxScrollExtent);
+        });
+      }
+    });
+  
     super.initState();
   }
 
@@ -92,7 +111,17 @@ class _MessageBodyState extends State<MessageBody> {
                 )
               );
             }
+
             final messages = snapshot.data!;
+            //for Auto-Scrolling just like WhatsApp
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              if (!_isUserScrolling && messageScrollController.hasClients) {
+                messageScrollController.jumpTo(
+                  messageScrollController.position.maxScrollExtent,
+                );
+              }
+            });
+
             return ListView.separated(
               controller: messageScrollController,
               scrollDirection: Axis.vertical,
@@ -101,7 +130,7 @@ class _MessageBodyState extends State<MessageBody> {
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
               separatorBuilder: (context, index) => SizedBox(height: 30.h),
               itemBuilder: (context, index) {
-            
+             
                 final data = messages[index];
             
                 return Dismissible(
@@ -115,15 +144,15 @@ class _MessageBodyState extends State<MessageBody> {
                     children: [
                       //date header here
                       data.from != userId 
-                      ? ReceiverChatBox(
-                        type: data.type,
+                      ?ReceiverChatBox(
+                        imageUrl: data.imageUrl,
                         content: data.content,
                         time: extractTimeIn12HourFormat(data.createdAt),
                         receipientName: widget.receipientName,
                         profilePicture: widget.receipientPicture,
                       ) 
-                      : SenderChatBox(
-                        type: data.type,
+                      :SenderChatBox(
+                        imageUrl: data.imageUrl,
                         content: data.content,
                         time: extractTimeIn12HourFormat(data.createdAt),
                       ),
