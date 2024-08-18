@@ -49,7 +49,7 @@ class _ChatListState extends State<ChatList> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    //socket.dispose();
+    socket.dispose();
   }
 
 
