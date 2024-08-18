@@ -66,7 +66,8 @@ class _ChatListState extends State<ChatList> {
       'https://dweller-node-api.onrender.com', 
       IO.OptionBuilder()
       .setTransports(["websocket"])
-      .disableAutoConnect()
+      //.disableAutoConnect()
+      .enableAutoConnect()
       .setExtraHeaders({
         //"foo": "bar",
         "accessToken": accessToken,
@@ -76,7 +77,7 @@ class _ChatListState extends State<ChatList> {
     );
     
     //connect manually since autoConnect is set to false
-    socket.connect();
+    //socket.connect();
     
     //check if connection is established
     socket.onConnect((_) {
