@@ -69,7 +69,7 @@ class AuthService extends getx.GetxController {
   Future<dynamic> logoutUser() async {
     isLoading.value = true;
     await LocalStorage.deleteToken();
-    //await LocalStorage.deleteXrefreshToken();
+    await LocalStorage.deleteXrefreshToken();
     await LocalStorage.deleteUserID();
     await LocalStorage.deleteUserEmail();
     await LocalStorage.deleteUsername();

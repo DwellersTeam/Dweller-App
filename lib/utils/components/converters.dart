@@ -8,12 +8,39 @@ import 'package:intl/intl.dart';
 
 
 
+
+
+
+int milliseconds = DateTime.now().millisecondsSinceEpoch;
+
+//generates automatic date stamp
+String convertToDateFormat() {
+  DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(milliseconds);
+  DateFormat dateFormatter = DateFormat.yMMMd();
+  return dateFormatter.format(dateTime);
+}
+
+//generates automatic timestamp
+String convertToTimeFormat() {
+  DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(milliseconds);
+  DateFormat timeFormatter = DateFormat.jm();
+  return timeFormatter.format(dateTime);
+}
+
+
+
+
+
+
+
+
+
 String getTimeDurationString({required String startTime, required String stopTime}) {
-  DateFormat dateFormat = DateFormat.jm(); // Format for parsing times like '10:30 AM'
+  DateFormat dateFormat = DateFormat('h:mm a'); // Format for parsing times like '10:30 AM'
 
   // Parse the start and stop times
-  DateTime startDateTime = dateFormat.parse(startTime).toLocal();
-  DateTime stopDateTime = dateFormat.parse(stopTime).toLocal();
+  DateTime startDateTime = dateFormat.parse(startTime);
+  DateTime stopDateTime = dateFormat.parse(stopTime);
 
   // Check if stopTime is earlier than startTime, adjust the stopDateTime to the next day
   if (stopDateTime.isBefore(startDateTime)) {
@@ -58,28 +85,23 @@ String getTimeDurationString({required String startTime, required String stopTim
   }
 }
 
-
-
-
-
-
-
-
 String formatDate(DateTime date) {
   // Create a DateFormat instance with the desired format
-  final DateFormat formatter = DateFormat('d MMMM, yyyy');
+  //final DateFormat formatter = DateFormat('d MMMM, yyyy');
+  final DateFormat formatter = DateFormat.yMMMd();
   // Use the formatter to format the DateTime object
   return formatter.format(date);
 }
 
 
+//for the web
 DateTime parseDateTime({required String dateString, required String timeString}) {
   // Parse date string
-  DateTime date = DateFormat("yyyy-MM-dd").parse(dateString);
+  DateTime date = DateFormat.yMMMd().parse(dateString).toLocal();
 
   // Parse time string
   DateFormat timeFormat = DateFormat("h:mm a");
-  DateTime time = timeFormat.parse(timeString);
+  DateTime time = timeFormat.parse(timeString).toLocal();
 
   // Combine date and time
   return DateTime(date.year, date.month, date.day, time.hour, time.minute);
@@ -89,7 +111,7 @@ DateTime convertNodeJSServerTimestampToDateObject({
   required String serverTimestampStr
   }) {
   try {
-    DateTime dateTime = DateTime.parse(serverTimestampStr).toLocal();
+    DateTime dateTime = DateTime.parse(serverTimestampStr);
     return dateTime;
   } 
   catch (e) {
@@ -98,14 +120,50 @@ DateTime convertNodeJSServerTimestampToDateObject({
 }
 
 
+String calculateDurationBetweenDates(String startDateStr, String endDateStr) {
+  // Define the date format
+  DateFormat dateFormat = DateFormat.yMMMd();
+
+  // Parse the date strings into DateTime objects
+  DateTime startDate = dateFormat.parse(startDateStr);
+  DateTime endDate = dateFormat.parse(endDateStr);
+
+  // Calculate the difference in days
+  Duration difference = endDate.difference(startDate);
+  int days = difference.inDays;
+
+  // Calculate weeks and months
+  int weeks = days ~/ 7;
+  int months = (days / 30).floor(); // approximate months by dividing days by 30
+
+  // Determine the result string
+  if (days < 7) {
+    return '$days day${days == 1 ? '' : 's'}';
+  } else if (weeks < 4) {
+    return '$weeks week${weeks == 1 ? '' : 's'}';
+  } else {
+    return '$months month${months == 1 ? '' : 's'}';
+  }
+}
+
+
+String extractTimeIn12HourFormat(String timestamp) {
+  // Parse the timestamp string into a DateTime object
+  DateTime dateTime = DateTime.parse(timestamp).toLocal();
+
+  // Format the DateTime object to a 12-hour format string
+  String formattedTime = DateFormat('hh:mm a').format(dateTime);
+
+  return formattedTime;
+}
 
 //converts a date string of time "2022:03:21:TZ" to 'January 13, 2023'
 String transformDateString(String dateString) {
   // Parse the original date string to a DateTime object
-  DateTime dateTime = DateTime.parse(dateString).toLocal();
+  DateTime dateTime = DateTime.parse(dateString);
   
   // Define the desired output format
-  DateFormat outputFormat = DateFormat.yMMMMd();
+  DateFormat outputFormat = DateFormat.yMMMd();
   
   // Format the DateTime object to the desired output format
   String formattedDate = outputFormat.format(dateTime);
@@ -115,26 +173,75 @@ String transformDateString(String dateString) {
 
 
 
+String convertDateString(String dateString) {
+  // Parse the input date string
+  DateTime parsedDate = DateFormat('d/M/yyyy').parse(dateString);
+
+  // Format the parsed date to the desired format
+  String formattedDate = DateFormat.yMMMd().format(parsedDate);
+
+  return formattedDate;
+}
+
+
+String convertStringServerTimeToDate(String timestamp){
+
+  // Convert the timestamp to a DateTime object
+  DateTime dateTime = DateTime.parse(timestamp);
+
+  // Use the toString method
+  String formattedDate = dateTime.toString();
+  //String finalResult = formattedDate.substring(0, 10);
+
+  print(formattedDate); // Output: 2023-01-27 20:48:47.960
+  return formattedDate;
+}
+
+
 // Function 1: Convert string to DateTime
 DateTime convertStringToDateTime(String dateString) {
   try {
-    // Assuming the input string is in the format yyyy-mm-dd
-    List<String> dateParts = dateString.split('-');
-    int year = int.parse(dateParts[0]);
-    int month = int.parse(dateParts[1]);
-    int day = int.parse(dateParts[2]);
+    // Define a map to convert month names to their numeric representations
+    /*Map<String, int> monthMap = {
+      'Jan': DateTime.january,
+      'Feb': DateTime.february,
+      'Mar': DateTime.march,
+      'Apr': DateTime.april,
+      'May': DateTime.may,
+      'Jun': DateTime.june,
+      'Jul': DateTime.july,
+      'Aug': DateTime.august,
+      'Sep': DateTime.september,
+      'Oct': DateTime.october,
+      'Nov': DateTime.november,
+      'Dec': DateTime.december,
+    };
     
-    return DateTime(year, month, day);
+    // Split the date string by comma and space
+    List<String> dateParts = dateString.split(', ');
+    // Extract the month, day, and year
+    List<String> date = dateParts[0].split(' ');
+    String monthName = date[0];
+    int month = monthMap[monthName]!;
+    int day = int.parse(date[1]);
+    int year = int.parse(dateParts[1]);
+    
+    return DateTime(year, month, day);*/
+    // Parse the input date string
+    DateTime parsedDate = DateFormat.yMMMd().parse(dateString);
+
+    return DateTime(parsedDate.year, parsedDate.month, parsedDate.day);
   } catch (e) {
     // Handle parsing errors, e.g., invalid format
-    print('Error converting string to DateTime: $e');
+    log('Error converting string to DateTime: $e');
     throw Exception("$e");
   }
 }
 
+
 // Function 2: Display today's date as a DateTime object
 DateTime getTodayDateTime() {
-  return DateTime.now().toLocal();
+  return DateTime.now();
 }
 
 // Function 3: Check how close a DateTime is to today's date
@@ -181,7 +288,7 @@ bool isDateInFuture(DateTime date) {
 
 String convertUTCTimestampToDate(int timestamp) {
   // Convert timestamp to DateTime
-  DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000, isUtc: true).toLocal();
+  DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000, isUtc: true);
 
   // Define month names
   List<String> months = [
@@ -201,24 +308,15 @@ String convertUTCTimestampToDate(int timestamp) {
 }
 
 String convertServerTimeToDate(int timestamp) {
-  // Convert timestamp to DateTime
-  DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000).toLocal();
+  // Convert the timestamp to a DateTime object
+  DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
 
-  // Define month names
-  List<String> months = [
-    "January", "February", "March", "April", "May", "June", "July",
-    "August", "September", "October", "November", "December"
-  ];
+  // Format the DateTime object to the desired format
+  //String formattedDate = DateFormat.yMMMd().format(dateTime);
+  // Format the DateTime to a readable string
+  String formattedDate = DateFormat.yMMMd().format(dateTime); //DateFormat('dd MMM, yyyy').format(dateTime);
 
-  // Extract components
-  int year = dateTime.year;
-  String month = months[dateTime.month - 1]; // Month index starts from 1
-  int day = dateTime.day;
-
-  // Construct date string
-  String dateString = "$month $day, $year";
-
-  return dateString;
+  return formattedDate;
 }
 
 //use well
@@ -247,28 +345,6 @@ String convertDateStringToDate(String dateString) {
   return formattedDate;
 }
 
-String convertStringServerTimeToDate(String timestamp){
-
-  // Convert the timestamp to a DateTime object
-  DateTime dateTime = DateTime.parse(timestamp);
-
-  // Use the toString method
-  String formattedDate = dateTime.toString();
-  //String finalResult = formattedDate.substring(0, 10);
-
-  print(formattedDate); // Output: 2023-01-27 20:48:47.960
-  return formattedDate;
-}
-
-
-DateTime convertStringToDateTimeTimeAgo(String timestamp){
-
-  // Convert the timestamp to a DateTime object
-  DateTime dateTime = DateTime.parse(timestamp).toLocal();
-
-  print("$dateTime"); // Output: 2023-01-27 20:48:47.960
-  return dateTime;
-}
 
 
 /*String convertServerTimeToDate(int timestamp) {
@@ -294,3 +370,48 @@ String convertServerTimeToTime(int timestamp) {
   print(formattedTime); // Output: 20:48:47
   return formattedTime;
 }
+
+
+
+
+
+DateTime convertStringToDateTimeTimeAgo(String timestamp){
+
+  // Convert the timestamp to a DateTime object
+  DateTime dateTime = DateTime.parse(timestamp).toLocal();
+
+  print("$dateTime"); // Output: 2023-01-27 20:48:47.960
+  return dateTime;
+}
+
+
+/*String convertServerTimeToDate(int timestamp) {
+  // Convert the timestamp to a DateTime object
+  DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timestamp);
+
+  // Use the toString method
+  String formattedDate = dateTime.toString();
+  String finalResult = formattedDate.substring(0, 10);
+
+  print(finalResult); // Output: 2023-01-27 20:48:47.960
+  return finalResult;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

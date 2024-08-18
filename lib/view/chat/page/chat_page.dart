@@ -10,15 +10,15 @@ import 'package:dweller/utils/components/extractors.dart';
 import 'package:dweller/utils/components/loader.dart';
 import 'package:dweller/view/chat/widget/chat_list.dart';
 import 'package:dweller/view/home/widget/notification/notification_sheet.dart';
-import 'package:dweller/view/settings/page/profile_type/profile_settings_host.dart';
-import 'package:dweller/view/settings/page/profile_type/profile_settings_seeker.dart';
+import 'package:dweller/view/search/settings/page/profile_type/profile_settings_host.dart';
+import 'package:dweller/view/search/settings/page/profile_type/profile_settings_seeker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 
 
@@ -38,6 +38,7 @@ class _ChatPageState extends State<ChatPage> {
   final profileService = Get.put(CreateProfileService());
   
   late Future<JwtModel> profileFuture;
+  
 
   @override
   void initState() {
@@ -59,6 +60,11 @@ class _ChatPageState extends State<ChatPage> {
       profileFuture = _refresh();
     });
   }
+
+
+
+  
+
 
   @override
   Widget build(BuildContext context) {

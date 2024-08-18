@@ -13,7 +13,7 @@ import 'package:dweller/view/create_profile/widget/phase_3/pet_list.dart';
 import 'package:dweller/view/create_profile/widget/phase_3/sleep_schedule_list.dart';
 import 'package:dweller/view/create_profile/widget/phase_3/work_study_schedule_list.dart';
 import 'package:dweller/view/create_profile/widget/select_dweller/next_button.dart';
-import 'package:dweller/view/settings/widget/general/success_sheet_acc.dart';
+import 'package:dweller/view/search/settings/widget/general/success_sheet_acc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

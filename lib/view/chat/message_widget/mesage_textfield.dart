@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dweller/services/controller/chat/chat_controller.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/view/chat/message_widget/options_sheet.dart';
@@ -19,7 +21,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class MessageTextField extends StatelessWidget {
-  MessageTextField({super.key});
+  MessageTextField({super.key, required this.onSend});
+  final VoidCallback onSend;
 
   final controller = Get.put(ChatPageController());
 
@@ -124,7 +127,10 @@ class MessageTextField extends StatelessWidget {
           Expanded(
             child: MessageTextInputfield(
               textController: controller.messageTextController,
-              onChanged: (val) {},
+              onChanged: (val) {
+                controller.messageTextController.text = val;
+                log(controller.messageTextController.text);
+              },
               onFieldSubmitted: (val) {},
               hintText: 'Say something',
               keyboardType: TextInputType.text,
@@ -152,7 +158,7 @@ class MessageTextField extends StatelessWidget {
             elevation: 0,
             foregroundColor: AppColor.blueColor,
             backgroundColor: AppColor.blueColor,
-            onPressed: () {},
+            onPressed: onSend,
             shape: CircleBorder(),
             child: Icon(
               size: 20.r,

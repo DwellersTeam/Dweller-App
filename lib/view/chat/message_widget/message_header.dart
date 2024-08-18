@@ -53,7 +53,7 @@ class MessageHeader extends StatelessWidget {
                 Text(
                   status,
                   style: GoogleFonts.poppins(
-                    color: AppColor.greenColor,
+                    color: status == "Online" ?AppColor.greenColor : AppColor.chatGreyColor,
                     fontSize: 10.sp,
                     fontWeight: FontWeight.w600
                   )

@@ -14,7 +14,7 @@ import 'package:dweller/view/create_profile/widget/phase_1/textfield.dart';
 import 'package:dweller/view/create_profile/widget/listing/property_image_selector.dart';
 import 'package:dweller/view/create_profile/widget/listing/selector_button.dart';
 import 'package:dweller/view/create_profile/widget/select_dweller/next_button.dart';
-import 'package:dweller/view/settings/widget/general/success_sheet_acc.dart';
+import 'package:dweller/view/search/settings/widget/general/success_sheet_acc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

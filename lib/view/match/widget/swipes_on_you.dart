@@ -16,6 +16,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+
 
 
 
@@ -35,10 +37,11 @@ class _SwipesOnYouState extends State<SwipesOnYou> {
   final notificationService = Get.put(PushNotificationController());
   final notiCreateService = Get.put(NotificationService());
   final String currentUsername = LocalStorage.getUsername();
+  final String accessToken = LocalStorage.getToken();
+  final String refreshToken = LocalStorage.getXrefreshToken();
 
 
   late Future<List<MatchResponse>> swipesOnYouFuture;
-
   @override
   void initState() {
     swipesOnYouFuture = _refresh();
@@ -60,6 +63,7 @@ class _SwipesOnYouState extends State<SwipesOnYou> {
     });
   }
 
+  
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -171,7 +175,12 @@ class _SwipesOnYouState extends State<SwipesOnYou> {
                               MatchListSwipesOnYouMenu(
                                 status: item.status,
                                 onChat: () {
-                                  Get.to(()=> const MessageScreen());
+                                  Get.to(()=> MessageScreen(
+                                    receipientId: item.from.id,
+                                    receipientName: "${item.from.firstname} ${item.from.lastname}",
+                                    receipientPicture: item.from.displayPicture,
+                                    online: item.from.online,
+                                  ));
                                 },
                                 onOpenProfile: () {
                                   Get.to(() => GetUserByIdPage(userId: item.from.id,));

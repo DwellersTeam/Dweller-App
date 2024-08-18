@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:dweller/model/match/match_response.dart';
+import 'package:dweller/services/repository/data_service/local_storage/local_storage.dart';
 import 'package:dweller/services/repository/match_service/match_service.dart';
 import 'package:dweller/services/repository/notification_service/notification_service.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
@@ -21,6 +22,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 
+
 class YourSwipes extends StatefulWidget {
   const YourSwipes({super.key});
 
@@ -32,6 +34,9 @@ class _YourSwipesState extends State<YourSwipes> {
 
   final matchService = Get.put(MatchService());
   final notiCreateService = Get.put(NotificationService());
+
+  final String accessToken = LocalStorage.getToken();
+  final String refreshToken = LocalStorage.getXrefreshToken();
 
   late Future<List<MatchResponse>> yourSwipesFuture;
 
@@ -55,6 +60,7 @@ class _YourSwipesState extends State<YourSwipes> {
       yourSwipesFuture = _refresh();
     });
   }
+
 
 
   @override
@@ -173,7 +179,12 @@ class _YourSwipesState extends State<YourSwipes> {
                               MatchListYourSwipesMenu(
                                 status: item.status,
                                 onChat: () {
-                                  Get.to(()=> const MessageScreen());
+                                  Get.to(()=> MessageScreen(
+                                    receipientId: item.from.id,
+                                    receipientName: "${item.from.firstname} ${item.from.lastname}",
+                                    receipientPicture: item.from.displayPicture,
+                                    online: item.from.online,
+                                  ));
                                 },
                                 onOpenProfile: () {
                                   Get.to(() => GetUserByIdPage(userId: item.to.id,));

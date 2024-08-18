@@ -1,4 +1,5 @@
 import 'package:dweller/utils/colors/appcolor.dart';
+import 'package:dweller/utils/components/extractors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +10,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 //for the person you're chatting with
 class ReceiverChatBox extends StatelessWidget {
-  const ReceiverChatBox({super.key});
+  const ReceiverChatBox({super.key, required this.type, required this.content, required this.time, required this.profilePicture, required this.receipientName});
+  final String type;
+  final String content;
+  final String time;
+  final String profilePicture;
+  final String receipientName;
 
   @override
   Widget build(BuildContext context) {
@@ -17,18 +23,24 @@ class ReceiverChatBox extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        CircleAvatar(
+        profilePicture.isEmpty
+        ?CircleAvatar(
           radius: 15.r, //24.r,
           backgroundColor: Colors.grey.withOpacity(0.1),
-          backgroundImage: const AssetImage("assets/images/lionel.jpg"),
-          /*child: Text(
-            'J',
+          //backgroundImage: const AssetImage("assets/images/lionel.jpg"),
+          child: Text(
+            getFirstLetter(receipientName),
             style: GoogleFonts.poppins(
               color: AppColor.blackColor,
-              fontSize: 16.sp,
+              fontSize: 12.sp,
               fontWeight: FontWeight.w500
             ),
-          ),*/
+          ),
+        )
+        :CircleAvatar(
+          radius: 15.r, //24.r,
+          backgroundColor: Colors.grey.withOpacity(0.1),
+          backgroundImage: NetworkImage(profilePicture),
         ),
         SizedBox(width: 4.w,),
         Container(
@@ -44,7 +56,8 @@ class ReceiverChatBox extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Hello there 👋, i noticed you like surfing',
+                content,
+                //'Hello there 👋, i noticed you like surfing',
                 style: GoogleFonts.poppins(
                   color: AppColor.blackColor,
                   fontSize: 12.sp,
@@ -53,7 +66,7 @@ class ReceiverChatBox extends StatelessWidget {
               ),
               SizedBox(height: 5.h,),
               Text(
-                '4:30 AM',
+                time,
                 style: GoogleFonts.poppins(
                   color: AppColor.chatTimeGreyColor,
                   fontSize: 8.sp,
@@ -73,7 +86,10 @@ class ReceiverChatBox extends StatelessWidget {
 
 //for the person sending the message
 class SenderChatBox extends StatelessWidget {
-  const SenderChatBox({super.key});
+  const SenderChatBox({super.key, required this.type, required this.content, required this.time});
+  final String type;
+  final String content;
+  final String time;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +106,8 @@ class SenderChatBox extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Yup! I do. Just my be my fav activity in Vinyl.',
+            content,
+            //'Yup! I do. Just my be my fav activity in Vinyl.',
             style: GoogleFonts.poppins(
               color: AppColor.whiteColor,
               fontSize: 12.sp,
@@ -99,7 +116,7 @@ class SenderChatBox extends StatelessWidget {
           ),
           SizedBox(height: 5.h,),
           Text(
-            '5:30 AM',
+            time,
             style: GoogleFonts.poppins(
               color: AppColor.whiteColor,
               fontSize: 8.sp,
