@@ -9,7 +9,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class ChatMenu extends StatelessWidget {
-  const ChatMenu({super.key});
+  const ChatMenu({super.key, required this.onOpenProfile, required this.onClearChats, required this.onBlockUser});
+  final VoidCallback onOpenProfile;
+  final VoidCallback onClearChats;
+  final VoidCallback onBlockUser;
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +27,13 @@ class ChatMenu extends StatelessWidget {
       onSelected: (String result) {
         switch (result) {
           case 'View Profile':
-            //_viewProfile(context);
+            onOpenProfile();
             break;
           case 'Clear Chats':
-            //_viewProfile(context);
+            onClearChats();
             break;
           case 'Block User':
-            //_blockUser(context);
+            onBlockUser();
             break;
         }
       },

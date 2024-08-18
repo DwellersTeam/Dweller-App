@@ -9,6 +9,7 @@ import 'package:dweller/view/chat/message_widget/chat_menu.dart';
 import 'package:dweller/view/chat/message_widget/mesage_textfield.dart';
 import 'package:dweller/view/chat/message_widget/message_body.dart';
 import 'package:dweller/view/chat/message_widget/message_header.dart';
+import 'package:dweller/view/home/widget/profiel_by_id/get_profile_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -146,7 +147,13 @@ class _MessageScreenState extends State<MessageScreen> {
             //CUSTOM HEADER HERE
             MessageHeader(
               name: widget.receipientName,
-              menuBar: ChatMenu(),
+              menuBar: ChatMenu(
+                onOpenProfile: () {
+                  Get.to(() => GetUserByIdPage(userId: widget.receipientId,));
+                },
+                onClearChats: () {},
+                onBlockUser: () {},
+              ),
               status: widget.online ? "Online" : "Offline",
             ),
         
