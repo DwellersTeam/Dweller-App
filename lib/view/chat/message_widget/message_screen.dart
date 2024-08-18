@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
@@ -35,11 +36,14 @@ class MessageScreen extends StatefulWidget {
 class _MessageScreenState extends State<MessageScreen> {
 
 
-  //final TextEditingController _messageController = TextEditingController();
-
 
   late IO.Socket socket;
+
   final List<MessageResponse> _messages = [];
+
+  final StreamController<List<MessageResponse>> _messagesStreamController = StreamController<List<MessageResponse>>.broadcast();
+  
+
   final controller = Get.put(ChatPageController());
   final String accessToken = LocalStorage.getToken();
   final String refreshToken = LocalStorage.getXrefreshToken();
@@ -54,6 +58,7 @@ class _MessageScreenState extends State<MessageScreen> {
   @override
   void dispose() {
     socket.dispose();
+    _messagesStreamController.close();
     super.dispose();
   }
 
@@ -93,11 +98,12 @@ class _MessageScreenState extends State<MessageScreen> {
       }
       final List<Map<String, dynamic>> messageList = List<Map<String, dynamic>>.from(data);
       final result = messageList.map((e) => MessageResponse.fromJson(e)).toList();
-      setState(() {
+      //setState(() {
         _messages
         ..clear()
         ..addAll(result);
-      });
+      //});
+      _messagesStreamController.add(_messages);
     });
 
     socket.on('direct-message', (data) {
@@ -107,9 +113,10 @@ class _MessageScreenState extends State<MessageScreen> {
       }
       final Map<String, dynamic> messages = data;
       final result = MessageResponse.fromJson(messages);
-      setState(() {
+      //setState(() {
         _messages.add(result);  //add json object subsequently
-      });
+      //});
+      _messagesStreamController.add(_messages);
     });
     
     //listening to disconnections
@@ -159,7 +166,7 @@ class _MessageScreenState extends State<MessageScreen> {
         
             //MESSAGELIST HERE(Wrap with container and then add the background image)
             MessageBody(
-              messagesList: _messages,
+              messagesStream: _messagesStreamController.stream,
               receipientName: widget.receipientName,
               receipientPicture: widget.receipientPicture,
             ),

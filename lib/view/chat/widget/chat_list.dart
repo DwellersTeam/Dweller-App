@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
@@ -5,6 +6,7 @@ import 'package:dweller/model/chat/chatlist_model.dart';
 import 'package:dweller/services/repository/data_service/local_storage/local_storage.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/extractors.dart';
+import 'package:dweller/utils/components/loader.dart';
 import 'package:dweller/view/chat/message_widget/message_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +37,7 @@ class _ChatListState extends State<ChatList> {
 
   late IO.Socket socket;
   final List<ChatListResponse> _listofChats = [];
+  final StreamController<List<ChatListResponse>> _chatsStreamController = StreamController<List<ChatListResponse>>.broadcast();
   final String accessToken = LocalStorage.getToken();
   final String refreshToken = LocalStorage.getXrefreshToken();
 
@@ -50,6 +53,7 @@ class _ChatListState extends State<ChatList> {
     // TODO: implement dispose
     super.dispose();
     socket.dispose();
+    _chatsStreamController.close();
   }
 
 
@@ -86,9 +90,10 @@ class _ChatListState extends State<ChatList> {
       }
       final List<dynamic> chatList = data;
       final result = chatList.map((e) => ChatListResponse.fromJson(e)).toList();
-      setState(() {
+      //setState(() {
         _listofChats.addAll(result); 
-      });
+      //});
+      _chatsStreamController.add(_listofChats);
     });
     
     //listening to disconnections
@@ -103,118 +108,154 @@ class _ChatListState extends State<ChatList> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: RefreshIndicator.adaptive(
-        color: AppColor.whiteColor,
-        backgroundColor: AppColor.darkPurpleColor,
-        onRefresh: () => _refresh(),
-        child: ListView.builder(
-          physics: const BouncingScrollPhysics(),
-          itemCount: _listofChats.length,
-          shrinkWrap: true,
-          scrollDirection: Axis.vertical,
-          //separatorBuilder: (context, index) => SizedBox(height: 20.h),
-          //padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-          itemBuilder: (context, index) {
-            final data = _listofChats[index];
-
-            return InkWell(
-              onTap: () {
-                Get.to(() => MessageScreen(
-                  receipientId: data.userId,
-                  receipientName: data.name,
-                  receipientPicture: data.picture,
-                  online: data.online,
-                ));
-              },
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    data.picture.isEmpty ?
-                    CircleAvatar(
-                      radius: 27.r, //24.r,
-                      backgroundColor: Colors.grey.withOpacity(0.1),
-                      child: Text(
-                        getFirstLetter(data.name),
-                        style: GoogleFonts.poppins(
-                          color: AppColor.blackColor,
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500
-                        ),
-                      ),
-                    )
-                    :CircleAvatar(
-                      radius: 27.r, //24.r,
-                      backgroundColor: Colors.grey.withOpacity(0.1),
-                      backgroundImage: NetworkImage(data.picture),
-                      
-                    ),
-                    SizedBox(width: 20.w,),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          //1
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    data.name,
-                                    style: GoogleFonts.bricolageGrotesque(
-                                      color: AppColor.blackColor,
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  SizedBox(width: 10.w,),
-                                  Icon(
-                                    color: AppColor.blueColor,
-                                    size: 15.r,
-                                    CupertinoIcons.checkmark_seal_fill
-                                  )
-                                ],
-                              ),
-
-                              //blue notification icon
-                              Icon(
-                                color: AppColor.deepBlueColor,
-                                size: 15.r,
-                                CupertinoIcons.circle_fill
-                              )
-                              
-                            ],
-                          ),
-
-                          SizedBox(height: 10.h,),
-
-                          InkWell(
-                            child: Text(
-                              data.lastMessage,
-                              //"Hello 👋, i noticed you stay in NYC. you seem really cool and i'd love to know you",
-                              style: GoogleFonts.poppins(
-                                color: AppColor.chatGreyColor,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w400
-                              ),
-                              overflow: TextOverflow.ellipsis,
+      child: StreamBuilder<List<ChatListResponse>>(
+        stream: _chatsStreamController.stream,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const LoaderS();
+          }
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            log("snapshot has data?: ${snapshot.hasData}");
+            return Center(
+              child: Text(
+                'No chats yet',
+                style: GoogleFonts.poppins(
+                  color: AppColor.darkPurpleColor,
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w500
+                )
+              )
+            );
+          }
+          if(snapshot.hasError) {
+            log("snapshot err: ${snapshot.error}");
+            return Center(
+              child: Text(
+                'Something went wrong',
+                style: GoogleFonts.poppins(
+                  color: AppColor.darkPurpleColor,
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w500
+                )
+              )
+            );
+          }
+          final chats = snapshot.data!;
+          return RefreshIndicator.adaptive(
+            color: AppColor.whiteColor,
+            backgroundColor: AppColor.darkPurpleColor,
+            onRefresh: () => _refresh(),
+            child: ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: chats.length,
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              //separatorBuilder: (context, index) => SizedBox(height: 20.h),
+              //padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+              itemBuilder: (context, index) {
+          
+                final data = chats[index];
+          
+                return InkWell(
+                  onTap: () {
+                    Get.to(() => MessageScreen(
+                      receipientId: data.userId,
+                      receipientName: data.name,
+                      receipientPicture: data.picture,
+                      online: data.online,
+                    ));
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        data.picture.isEmpty ?
+                        CircleAvatar(
+                          radius: 27.r, //24.r,
+                          backgroundColor: Colors.grey.withOpacity(0.1),
+                          child: Text(
+                            getFirstLetter(data.name),
+                            style: GoogleFonts.poppins(
+                              color: AppColor.blackColor,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w500
                             ),
                           ),
-
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            );
-                      
-          }
-        ),
+                        )
+                        :CircleAvatar(
+                          radius: 27.r, //24.r,
+                          backgroundColor: Colors.grey.withOpacity(0.1),
+                          backgroundImage: NetworkImage(data.picture),
+                          
+                        ),
+                        SizedBox(width: 20.w,),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              //1
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        data.name,
+                                        style: GoogleFonts.bricolageGrotesque(
+                                          color: AppColor.blackColor,
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      SizedBox(width: 10.w,),
+                                      Icon(
+                                        color: AppColor.blueColor,
+                                        size: 15.r,
+                                        CupertinoIcons.checkmark_seal_fill
+                                      )
+                                    ],
+                                  ),
+          
+                                  //blue notification icon
+                                  Icon(
+                                    color: AppColor.deepBlueColor,
+                                    size: 15.r,
+                                    CupertinoIcons.circle_fill
+                                  )
+                                  
+                                ],
+                              ),
+          
+                              SizedBox(height: 10.h,),
+          
+                              InkWell(
+                                child: Text(
+                                  data.lastMessage,
+                                  //"Hello 👋, i noticed you stay in NYC. you seem really cool and i'd love to know you",
+                                  style: GoogleFonts.poppins(
+                                    color: AppColor.chatGreyColor,
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w400
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+          
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+                          
+              }
+            ),
+          );
+        }
       ),
     );
   }
