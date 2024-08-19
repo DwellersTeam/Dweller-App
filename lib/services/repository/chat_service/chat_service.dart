@@ -56,7 +56,7 @@ class ChatService extends getx.GetxController {
     _isConnected = true;
     socket.onConnect((_) => print('Connected to server'));
     // ... listen for events
-        //listening from backend
+    //listening from backend
     socket.on('chats', (data) {
       log("chat list data: $data");
       if(data is String){
