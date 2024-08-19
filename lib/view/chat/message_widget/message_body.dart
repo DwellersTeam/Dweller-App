@@ -132,6 +132,15 @@ class _MessageBodyState extends State<MessageBody> {
               itemBuilder: (context, index) {
              
                 final data = messages[index];
+
+                // Check if the current message's date is different from the previous message's date
+                bool showDateHeader = true;
+                if (index > 0) {
+                  var previousData = messages[index - 1];
+                  var currentDate = transformDateString(data.createdAt);
+                  var previousDate = transformDateString(previousData.createdAt);
+                  showDateHeader = currentDate != previousDate;
+                }
             
                 return Dismissible(
                   key: UniqueKey(),
@@ -143,6 +152,48 @@ class _MessageBodyState extends State<MessageBody> {
                     crossAxisAlignment: data.from != userId  ? CrossAxisAlignment.start : CrossAxisAlignment.end,
                     children: [
                       //date header here
+                      // Show the date header if needed
+                      if (showDateHeader)
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 30.h, 
+                            horizontal: 120.w
+                          ),
+                          child: Container(
+                            alignment: Alignment.center,
+                            //height: 30.h,
+                            //width: 150.w,
+                            padding: EdgeInsets.symmetric(
+                              vertical: 2.h, //20.h
+                              horizontal: 5.w  //15.h
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColor.pureLightGreyColor,
+                              borderRadius: BorderRadius.circular(10.r),
+                              /*boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  //color: AppTheme().lightGreyColor,
+                                  spreadRadius: 0.1.r,
+                                  blurRadius: 8.0.r,
+                                )
+                              ],*/
+                            ),
+                            child: Text(
+                              transformDateString(data.createdAt),
+                              style: GoogleFonts.poppins(
+                                color: AppColor.darkGreyColor,
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+
+
                       data.from != userId 
                       ?ReceiverChatBox(
                         imageUrl: data.imageUrl,
