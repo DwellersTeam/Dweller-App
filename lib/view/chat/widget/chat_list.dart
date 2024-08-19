@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dweller/model/chat/chatlist_model.dart';
+import 'package:dweller/services/repository/chat_service/chat_service.dart';
 import 'package:dweller/services/repository/data_service/local_storage/local_storage.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/extractors.dart';
@@ -33,33 +34,38 @@ class _ChatListState extends State<ChatList> {
   //
   Future<void> _refresh() async {
     await Future.delayed(const Duration(seconds: 1));
-    connectToServer();
+    //connectToServer();
   }
 
-  late IO.Socket socket;
-  //final List<ChatListResponse> _listofChats = [];
-  final StreamController<List<ChatListResponse>> _chatsStreamController = StreamController<List<ChatListResponse>>.broadcast();
-  final String accessToken = LocalStorage.getToken();
-  final String refreshToken = LocalStorage.getXrefreshToken();
+  final chatService = Get.put(ChatService());
+
+  //late IO.Socket socket;
+  //final StreamController<List<ChatListResponse>> _chatsStreamController = StreamController<List<ChatListResponse>>.broadcast();
+  //final String refreshToken = LocalStorage.getXrefreshToken();
+  //final String accessToken = LocalStorage.getToken();
 
   @override
   void initState() {
-    _refresh();
-    connectToServer();
+    //_refresh();
+    //connectToServer();
+    if (!chatService.isConnected) {
+      chatService.connect();
+    }
     super.initState();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
+    //socket.dispose();
+    //_chatsStreamController.close();
+
     super.dispose();
-    socket.dispose();
-    _chatsStreamController.close();
   }
 
 
 
-  void connectToServer() {
+  /*void connectToServer() {
 
     //1
     socket = IO.io(
@@ -101,7 +107,7 @@ class _ChatListState extends State<ChatList> {
     socket.onConnectError((_) => print("connection error: $_"));
     socket.onConnectTimeout((_) => print("connection timed out: $_"));
     socket.onError((_) => print("error: $_"));
-  }
+  }*/
 
   
 
@@ -109,7 +115,7 @@ class _ChatListState extends State<ChatList> {
   Widget build(BuildContext context) {
     return Expanded(
       child: StreamBuilder<List<ChatListResponse>>(
-        stream: _chatsStreamController.stream,
+        stream: chatService.chatsStreamController.stream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const LoaderS();
@@ -140,7 +146,9 @@ class _ChatListState extends State<ChatList> {
               )
             );
           }
+
           final chats = snapshot.data!;
+          
           return RefreshIndicator.adaptive(
             color: AppColor.whiteColor,
             backgroundColor: AppColor.darkPurpleColor,
@@ -158,6 +166,12 @@ class _ChatListState extends State<ChatList> {
           
                 return InkWell(
                   onTap: () {
+                    chatService.socket.emit(
+                      'chats', 
+                      {
+                        'seen': true,
+                      }
+                    );
                     Get.to(() => MessageScreen(
                       receipientId: data.userId,
                       receipientName: data.name,
@@ -186,8 +200,7 @@ class _ChatListState extends State<ChatList> {
                         :CircleAvatar(
                           radius: 27.r, //24.r,
                           backgroundColor: Colors.grey.withOpacity(0.1),
-                          backgroundImage: NetworkImage(data.picture),
-                          
+                          backgroundImage: NetworkImage(data.picture), 
                         ),
                         SizedBox(width: 20.w,),
                         Expanded(
@@ -220,7 +233,7 @@ class _ChatListState extends State<ChatList> {
                                   ),
           
                                   //blue notification icon
-                                  Icon(
+                                  data.seen ? SizedBox.shrink() : Icon(
                                     color: AppColor.deepBlueColor,
                                     size: 15.r,
                                     CupertinoIcons.circle_fill
