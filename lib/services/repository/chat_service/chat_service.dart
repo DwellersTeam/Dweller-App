@@ -30,7 +30,7 @@ class ChatService extends getx.GetxController {
   final String accessToken = LocalStorage.getToken();
   final StreamController<List<ChatListResponse>> chatsStreamController = StreamController<List<ChatListResponse>>.broadcast();
 
-
+  //WEB SOCKET FOR CHAT LIST CONFIG
   late IO.Socket socket;
   bool _isConnected = false;
 
