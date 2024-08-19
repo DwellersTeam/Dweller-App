@@ -37,35 +37,35 @@ class _ChatListState extends State<ChatList> {
     //connectToServer();
   }
 
-  final chatService = Get.put(ChatService());
+  //final chatService = Get.put(ChatService());
 
-  //late IO.Socket socket;
-  //final StreamController<List<ChatListResponse>> _chatsStreamController = StreamController<List<ChatListResponse>>.broadcast();
-  //final String refreshToken = LocalStorage.getXrefreshToken();
-  //final String accessToken = LocalStorage.getToken();
+  late IO.Socket socket;
+  final StreamController<List<ChatListResponse>> _chatsStreamController = StreamController<List<ChatListResponse>>.broadcast();
+  final String refreshToken = LocalStorage.getXrefreshToken();
+  final String accessToken = LocalStorage.getToken();
 
   @override
   void initState() {
-    //_refresh();
-    //connectToServer();
-    if (!chatService.isConnected) {
+    _refresh();
+    connectToServer();
+    /*if (!chatService.isConnected) {
       chatService.connect();
-    }
+    }*/
     super.initState();
   }
 
   @override
   void dispose() {
     // TODO: implement dispose
-    //socket.dispose();
-    //_chatsStreamController.close();
+    socket.dispose();
+    _chatsStreamController.close();
 
     super.dispose();
   }
 
 
 
-  /*void connectToServer() {
+  void connectToServer() {
 
     //1
     socket = IO.io(
@@ -107,7 +107,7 @@ class _ChatListState extends State<ChatList> {
     socket.onConnectError((_) => print("connection error: $_"));
     socket.onConnectTimeout((_) => print("connection timed out: $_"));
     socket.onError((_) => print("error: $_"));
-  }*/
+  }
 
   
 
@@ -115,7 +115,7 @@ class _ChatListState extends State<ChatList> {
   Widget build(BuildContext context) {
     return Expanded(
       child: StreamBuilder<List<ChatListResponse>>(
-        stream: chatService.chatsStreamController.stream,
+        stream: _chatsStreamController.stream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const LoaderS();
@@ -148,7 +148,7 @@ class _ChatListState extends State<ChatList> {
           }
 
           final chats = snapshot.data!;
-          
+
           return RefreshIndicator.adaptive(
             color: AppColor.whiteColor,
             backgroundColor: AppColor.darkPurpleColor,
@@ -166,7 +166,7 @@ class _ChatListState extends State<ChatList> {
           
                 return InkWell(
                   onTap: () {
-                    chatService.socket.emit(
+                    socket.emit(
                       'chats', 
                       {
                         'seen': true,
