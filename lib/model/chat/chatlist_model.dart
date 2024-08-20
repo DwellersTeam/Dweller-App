@@ -29,7 +29,8 @@ class ChatListResponse{
 
   factory ChatListResponse.fromJson(Map<String, dynamic> json) {
     return ChatListResponse(
-      fcmToken: json["fcmToken"] ?? '',
+      fcmToken: json["fcmToken"] ?? 
+      'dqysECpRQOiD97Ig_Zovhh:APA91bGClIlJejREsA587TcwhRrF6XprUY-kY_dKpFPr3OHdp-vFDWXzgt1EAsnY1FFSwqEYiGiQFR46K6JlcKbl7jXi4vwxO3sbXibrdkWfLHAboIRFa6ak72Svyse2rchYy_yiHtgn',
       chatId: json["_id"] ?? "",
       userId: json['userId'] ?? "",
       picture: json['picture'] ?? '',
