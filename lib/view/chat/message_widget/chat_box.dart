@@ -46,70 +46,74 @@ class ReceiverChatBox extends StatelessWidget {
           backgroundImage: NetworkImage(profilePicture),
         ),
         SizedBox(width: 4.w,),
-        Container(
-          alignment: Alignment.center,
-          //height: 50.h,
-          //width: double.infinity,
-          padding: imageUrl.isEmpty 
-          ? EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h)
-          : EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-          decoration: BoxDecoration(
-            color: AppColor.blueColorOp,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(20.r), topRight: Radius.circular(20.r), bottomRight: Radius.circular(20.r),)
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              imageUrl.isEmpty
-              ? const SizedBox.shrink()
-              :Container(
-                alignment: Alignment.center,
-                //height: 200.h,
-                width: double.infinity, 
-                decoration: BoxDecoration(
-                  color: AppColor.pureLightGreyColor,
-                  borderRadius: BorderRadius.circular(10.r),
+        
+        //wrap with expanded
+        Expanded(
+          child: Container(
+            alignment: Alignment.center,
+            //height: 50.h,
+            //width: double.infinity,
+            padding: imageUrl.isEmpty 
+            ? EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h)
+            : EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+            decoration: BoxDecoration(
+              color: AppColor.blueColorOp,
+              borderRadius: BorderRadius.only(topLeft: Radius.circular(20.r), topRight: Radius.circular(20.r), bottomRight: Radius.circular(20.r),)
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                imageUrl.isEmpty
+                ? const SizedBox.shrink()
+                :Container(
+                  alignment: Alignment.center,
+                  //height: 200.h,
+                  width: double.infinity, 
+                  decoration: BoxDecoration(
+                    color: AppColor.pureLightGreyColor,
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: imageUrl,
+                    fit: BoxFit.contain,
+                    filterQuality: FilterQuality.high,
+                    errorWidget: (context, url, error) {
+                      log("error loading image: $error");
+                      return Text(
+                        error.toString(),
+                        style: GoogleFonts.poppins(
+                          color: AppColor.darkGreyColor,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      );
+                    },
+                  ),
                 ),
-                child: CachedNetworkImage(
-                  imageUrl: imageUrl,
-                  fit: BoxFit.contain,
-                  filterQuality: FilterQuality.high,
-                  errorWidget: (context, url, error) {
-                    log("error loading image: $error");
-                    return Text(
-                      error.toString(),
-                      style: GoogleFonts.poppins(
-                        color: AppColor.darkGreyColor,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    );
-                  },
+                imageUrl.isEmpty
+                ? const SizedBox.shrink()
+                :SizedBox(height: 5.h,),
+                Text(
+                  content,
+                  //'Hello there 👋, i noticed you like surfing',
+                  style: GoogleFonts.poppins(
+                    color: AppColor.blackColor,
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w400
+                  )
                 ),
-              ),
-              imageUrl.isEmpty
-              ? const SizedBox.shrink()
-              :SizedBox(height: 5.h,),
-              Text(
-                content,
-                //'Hello there 👋, i noticed you like surfing',
-                style: GoogleFonts.poppins(
-                  color: AppColor.blackColor,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w400
-                )
-              ),
-              SizedBox(height: 5.h,),
-              Text(
-                time,
-                style: GoogleFonts.poppins(
-                  color: AppColor.chatTimeGreyColor,
-                  fontSize: 8.sp,
-                  fontWeight: FontWeight.w600
-                )
-              ),
-            ],
+                SizedBox(height: 5.h,),
+                Text(
+                  time,
+                  style: GoogleFonts.poppins(
+                    color: AppColor.chatTimeGreyColor,
+                    fontSize: 8.sp,
+                    fontWeight: FontWeight.w600
+                  )
+                ),
+              ],
+            ),
           ),
         ),
       ],
@@ -143,6 +147,7 @@ class SenderChatBox extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
           imageUrl.isEmpty
           ? const SizedBox.shrink()
           :Container(
