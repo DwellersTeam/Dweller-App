@@ -172,7 +172,7 @@ class _ChatListState extends State<ChatList> {
                       socket.emit(
                         'seen', 
                         {
-                        "id": data.senderOfLastMessage,
+                          "id": data.senderOfLastMessage,
                         }
                       );
                     }
