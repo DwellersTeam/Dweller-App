@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:dweller/model/chat/messages_model.dart';
 import 'package:dweller/services/controller/chat/chat_controller.dart';
 import 'package:dweller/services/repository/data_service/local_storage/local_storage.dart';
+import 'package:dweller/services/repository/notification_service/push_notifications.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/view/chat/message_widget/chat_menu.dart';
 import 'package:dweller/view/chat/message_widget/mesage_textfield.dart';
@@ -23,10 +24,11 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 
 class MessageScreen extends StatefulWidget {
-  MessageScreen({super.key, required this.receipientId, required this.receipientName, required this.receipientPicture, required this.online});
+  MessageScreen({super.key, required this.receipientId, required this.receipientName, required this.receipientPicture, required this.online, required this.receipientFCMToken});
   final String receipientId;
   final String receipientName;
   final String receipientPicture;
+  final String receipientFCMToken;
   bool online;
 
   @override
@@ -43,8 +45,9 @@ class _MessageScreenState extends State<MessageScreen> {
 
   final StreamController<List<MessageResponse>> _messagesStreamController = StreamController<List<MessageResponse>>.broadcast();
   
-
+  
   final controller = Get.put(ChatPageController());
+  final notificationService = Get.put(PushNotificationController());
   final String accessToken = LocalStorage.getToken();
   final String refreshToken = LocalStorage.getXrefreshToken();
 
@@ -103,7 +106,7 @@ class _MessageScreenState extends State<MessageScreen> {
         ..clear()
         ..addAll(result);
       //});
-      _messagesStreamController.add(_messages);
+      _messagesStreamController.add(result);
     });
 
     socket.on('direct-message', (data) {
@@ -126,47 +129,113 @@ class _MessageScreenState extends State<MessageScreen> {
     socket.onError((_) => print("error: $_"));
   }
 
-  void sendMessage({required TextEditingController messageController}) {
-    if (messageController.text.isNotEmpty) {
+  void sendMessage({required TextEditingController messageController}) async{
+    if(controller.notiCount.value == 5){
+      controller.notiCount.value = 0;
+    
+      //send text messages
+      if (messageController.text.isNotEmpty) {
 
-      socket.emit(
-        'direct-message', 
-        controller.imageUrlController.value.isEmpty ?
-        {
-          //'from': widget.userId,
-          'to': widget.receipientId,
-          'content': messageController.text,
-        }
-        :{
-          //'from': widget.userId,
-          'to': widget.receipientId,
-          'content': messageController.text,
-          'imageUrl': controller.imageUrlController.value,
-        }
-      );
-      
-      //clear the clearables
-      messageController.clear();
-      controller.imageUrlController.value = "";
-    }
-    else{
-      if(controller.imageUrlController.value.isEmpty) {
-        log("do nothing");
-      }
-      else{
         socket.emit(
           'direct-message', 
+          controller.imageUrlController.value.isEmpty ?
           {
             //'from': widget.userId,
             'to': widget.receipientId,
-            'content': "",
+            'content': messageController.text,
+          }
+          :{
+            //'from': widget.userId,
+            'to': widget.receipientId,
+            'content': messageController.text,
             'imageUrl': controller.imageUrlController.value,
           }
         );
-        //clear the image url
+        //send push notification
+        await notificationService.sendNotification(
+          targetUserToken: widget.receipientFCMToken, 
+          title: widget.receipientName, 
+          body: controller.imageUrlController.value.isNotEmpty ? "📷 photo" : messageController.text, 
+          type: "chat"
+        );
+      
+        //clear the clearables
+        messageController.clear();
         controller.imageUrlController.value = "";
       }
+      else{
+        if(controller.imageUrlController.value.isEmpty) {
+          log("do nothing");
+        }
+        else{
+          socket.emit(
+            'direct-message', 
+            {
+              //'from': widget.userId,
+              'to': widget.receipientId,
+              'content': "",
+              'imageUrl': controller.imageUrlController.value,
+            }
+          );
+
+          //send push notification
+          await notificationService.sendNotification(
+            targetUserToken: widget.receipientFCMToken, 
+            title: widget.receipientName, 
+            body: "📷 photo", 
+            type: "chat"
+          );
+          //clear the image url
+          controller.imageUrlController.value = "";
+        }
+      }
     }
+    else {
+      //Increment the count
+      controller.notiCount.value++;
+      //send text messages
+      if (messageController.text.isNotEmpty) {
+
+        socket.emit(
+          'direct-message', 
+          controller.imageUrlController.value.isEmpty ?
+          {
+            //'from': widget.userId,
+            'to': widget.receipientId,
+            'content': messageController.text,
+          }
+          :{
+            //'from': widget.userId,
+            'to': widget.receipientId,
+            'content': messageController.text,
+            'imageUrl': controller.imageUrlController.value,
+          }
+        );
+      
+        //clear the clearables
+        messageController.clear();
+        controller.imageUrlController.value = "";
+      }
+      else{
+        if(controller.imageUrlController.value.isEmpty) {
+          log("do nothing");
+        }
+        else{
+          socket.emit(
+            'direct-message', 
+            {
+              //'from': widget.userId,
+              'to': widget.receipientId,
+              'content': "",
+              'imageUrl': controller.imageUrlController.value,
+            }
+          );
+          //clear the image url
+          controller.imageUrlController.value = "";
+        }
+      }
+    }
+    
   }
 
   @override

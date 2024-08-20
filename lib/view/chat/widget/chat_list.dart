@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dweller/model/chat/chatlist_model.dart';
+import 'package:dweller/services/controller/chat/chat_controller.dart';
 import 'package:dweller/services/repository/chat_service/chat_service.dart';
 import 'package:dweller/services/repository/data_service/local_storage/local_storage.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
@@ -37,7 +38,6 @@ class _ChatListState extends State<ChatList> {
     connectToServer();
   }
 
-  //final chatService = Get.put(ChatService());
 
   late IO.Socket socket;
   final StreamController<List<ChatListResponse>> _chatsStreamController = StreamController<List<ChatListResponse>>.broadcast();
@@ -57,8 +57,8 @@ class _ChatListState extends State<ChatList> {
   @override
   void dispose() {
     // TODO: implement dispose
-    socket.dispose();
-    _chatsStreamController.close();
+    /*socket.dispose();
+    _chatsStreamController.close();*/
 
     super.dispose();
   }
@@ -166,13 +166,16 @@ class _ChatListState extends State<ChatList> {
           
                 return InkWell(
                   onTap: () {
-                    socket.emit(
+                    /*socket.emit(
                       'chats', 
                       {
+                        "id": data.chatId,
                         'seen': true,
                       }
-                    );
+                    );*/
+                    
                     Get.to(() => MessageScreen(
+                      receipientFCMToken: data.fcmToken,
                       receipientId: data.userId,
                       receipientName: data.name,
                       receipientPicture: data.picture,

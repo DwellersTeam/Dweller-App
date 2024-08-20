@@ -276,6 +276,9 @@ class PushNotificationController extends getx.GetxController {
       else if(message.data['type'] == 'match') {
         controller.navigateToMainpageAtIndex(index: 2, page: MainPage());
       }
+      else if(message.data['type'] == 'bookmark') {
+        controller.navigateToMainpageAtIndex(index: 3, page: MainPage());
+      }
       else if(message.data['type'] == 'chat') {
         controller.navigateToMainpageAtIndex(index: 4, page: MainPage());
       }
