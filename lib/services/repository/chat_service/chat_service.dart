@@ -84,4 +84,11 @@ class ChatService extends getx.GetxController {
 
   bool get isConnected => _isConnected;
 
+
+
+  //SCHEDULE TASK APIS
+  
+
+
+
 }

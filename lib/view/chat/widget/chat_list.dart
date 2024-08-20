@@ -43,6 +43,7 @@ class _ChatListState extends State<ChatList> {
   final StreamController<List<ChatListResponse>> _chatsStreamController = StreamController<List<ChatListResponse>>.broadcast();
   final String refreshToken = LocalStorage.getXrefreshToken();
   final String accessToken = LocalStorage.getToken();
+  final String myId = LocalStorage.getUserID();
 
   @override
   void initState() {
@@ -166,13 +167,18 @@ class _ChatListState extends State<ChatList> {
           
                 return InkWell(
                   onTap: () {
-                    /*socket.emit(
-                      'chats', 
-                      {
-                        "id": data.chatId,
-                        'seen': true,
-                      }
-                    );*/
+
+                    if(data.senderOfLastMessage != myId) {
+                      socket.emit(
+                        'seen', 
+                        {
+                        "id": data.senderOfLastMessage,
+                        }
+                      );
+                    }
+                    else {
+                      log("nothing done");
+                    }
                     
                     Get.to(() => MessageScreen(
                       receipientFCMToken: data.fcmToken,

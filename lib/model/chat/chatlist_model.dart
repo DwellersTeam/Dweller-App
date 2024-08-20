@@ -10,6 +10,7 @@ class ChatListResponse{
     required this.userId,
     required this.picture,
     required this.name,
+    required this.senderOfLastMessage,
     required this.lastMessage,
     required this.createdAt,
     required this.online,
@@ -20,6 +21,7 @@ class ChatListResponse{
   final String userId;
   final String picture;
   final String name;
+  final String senderOfLastMessage;
   final String lastMessage;
   final String createdAt;
   final bool online;
@@ -29,12 +31,12 @@ class ChatListResponse{
 
   factory ChatListResponse.fromJson(Map<String, dynamic> json) {
     return ChatListResponse(
-      fcmToken: json["fcmToken"] ?? 
-      'dqysECpRQOiD97Ig_Zovhh:APA91bGClIlJejREsA587TcwhRrF6XprUY-kY_dKpFPr3OHdp-vFDWXzgt1EAsnY1FFSwqEYiGiQFR46K6JlcKbl7jXi4vwxO3sbXibrdkWfLHAboIRFa6ak72Svyse2rchYy_yiHtgn',
+      fcmToken: json["fcmToken"] ?? '',
       chatId: json["_id"] ?? "",
       userId: json['userId'] ?? "",
       picture: json['picture'] ?? '',
       name: json['name'] ?? '',
+      senderOfLastMessage: json["sender"] ?? '',
       lastMessage: json['lastMessage'] ?? '',
       createdAt: json['createdAt'] ?? '',
       online: json['online'] ?? false,
@@ -49,6 +51,7 @@ class ChatListResponse{
       "userId": userId,
       "picture": picture,
       "name": name,
+      "sender": senderOfLastMessage,
       "lastMessage": lastMessage,
       "createdAt": createdAt,
       "online": online,
