@@ -270,6 +270,7 @@ class _MessageScreenState extends State<MessageScreen> {
         
             //CUSTOM TEXTFIELD HERE
             MessageTextField(
+              receipientId: widget.receipientId,
               onSend: () {
                 sendMessage(messageController: controller.messageTextController);
               },

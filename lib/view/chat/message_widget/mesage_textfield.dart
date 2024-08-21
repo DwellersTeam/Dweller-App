@@ -21,8 +21,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class MessageTextField extends StatelessWidget {
-  MessageTextField({super.key, required this.onSend});
+  MessageTextField({super.key, required this.onSend, required this.receipientId});
   final VoidCallback onSend;
+  final String receipientId;
 
   final controller = Get.put(ChatPageController());
 
@@ -159,7 +160,8 @@ class MessageTextField extends StatelessWidget {
                 onTap: () {
                   messageOptionBottomsheet(
                     context: context,
-                    controller: controller
+                    controller: controller,
+                    receipientId: receipientId
                   );
                 },
                 child: Icon(

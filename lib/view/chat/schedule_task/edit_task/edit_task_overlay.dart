@@ -1,6 +1,8 @@
 import 'package:dweller/services/controller/chat/chat_controller.dart';
+import 'package:dweller/services/repository/chat_service/chat_service.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/date_picker.dart';
+import 'package:dweller/utils/components/my_snackbar.dart';
 import 'package:dweller/utils/components/time_picker.dart';
 import 'package:dweller/view/chat/schedule_task/add_task/tap_card.dart';
 import 'package:dweller/view/search/widget/search_field.dart';
@@ -17,7 +19,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 void editTaskBottomsheet({
   required ChatPageController controller,
+  required ChatService service,
+  required String myId,
   required BuildContext context,
+  required VoidCallback onRefresh,
+  required String taskId,
   required String taskName,
   required String taskDescription,
   required String dueDate,
@@ -51,7 +57,40 @@ void editTaskBottomsheet({
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () async{
+                      await service.updateTask(
+                        taskId: taskId,
+                        taskName: controller.taskNameTextControllerEdit.text.isNotEmpty ? controller.taskNameTextControllerEdit.text : taskName, 
+                        taskDescription: controller.taskDescriptionTextControllerEdit.text.isNotEmpty ? controller.taskDescriptionTextControllerEdit.text : taskDescription,
+                        taskDueDate: controller.dueDateEdit.value.isNotEmpty ? controller.dueDateEdit.value : dueDate, 
+                        taskDueTime: controller.dueTimeEdit.value.isNotEmpty ? controller.dueTimeEdit.value : dueTime,
+                        onSuccess: () {
+                          controller.taskNameTextControllerEdit.clear();
+                          controller.taskDescriptionTextControllerEdit.clear();
+                          controller.dueDateEdit.value = '';
+                          controller.dueTimeEdit.value = '';
+                          showMySnackBar(
+                            context: context, 
+                            message: "task updated successfully", 
+                            backgroundColor: AppColor.greenColor
+                          );
+                          onRefresh();
+                          Get.back();
+                        },
+                        onFailure: () {
+                          controller.taskNameTextControllerEdit.clear();
+                          controller.taskDescriptionTextControllerEdit.clear();
+                          controller.dueDateEdit.value = '';
+                          controller.dueTimeEdit.value = '';
+                          showMySnackBar(
+                            context: context, 
+                            message: "failed to update task", 
+                            backgroundColor: AppColor.redColor
+                          );
+                          Get.back();
+                        },
+                      );
+                    },
                     child: Container(
                       alignment: Alignment.center,
                       //height: 7.h,
@@ -61,25 +100,29 @@ void editTaskBottomsheet({
                         color: AppColor.darkPurpleColor,
                         borderRadius: BorderRadius.circular(30.r)
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Mark as done',
-                            style: GoogleFonts.poppins(
-                              color: AppColor.whiteColor,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600
-                            ),
-                          ),
-                          SizedBox(width: 5.w,),
-                          Icon(
-                            size: 24.r,
-                            color: AppColor.whiteColor,
-                            CupertinoIcons.check_mark
-                            //Icons.check
-                          ),
-                        ],
+                      child: Obx(
+                        () {
+                          return service.isLoading.value ? CircularProgressIndicator.adaptive(backgroundColor: AppColor.whiteColor,) : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Mark as done',
+                                style: GoogleFonts.poppins(
+                                  color: AppColor.whiteColor,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w600
+                                ),
+                              ),
+                              SizedBox(width: 5.w,),
+                              Icon(
+                                size: 24.r,
+                                color: AppColor.whiteColor,
+                                CupertinoIcons.check_mark
+                                //Icons.check
+                              ),
+                            ],
+                          );
+                        }
                       ),
                     ),
                   ),
@@ -89,7 +132,9 @@ void editTaskBottomsheet({
               SizedBox(height: MediaQuery.of(context).size.height * 0.03),
         
               TaskTextInputfieldEdit(
-                onChanged: (val) {},
+                onChanged: (val) {
+                  controller.taskNameTextControllerEdit.text = val;
+                },
                 onFieldSubmitted: (val) {
                   controller.taskNameTextControllerEdit.text = val;
                 },
@@ -100,7 +145,9 @@ void editTaskBottomsheet({
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.04),
               TaskTextInputfieldEdit(
-                onChanged: (val) {},
+                onChanged: (val) {
+                  controller.taskDescriptionTextControllerEdit.text = val;
+                },
                 onFieldSubmitted: (val) {
                   controller.taskDescriptionTextControllerEdit.text = val;
                 },
@@ -123,7 +170,7 @@ void editTaskBottomsheet({
                           );
                         },
                         svgasset: 'assets/svg/due_date.svg',
-                        text: controller.dueDateEdit.value.isNotEmpty ? controller.dueDateEdit.value :  dueDate,
+                        text: controller.dueDateEdit.value.isNotEmpty ? controller.dueDateEdit.value : dueDate,
                       );
                     }
                   ),
@@ -138,7 +185,7 @@ void editTaskBottomsheet({
                           );
                         },
                         svgasset: 'assets/svg/due_time.svg',
-                        text: controller.dueTimeEdit.value.isNotEmpty ? controller.dueTimeEdit.value  : dueTime,
+                        text: controller.dueTimeEdit.value.isNotEmpty ? controller.dueTimeEdit.value : dueTime,
                       );
                     }
                   ),

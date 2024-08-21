@@ -20,7 +20,7 @@ Future<void> rightSwipeAlert({required BuildContext context, required UserModel 
     transitionCurve: const ElasticOutCurve(),
     useSafeArea: true,
     barrierDismissible: false,
-    AlertDialog(
+    AlertDialog.adaptive(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(20.r),

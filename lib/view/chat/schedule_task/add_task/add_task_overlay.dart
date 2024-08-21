@@ -1,6 +1,8 @@
 import 'package:dweller/services/controller/chat/chat_controller.dart';
+import 'package:dweller/services/repository/chat_service/chat_service.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/date_picker.dart';
+import 'package:dweller/utils/components/my_snackbar.dart';
 import 'package:dweller/utils/components/time_picker.dart';
 import 'package:dweller/view/chat/schedule_task/add_task/tap_card.dart';
 import 'package:dweller/view/search/widget/search_field.dart';
@@ -18,6 +20,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 void addTaskBottomsheet({
   required ChatPageController controller,
+  required ChatService service,
+  required String myId,
+  required String receipientId,
+  required VoidCallback onRefresh,
   required BuildContext context,
 }) {
   Get.bottomSheet(
@@ -48,7 +54,41 @@ void addTaskBottomsheet({
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: () async{
+                      await service.createTask(
+                        receipientId: receipientId, 
+                        creatorId: myId, 
+                        taskName: controller.taskNameTextController.text, 
+                        taskDescription:controller.taskDescriptionTextController.text,
+                        taskDueDate: controller.dueDate.value, 
+                        taskDueTime: controller.dueTime.value, 
+                        onSuccess: () {
+                          controller.taskNameTextController.clear();
+                          controller.taskDescriptionTextController.clear();
+                          controller.dueDate.value = '';
+                          controller.dueTime.value = '';
+                          showMySnackBar(
+                            context: context, 
+                            message: "task created successfully", 
+                            backgroundColor: AppColor.greenColor
+                          );
+                          onRefresh();
+                          Get.back();
+                        },
+                        onFailure: () {
+                          controller.taskNameTextController.clear();
+                          controller.taskDescriptionTextController.clear();
+                          controller.dueDate.value = '';
+                          controller.dueTime.value = '';
+                          showMySnackBar(
+                            context: context, 
+                            message: "failed to create task", 
+                            backgroundColor: AppColor.redColor
+                          );
+                          Get.back();
+                        },
+                      );
+                    },
                     child: Container(
                       alignment: Alignment.center,
                       //height: 7.h,
@@ -58,25 +98,29 @@ void addTaskBottomsheet({
                         color: Color.fromRGBO(55, 203, 237, 1),
                         borderRadius: BorderRadius.circular(30.r)
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Add task',
-                            style: GoogleFonts.poppins(
-                              color: AppColor.whiteColor,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600
-                            ),
-                          ),
-                          SizedBox(width: 5.w,),
-                          Icon(
-                            size: 24.r,
-                            color: AppColor.whiteColor,
-                            CupertinoIcons.check_mark
-                            //Icons.check
-                          ),
-                        ],
+                      child: Obx(
+                        () {
+                          return service.isLoading.value ? const CircularProgressIndicator.adaptive(backgroundColor: AppColor.whiteColor,) : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Add task',
+                                style: GoogleFonts.poppins(
+                                  color: AppColor.whiteColor,
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w600
+                                ),
+                              ),
+                              SizedBox(width: 5.w,),
+                              Icon(
+                                size: 24.r,
+                                color: AppColor.whiteColor,
+                                CupertinoIcons.check_mark
+                                //Icons.check
+                              ),
+                            ],
+                          );
+                        }
                       ),
                     ),
                   ),
@@ -86,7 +130,9 @@ void addTaskBottomsheet({
               SizedBox(height: MediaQuery.of(context).size.height * 0.03),
         
               TaskTextInputfield(
-                onChanged: (val) {},
+                onChanged: (val) {
+                  controller.taskNameTextController.text = val;
+                }, 
                 onFieldSubmitted: (val) {},
                 hintText: 'Task name',
                 keyboardType: TextInputType.name,
@@ -95,7 +141,9 @@ void addTaskBottomsheet({
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.04),
               TaskTextInputfield(
-                onChanged: (val) {},
+                onChanged: (val) {
+                  controller.taskDescriptionTextController.text = val;
+                },
                 onFieldSubmitted: (val) {},
                 hintText: 'Task description',
                 keyboardType: TextInputType.text,

@@ -1,7 +1,7 @@
 import 'package:dweller/services/controller/home/homepage_controller.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
-import 'package:dweller/view/search/settings/page/edit_hobbies_lifestyle_settings.dart';
-import 'package:dweller/view/search/settings/widget/general/all_buttons.dart';
+import 'package:dweller/view/settings/page/edit_hobbies_lifestyle_settings.dart';
+import 'package:dweller/view/settings/widget/general/all_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

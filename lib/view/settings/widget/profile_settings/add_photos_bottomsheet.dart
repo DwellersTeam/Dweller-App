@@ -3,7 +3,7 @@ import 'package:dweller/services/controller/settings/settings_controller.dart';
 import 'package:dweller/services/repository/create_profile_service/create_profile_service.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/my_snackbar.dart';
-import 'package:dweller/view/search/settings/widget/general/success_sheet_acc.dart';
+import 'package:dweller/view/settings/widget/general/success_sheet_acc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

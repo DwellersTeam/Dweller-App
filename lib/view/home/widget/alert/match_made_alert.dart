@@ -16,7 +16,7 @@ Future<void> matchMadeAlert({required UserModel user}) async {
     transitionCurve: const ElasticOutCurve(),
     useSafeArea: true,
     barrierDismissible: false,
-    AlertDialog(
+    AlertDialog.adaptive(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(20.r),

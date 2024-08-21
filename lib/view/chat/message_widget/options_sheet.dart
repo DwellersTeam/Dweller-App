@@ -18,6 +18,7 @@ import 'package:google_fonts/google_fonts.dart';
 //Upload Photo Bottomsheet
 Future<void> messageOptionBottomsheet({
   required BuildContext context,
+  required String receipientId,
   required ChatPageController controller,
 }) async {
   final size = MediaQuery.of(context).size;
@@ -120,7 +121,9 @@ Future<void> messageOptionBottomsheet({
                           GestureDetector(
                             onTap: () {
                               Get.back();
-                              Get.to(() => TaskScreen());
+                              Get.to(() => TaskScreen(
+                                receipientId: receipientId,
+                              ));
                             },
                             child: Container(
                               alignment: Alignment.center,

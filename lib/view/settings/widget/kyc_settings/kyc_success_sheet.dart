@@ -1,5 +1,5 @@
 import 'package:dweller/utils/colors/appcolor.dart';
-import 'package:dweller/view/search/settings/widget/general/all_buttons.dart';
+import 'package:dweller/view/settings/widget/general/all_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -11,9 +11,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 
-Future<void> successBottomsheet({
+Future<void> kycSuccessBottomsheet({
   required BuildContext context,
   required String title, 
+  required String subtitle,
 
   }) async{
 
@@ -74,26 +75,40 @@ Future<void> successBottomsheet({
                 Text(
                   title,
                   style: GoogleFonts.poppins(
-                    color: AppColor.neutralBlackColor,
+                    color: AppColor.darkPurpleColor,
                     fontSize: 22.sp, //16.sp
-                    fontWeight: FontWeight.w500
+                    fontWeight: FontWeight.w500 //w600
                   ),
                   textAlign: TextAlign.center,
                 ),
-                //SizedBox(height: 60.h,),
+                SizedBox(height: 20.h,),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40.w),
+                  child: Text(
+                    subtitle,
+                    style: GoogleFonts.poppins(
+                      color: AppColor.darkPurpleColor,
+                      fontSize: 12.sp, 
+                      fontWeight: FontWeight.w400 
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.06),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: ConfirmButton(
-                    backgroundColor: AppColor.blackColorOp, 
                     textColor: AppColor.whiteColor,
+                    backgroundColor: AppColor.darkPurpleColor,
                     text: 'Got it!',
                     onPressed: () {
                       Get.back();
                     },
+                    height: 70.h,
+                    borderRadius: BorderRadius.circular(10.r),
                   ),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                 
               ],
             ),

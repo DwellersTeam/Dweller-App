@@ -21,7 +21,7 @@ void showLogoutDialog({
     //backgroundColor: Color.fromRGBO(214, 248, 255, 1),
     //contentPadding: EdgeInsetsDirectional.symmetric(horizontal: 20.w, vertical: 20.h),
   
-    AlertDialog(
+    AlertDialog.adaptive(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(20.r),
