@@ -130,25 +130,21 @@ class BaseService extends getX.GetxController {
   );
 
   //function that sends a GET request for Google Auth (on a soft)
-  Future<diox.Response> httpPostAuth({required String endPoint, required dynamic body}) async {
+  Future<http.Response> httpPostAuth({required String endPoint, required dynamic body}) async {
     //var token = await LocalStorage.getToken();
     Uri url = Uri.parse("$baseUrl$endPoint");
     log('$url');
-    final res = dio.post(
-      '$baseUrl$endPoint', //url,
-      data: body,
-      options: diox.Options(
-        contentType: "application/json",
-        headers: {
-          //"Accept": "*/*",
-          'Content-Type': 'application/json',
-          //"Accept-Encoding": "gzip, deflate, br",
-          "Connection": "keep-alive",
-        },
-      ),
-    
+    final res = http.post(
+      url,
+      body: json.encode(body),
+      headers:
+      {
+        //"Accept": "*/*",
+        "Content-Type": "application/json",
+        //"Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+      } 
     );
-
     return res;
   }
 

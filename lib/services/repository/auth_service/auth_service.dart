@@ -509,16 +509,17 @@ class AuthService extends getx.GetxController {
         "fcmToken": FCMToken ?? "no token"
       };
       
-      diox.Response res = await baseService.httpPostAuth(endPoint: "auth/signup", body: body);
+      //diox.Response res = await baseService.httpPostAuth(endPoint: "auth/signup", body: body);
+      http.Response res = await baseService.httpPostAuth(endPoint: "auth/signup", body: body);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
 
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
-        debugPrint('this is response body ==> ${res.data}');
+        debugPrint('this is response body ==> ${res.body}');
         
         //decode response from the server
-        RegisterResponse jsonResponse = RegisterResponse.fromJson(json.decode(res.data)); 
+        RegisterResponse jsonResponse = RegisterResponse.fromJson(jsonDecode(res.body)); 
 
         String accessToken = jsonResponse.accessToken;
         String refreshToken = jsonResponse.refreshToken;
@@ -581,7 +582,7 @@ class AuthService extends getx.GetxController {
       } 
       else {
         isLoading.value = false;
-        debugPrint('this is response body ==>${res.data}');
+        debugPrint('this is response body ==>${res.body}');
         debugPrint('this is response status ==>${res.statusCode}');
         //debugPrint('this is response reason ==> ${res.reasonPhrase}');
         return baseService.showErrorMessage(context: context, httpStatusCode: res.statusCode!);
@@ -626,16 +627,16 @@ class AuthService extends getx.GetxController {
         "fcmToken": FCMToken ?? "no token"
       };
       
-      diox.Response res = await baseService.httpPostAuth(endPoint: "auth/login", body: body);
+      http.Response res = await baseService.httpPostAuth(endPoint: "auth/login", body: body);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
 
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
-        log('this is response body  ==> ${res.data}');
+        log('this is response body  ==> ${res.body}');
 
         // Decode response from the server
-        LoginResponse jsonResponse = LoginResponse.fromJson(jsonDecode(res.data));
+        LoginResponse jsonResponse = LoginResponse.fromJson(jsonDecode(res.body));
 
         String accessToken = jsonResponse.accessToken;
         String refreshToken = jsonResponse.refreshToken;
@@ -674,8 +675,8 @@ class AuthService extends getx.GetxController {
         isLoading.value = false;
         //debugPrint('this is response body ==>${res.body}');
         debugPrint('this is response status ==>${res.statusCode}');
-        debugPrint('this is response reason ==> ${res.statusMessage}');
-        return baseService.showErrorMessage(context: context, httpStatusCode: res.statusCode!);
+        debugPrint('this is response reason ==> ${res.reasonPhrase}');
+        return baseService.showErrorMessage(context: context, httpStatusCode: res.statusCode);
       }
     }
 
@@ -720,13 +721,13 @@ class AuthService extends getx.GetxController {
         //"type": 'email',
       };
       
-      diox.Response res = await baseService.httpPostAuth(endPoint: "auth/sendVerification", body: body);
+      http.Response res = await baseService.httpPostAuth(endPoint: "auth/sendVerification", body: body);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
 
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
-        debugPrint('this is response body ==> ${res.data}');
+        debugPrint('this is response body ==> ${res.body}');
         
         //decode response from the server
         /*VerifyEmailResponse jsonResponse = VerifyEmailResponse.fromJson(json.decode(res.body)); 
@@ -743,7 +744,7 @@ class AuthService extends getx.GetxController {
       
       else {
         isLoading.value = false;
-        debugPrint('this is response body ==>${res.data}');
+        debugPrint('this is response body ==>${res.body}');
         debugPrint('this is response status ==>${res.statusCode}');
         //debugPrint('this is response reason ==> ${res.reasonPhrase}');
         return baseService.showErrorMessage(context: context, httpStatusCode: res.statusCode!);
@@ -792,13 +793,13 @@ class AuthService extends getx.GetxController {
         "lastname": lastName,
       };
       
-      diox.Response res = await baseService.httpPostAuth(endPoint: "auth/verifyAccount", body: body);
+      http.Response res = await baseService.httpPostAuth(endPoint: "auth/verifyAccount", body: body);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
 
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
-        debugPrint('this is response body ==> ${res.data}');
+        debugPrint('this is response body ==> ${res.body}');
         
         //decode response from the server
         onSuccess();
@@ -806,7 +807,7 @@ class AuthService extends getx.GetxController {
       } 
       else {
         isLoading.value = false;
-        debugPrint('this is response body ==>${res.data}');
+        debugPrint('this is response body ==>${res.body}');
         debugPrint('this is response status ==>${res.statusCode}');
         //debugPrint('this is response reason ==> ${res.reasonPhrase}');
         return baseService.showErrorMessage(context: context, httpStatusCode: res.statusCode!);
@@ -850,13 +851,13 @@ class AuthService extends getx.GetxController {
         'email': email,
       };
       
-      diox.Response res = await baseService.httpPostAuth(endPoint: "auth/forgotPassword", body: body);
+      http.Response res = await baseService.httpPostAuth(endPoint: "auth/forgotPassword", body: body);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
 
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
-        debugPrint('this is response body ==> ${res.data}');
+        debugPrint('this is response body ==> ${res.body}');
         
         //decode response from the server
         getx.Get.to(() =>  nextPage);
@@ -865,10 +866,10 @@ class AuthService extends getx.GetxController {
       
       else {
         isLoading.value = false;
-        debugPrint('this is response body ==>${res.data}');
+        debugPrint('this is response body ==>${res.body}');
         debugPrint('this is response status ==>${res.statusCode}');
-        debugPrint('this is response reason ==> ${res.statusMessage}');
-        return baseService.showErrorMessage(context: context, httpStatusCode: res.statusCode!);
+        debugPrint('this is response reason ==> ${res.reasonPhrase}');
+        return baseService.showErrorMessage(context: context, httpStatusCode: res.statusCode);
       }
 
     }
@@ -915,13 +916,13 @@ class AuthService extends getx.GetxController {
         'passwordConfirmation': confirmPassword,
       };
       
-      diox.Response res = await baseService.httpPostAuth(endPoint: "auth/resetPassowrd", body: body);
+      http.Response res = await baseService.httpPostAuth(endPoint: "auth/resetPassowrd", body: body);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
 
         isLoading.value = false;
         debugPrint('this is response status ==> ${res.statusCode}');
-        debugPrint('this is response body ==> ${res.data}');
+        debugPrint('this is response body ==> ${res.body}');
         
         //decode response from the server
         onSuccess();
@@ -929,10 +930,10 @@ class AuthService extends getx.GetxController {
       } 
       else {
         isLoading.value = false;
-        debugPrint('this is response body ==>${res.data}');
+        debugPrint('this is response body ==>${res.body}');
         debugPrint('this is response status ==>${res.statusCode}');
-        debugPrint('this is response reason ==> ${res.data}');
-        return baseService.showErrorMessage(context: context, httpStatusCode: res.statusCode!);
+        debugPrint('this is response reason ==> ${res.body}');
+        return baseService.showErrorMessage(context: context, httpStatusCode: res.statusCode);
       }
     }
     on FormatException catch(e, stackTrace){
