@@ -60,6 +60,7 @@ class HomePageController extends getx.GetxController {
       case Swipe():
         log('The card was swiped to the : ${activity.direction.name}');
         log('previous index: $previousIndex, target index: $targetIndex');
+        currentIndex.value = 0;
 
         if (activity.direction.name == "right") {
 
@@ -88,12 +89,15 @@ class HomePageController extends getx.GetxController {
       case Unswipe():
         log('A ${activity.direction.name} swipe was undone.');
         log('previous index: $previousIndex, target index: $targetIndex');
+        currentIndex.value = 0;
         break;
       case CancelSwipe():
         log('A swipe was cancelled');
+        currentIndex.value = 0;
         break;
       case DrivenActivity():
         log('Driven Activity');
+        //currentIndex.value = 0;
         break;
     }
   }

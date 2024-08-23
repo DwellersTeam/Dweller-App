@@ -124,8 +124,10 @@ class _HostCardState extends State<HostCard> {
                 targetIndex: targetIndex,
                 activity: activity,
                 context: context,
-                userModel: service.propertyList[targetIndex].propertyOwner, //change back to previous index
+                userModel: service.propertyList[previousIndex].propertyOwner, //change back to previous index
               );
+              //reset the picture index back to zero
+              //controller.currentIndex.value = 0;
             }
           },
           

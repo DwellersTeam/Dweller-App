@@ -120,8 +120,10 @@ class _SeekerCardState extends State<SeekerCard> {
                 targetIndex: targetIndex,
                 activity: activity,
                 context: context,
-                userModel: service.seekersList[targetIndex],
+                userModel: service.seekersList[previousIndex],
               );
+              //reset the picture index back to zero
+              //controller.currentIndex.value = 0;
             }
           },
           onEnd: () => controller.onEnd(context: context, isUserPro: widget.isOnPro),
@@ -144,7 +146,7 @@ class _SeekerCardState extends State<SeekerCard> {
                   image: DecorationImage(
                     colorFilter: const ColorFilter.mode(AppColor.darkGreyColor, BlendMode.softLight),
                     image: NetworkImage(
-                      item.pictures[controller.currentIndex.value],
+                      item.pictures[controller.currentIndex.value],   /////problem here
                     ),
                     fit: BoxFit.cover,
                     filterQuality: FilterQuality.high,
