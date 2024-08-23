@@ -186,7 +186,6 @@ class KYCSettings extends StatelessWidget {
                             title: "Uh oh!", 
                             message:  "please select and upload your valid document", 
                             buttonText: "Okay", 
-                            context: context
                           );
                         }
                         else{

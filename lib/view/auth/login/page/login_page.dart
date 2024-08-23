@@ -212,7 +212,6 @@ class _LoginPageState extends State<LoginPage> {
                                 title: 'Uh oh', 
                                 message: 'fields must not be empty', 
                                 buttonText: 'Okay', 
-                                context: context
                               );
                             }
                             

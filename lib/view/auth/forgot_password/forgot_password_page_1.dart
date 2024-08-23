@@ -121,7 +121,6 @@ class ForgotPasswordPage1 extends StatelessWidget {
                               title: 'Uh oh', 
                               message: 'field must not be empty', 
                               buttonText: 'Okay', 
-                              context: context
                             );
                           }
                         },

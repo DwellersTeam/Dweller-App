@@ -220,7 +220,6 @@ class _WelcomePageState extends State<WelcomePage> {
                             title: 'Uh oh', 
                             message: 'please set up your profile so we can know the type of Dweller you are', 
                             buttonText: 'Okay', 
-                            context: context
                           );
                         }
                         else{

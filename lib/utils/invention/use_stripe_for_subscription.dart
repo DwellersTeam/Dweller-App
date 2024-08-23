@@ -82,7 +82,6 @@ class StripeSubscriptionClass {
             title: "Uh oh!", 
             message: "you are already subscribed to Dweller PRO", 
             buttonText: "Okay", 
-            context: context
           );
         }
         else if(e.error.code == FailureCode.Canceled) {
@@ -90,7 +89,6 @@ class StripeSubscriptionClass {
             title: "Uh oh!", 
             message: "payment intent was cancelled", 
             buttonText: "Okay", 
-            context: context
           );
         }
         else if(e.error.code == FailureCode.Timeout) {
@@ -98,7 +96,6 @@ class StripeSubscriptionClass {
             title: "Uh oh!", 
             message: "payment intent timed out", 
             buttonText: "Okay", 
-            context: context
           );
         }
         else{
@@ -106,7 +103,6 @@ class StripeSubscriptionClass {
             title: "Uh oh!", 
             message: "something went wrong", 
             buttonText: "Okay", 
-            context: context
           );
 
         }

@@ -32,7 +32,6 @@ class BaseService extends getX.GetxController {
           title: 'Uh oh', 
           message: 'Bad Request: The server could not understand the request due to invalid syntax.', 
           buttonText: 'Dismiss', 
-          context: context
         );
       case 401:
         //return 'Unauthorized: The client must authenticate itself to get the requested response.';
@@ -40,7 +39,6 @@ class BaseService extends getX.GetxController {
           title: 'Uh oh', 
           message: 'Unauthorized: The client must authenticate itself to get the requested response.',
           buttonText: 'Dismiss', 
-          context: context
         );
       case 403:
         //return 'Forbidden: The client does not have access rights to the content.';
@@ -48,7 +46,6 @@ class BaseService extends getX.GetxController {
           title: 'Uh oh', 
           message: 'Forbidden: The client does not have access rights to the content.',
           buttonText: 'Dismiss', 
-          context: context
         );
       case 404:
         //return 'Not Found: The server can not find the requested resource.';
@@ -56,7 +53,6 @@ class BaseService extends getX.GetxController {
           title: 'Uh oh', 
           message: 'Not Found: The server can not find the requested resource.',
           buttonText: 'Dismiss', 
-          context: context
         );
       case 500:
         //return 'Internal Server Error: The server has encountered a situation it doesn\'t know how to handle.';
@@ -64,7 +60,6 @@ class BaseService extends getX.GetxController {
           title: 'Uh oh', 
           message: 'Internal Server Error: The server has encountered a situation it doesn\'t know how to handle.',
           buttonText: 'Dismiss', 
-          context: context
         );
       case 502:
         //return 'Bad Gateway: The server was acting as a gateway or proxy and received an invalid response from the upstream server.';
@@ -72,7 +67,6 @@ class BaseService extends getX.GetxController {
           title: 'Uh oh', 
           message: 'Bad Gateway: The server was acting as a gateway or proxy and received an invalid response from the upstream server.',
           buttonText: 'Dismiss', 
-          context: context
         );
       case 503:
         //return 'Service Unavailable: The server is not ready to handle the request. Common causes might be a server that is down for maintenance or that is overloaded.';
@@ -80,7 +74,6 @@ class BaseService extends getX.GetxController {
           title: 'Uh oh', 
           message: 'Service Unavailable: The server is not ready to handle the request. Common causes might be a server that is down for maintenance or that is overloaded.',
           buttonText: 'Dismiss', 
-          context: context
         );
       case 504:
         //return 'Gateway Timeout: The server is acting as a gateway or proxy and did not receive a timely response from the upstream server.';
@@ -88,7 +81,6 @@ class BaseService extends getX.GetxController {
           title: 'Uh oh', 
           message: 'Gateway Timeout: The server is acting as a gateway or proxy and did not receive a timely response from the upstream server.',
           buttonText: 'Dismiss', 
-          context: context
         );
       default:
         //return 'Unknown Error: An unexpected error occurred.';
@@ -96,7 +88,6 @@ class BaseService extends getX.GetxController {
           title: 'Uh oh', 
           message: 'Unknown Error: An unexpected error occurred.',
           buttonText: 'Dismiss', 
-          context: context
         );
     }   
   }

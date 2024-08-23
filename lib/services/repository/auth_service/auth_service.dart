@@ -140,7 +140,6 @@ class AuthService extends getx.GetxController {
           title: 'Error',
           message: e.code,
           buttonText: 'Dismiss',
-          context: context
         );
       }
       else if (e.code == GoogleSignIn.kSignInCanceledError) {
@@ -151,7 +150,6 @@ class AuthService extends getx.GetxController {
           title: 'Error',
           message: e.code,
           buttonText: 'Dismiss',
-          context: context
         );
       }
       else if (e.code == GoogleSignIn.kSignInFailedError) {
@@ -163,7 +161,6 @@ class AuthService extends getx.GetxController {
           title: 'Error',
           message: e.code,
           buttonText: 'Dismiss',
-          context: context
         );
       }
       else {        
@@ -172,7 +169,6 @@ class AuthService extends getx.GetxController {
           title: 'Error',
           message: errorMessage,
           buttonText: 'Dismiss',
-          context: context
         );
       }
     }
@@ -184,7 +180,6 @@ class AuthService extends getx.GetxController {
         title: 'Error',
         message: '$e',
         buttonText: 'Dismiss',
-        context: context
       );
     }
 
@@ -243,7 +238,6 @@ class AuthService extends getx.GetxController {
           title: 'Error',
           message: e.code,
           buttonText: 'Dismiss',
-          context: context
         );
       }
       else if (e.code == GoogleSignIn.kSignInCanceledError) {
@@ -254,7 +248,6 @@ class AuthService extends getx.GetxController {
           title: 'Error',
           message: e.code,
           buttonText: 'Dismiss',
-           context: context
         );
       }
       else if (e.code == GoogleSignIn.kSignInFailedError) {
@@ -266,7 +259,6 @@ class AuthService extends getx.GetxController {
           title: 'Error',
           message: e.code,
           buttonText: 'Dismiss',
-          context: context
         );
       }
       else {        
@@ -275,7 +267,6 @@ class AuthService extends getx.GetxController {
           title: 'Error',
           message: errorMessage,
           buttonText: 'Dismiss',
-          context: context
         );
       }
     }
@@ -286,7 +277,6 @@ class AuthService extends getx.GetxController {
         title: 'Error',
         message: '$e',
         buttonText: 'Dismiss',
-        context: context
       );
     }
   }
@@ -374,7 +364,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (fmt)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
     on Exception catch(e, stackTrace) {
@@ -385,7 +374,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (exc)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
   }
@@ -483,7 +471,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (fmt)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
     on Exception catch(e, stackTrace) {
@@ -494,7 +481,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (exc)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
   }
@@ -609,7 +595,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (fmt)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
     on Exception catch(e, stackTrace) {
@@ -620,7 +605,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (exc)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
   }
@@ -703,7 +687,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (fmt)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
     on Exception catch(e, stackTrace) {
@@ -714,7 +697,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (exc)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
   }
@@ -775,7 +757,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (fmt)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
     on Exception catch(e, stackTrace) {
@@ -786,7 +767,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (exc)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
   }
@@ -841,7 +821,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (fmt)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
     on Exception catch(e, stackTrace) {
@@ -852,7 +831,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (exc)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
   }
@@ -902,7 +880,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (fmt)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
     on Exception catch(e, stackTrace) {
@@ -913,7 +890,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (exc)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
   }
@@ -967,7 +943,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (fmt)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
     on Exception catch(e, stackTrace) {
@@ -978,7 +953,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (exc)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
   }
@@ -1030,7 +1004,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (fmt)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
     on Exception catch(e, stackTrace) {
@@ -1041,7 +1014,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (exc)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
   }
@@ -1084,7 +1056,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (fmt)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
     on Exception catch(e, stackTrace) {
@@ -1095,7 +1066,6 @@ class AuthService extends getx.GetxController {
         title: 'Error (exc)',
         message: "$e",
         buttonText: 'Dismiss',
-        context: context
       );
     }
   }

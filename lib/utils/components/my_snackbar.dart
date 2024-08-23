@@ -44,12 +44,11 @@ Future<void> showMessagePopup({
   required String title,
   required String message,
   required String buttonText, 
-  required BuildContext context,
+  //required BuildContext context,
   }) async{
-  showAdaptiveDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog.adaptive(
+  Get.dialog(
+    useSafeArea: true,
+    AlertDialog.adaptive(
         //barrierDismissible: true,
         elevation: 2,
         backgroundColor: const Color.fromRGBO(10, 4, 43, 1),
@@ -80,7 +79,8 @@ Future<void> showMessagePopup({
                     overflow: TextOverflow.clip,
                   ),
               
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.04,),
+                  //SizedBox(height: MediaQuery.of(context).size.height * 0.04,),
+                  SizedBox(height: 20.h),
                     
                   InkWell(
                     onTap: () {
@@ -111,8 +111,8 @@ Future<void> showMessagePopup({
             ),
           ],
         ),
-      );
-    }
+    )
+  
   );
 }
 
@@ -123,10 +123,9 @@ Future<void> showPropertyAlertPopup({
   required BuildContext context,
   required VoidCallback onTap,
   }) async{
-  showAdaptiveDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog.adaptive(
+  Get.dialog(
+    useSafeArea: true,
+    AlertDialog.adaptive(
         //barrierDismissible: true,
         elevation: 2,
         backgroundColor: const Color.fromRGBO(50, 92, 191, 1),
@@ -220,7 +219,8 @@ Future<void> showPropertyAlertPopup({
             ),
           ],
         ),
-      );
-    }
+      )
   );
+    
+  
 }

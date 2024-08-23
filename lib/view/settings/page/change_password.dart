@@ -149,7 +149,6 @@ class ChangePasswordPage extends StatelessWidget {
                                   title: "Uh oh!", 
                                   message: "fields must not be emoty", 
                                   buttonText: "Okay", 
-                                  context: context
                                 );
                               }
                               else{

@@ -110,8 +110,7 @@ class RegisterPage1 extends StatelessWidget {
                           showMessagePopup(
                             title: 'Uh oh', 
                             message: 'fields must not be empty', 
-                            buttonText: 'Okay', 
-                            context: context
+                            buttonText: 'Okay',
                           );
                         }
                       },

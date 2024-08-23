@@ -298,7 +298,6 @@ class _HostPhase4PageState extends State<HostPhase4Page> {
                                       title: 'Uh oh', 
                                       message: 'please upload both display pictures and wait for processing', 
                                       buttonText: 'Okay', 
-                                      context: context
                                     );
                                   }
                                       

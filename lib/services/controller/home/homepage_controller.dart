@@ -1,8 +1,13 @@
 import 'dart:developer';
 import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:dweller/model/profile/user_profile_model.dart';
+import 'package:dweller/services/controller/settings/settings_controller.dart';
 import 'package:dweller/services/repository/match_service/match_service.dart';
+import 'package:dweller/services/repository/settings_service/settings_service.dart';
+import 'package:dweller/utils/components/my_snackbar.dart';
+import 'package:dweller/utils/invention/use_stripe_for_subscription.dart';
 import 'package:dweller/view/home/widget/alert/right_swipe_alert.dart';
+import 'package:dweller/view/subscription/widget/subscription_bottomsheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' as getx;
 
@@ -13,7 +18,11 @@ import 'package:get/get.dart' as getx;
 
 class HomePageController extends getx.GetxController {
   
+  final settingController = getx.Get.put(SettingsController());
+  final settingService = getx.Get.put(SettingService());
+  final subscriptionClass = StripeSubscriptionClass();
 
+  final isOnPro = false.obs;
   final isBookmarked = false.obs;  
 
 
@@ -89,7 +98,23 @@ class HomePageController extends getx.GetxController {
     }
   }
 
-  void onEnd() {
+  void onEnd({required bool isUserPro, required BuildContext context}) {
+    if(isUserPro){
+      showMessagePopup(
+        title: "You're all caught up!", 
+        message: "refresh to see if there are new updates", 
+        buttonText: "Okay", 
+      );
+      log('end reached! you are all caught up!');
+    }
+    else{
+      subscriptionBottomsheetAdvancedSearch(
+        context: context,
+        settingsController: settingController,
+        service: settingService,
+        subscriptionService: subscriptionClass
+      );
+    }
     log('end reached!');
   }
 

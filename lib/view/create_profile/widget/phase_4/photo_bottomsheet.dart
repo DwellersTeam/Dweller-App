@@ -73,7 +73,7 @@ Future<void> uploadPhotoBottomsheet({
                 SizedBox(height: size.height * 0.04,),
                 Obx(
                   () {
-                    return service.isProfileImageLoading.value ? const Loader() : Row(
+                    return service.isProfileImageLoading.value ? CircularProgressIndicator.adaptive(backgroundColor: AppColor.darkPurpleColor,) : Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         //1

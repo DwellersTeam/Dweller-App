@@ -39,6 +39,8 @@ class _ChatListState extends State<ChatList> {
   }
 
 
+
+
   late IO.Socket socket;
   final StreamController<List<ChatListResponse>> _chatsStreamController = StreamController<List<ChatListResponse>>.broadcast();
   final String refreshToken = LocalStorage.getXrefreshToken();

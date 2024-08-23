@@ -47,7 +47,7 @@ class HomeService extends getx.GetxController {
         seekersList
         ..clear()
         ..addAll(jsonResponse);
-        return seekersList;
+        return jsonResponse;
 
       }
       else{
@@ -93,7 +93,7 @@ class HomeService extends getx.GetxController {
         propertyList
         ..clear()
         ..addAll(jsonResponse);
-        return propertyList;
+        return jsonResponse;
 
       }
       else{

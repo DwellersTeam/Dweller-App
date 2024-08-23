@@ -171,8 +171,7 @@ class _RegisterPage4State extends State<RegisterPage4> {
                               showMessagePopup(
                                 title: 'Uh oh', 
                                 message: 'fields must not be empty', 
-                                buttonText: 'Okay', 
-                                context: context
+                                buttonText: 'Okay',
                               );
                             }
                           },

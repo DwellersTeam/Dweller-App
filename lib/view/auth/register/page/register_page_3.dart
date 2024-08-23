@@ -231,7 +231,6 @@ class _RegisterPage3State extends State<RegisterPage3> {
                                 title: 'Uh oh', 
                                 message: 'invalid input', 
                                 buttonText: 'Okay', 
-                                context: context
                               );
                               log("OTP FIELD IS EMPTY OR ISN'T A DIGIT");
                             }

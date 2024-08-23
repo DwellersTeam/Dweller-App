@@ -24,7 +24,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class HostCard extends StatefulWidget {
-  const HostCard({super.key});
+  const HostCard({super.key, required this.isOnPro});
+  final bool isOnPro;
 
   @override
   State<HostCard> createState() => _HostCardState();
@@ -104,7 +105,7 @@ class _HostCardState extends State<HostCard> {
             );
           },
           onSwipeEnd: (int previousIndex, int targetIndex, SwiperActivity activity) {
-            if (previousIndex >= 0 && previousIndex < service.propertyList.length) {
+            if (targetIndex >= 0 && targetIndex < service.propertyList.length) {
               controller.swipeEnd(
                 onSuccess: () async{
                   await matchService.sendMatchRequest(
@@ -123,11 +124,13 @@ class _HostCardState extends State<HostCard> {
                 targetIndex: targetIndex,
                 activity: activity,
                 context: context,
-                userModel: service.propertyList[previousIndex].propertyOwner,
+                userModel: service.propertyList[targetIndex].propertyOwner, //change back to previous index
               );
             }
           },
-          onEnd: controller.onEnd,
+          
+          onEnd: () => controller.onEnd(context: context, isUserPro: widget.isOnPro),
+
           cardCount: service.propertyList.length,
           cardBuilder: (BuildContext context, int index) {
             if (index < 0 || index >= service.propertyList.length) {

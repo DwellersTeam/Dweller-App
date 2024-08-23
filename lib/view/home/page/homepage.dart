@@ -68,6 +68,8 @@ class _HomePageState extends State<HomePage> {
   Future<JwtModel> _refresh() async{
     await Future.delayed(const Duration(seconds: 2));
     final profileFuture = await profileService.fetchUserDetailFromJWT(context);
+    controller.isOnPro.value = profileFuture.pro;
+    log("is current user on dweller pro ? ${controller.isOnPro.value}");
     return profileFuture;
   }
 
@@ -203,7 +205,7 @@ class _HomePageState extends State<HomePage> {
                   //scrollDirection: Axis.vertical,
                   padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
                   //CHECK IF THE LOGGED-IN USER IS A HOST OR SEEKER
-                  child: dwellerKind == 'seeker' ? const HostCard() : const SeekerCard(),
+                  child: dwellerKind == 'seeker' ? HostCard(isOnPro: controller.isOnPro.value,) : SeekerCard(isOnPro: controller.isOnPro.value),
 
                   //child: HostCard()
                 ),

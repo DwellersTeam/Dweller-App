@@ -16,8 +16,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
+
+
 class SeekerCard extends StatefulWidget {
-  const SeekerCard({super.key});
+  const SeekerCard({super.key, required this.isOnPro});
+  final bool isOnPro;
 
   @override
   State<SeekerCard> createState() => _SeekerCardState();
@@ -97,7 +101,7 @@ class _SeekerCardState extends State<SeekerCard> {
             );
           },
           onSwipeEnd: (int previousIndex, int targetIndex, SwiperActivity activity) {
-            if (previousIndex >= 0 && previousIndex < service.seekersList.length) {
+            if (targetIndex >= 0 && targetIndex < service.seekersList.length) {
               controller.swipeEnd(
                 onSuccess: () async{
                   await matchService.sendMatchRequest(
@@ -116,11 +120,11 @@ class _SeekerCardState extends State<SeekerCard> {
                 targetIndex: targetIndex,
                 activity: activity,
                 context: context,
-                userModel: service.seekersList[previousIndex],
+                userModel: service.seekersList[targetIndex],
               );
             }
           },
-          onEnd: controller.onEnd,
+          onEnd: () => controller.onEnd(context: context, isUserPro: widget.isOnPro),
           cardCount: service.seekersList.length,
           cardBuilder: (BuildContext context, int index) {
         

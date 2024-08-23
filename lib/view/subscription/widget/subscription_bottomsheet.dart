@@ -459,12 +459,7 @@ Future<void> subscriptionBottomsheetAdvancedSearch({
                               .whenComplete((){
                                 Get.back();
                               });
-                              /*Get.back();
-                              payWithCardBottomsheetAdvancedSearch(
-                                context: context,
-                                controller: settingsController,
-                                service: service
-                              );*/
+                          
                             },
                             style: GradientElevatedButton.styleFrom(
                               gradient: const LinearGradient(

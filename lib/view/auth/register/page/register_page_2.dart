@@ -134,7 +134,6 @@ class RegisterPage2 extends StatelessWidget {
                                 title: 'Uh oh', 
                                 message: 'fields must not be empty', 
                                 buttonText: 'Okay', 
-                                context: context
                               );
                             }
                           },

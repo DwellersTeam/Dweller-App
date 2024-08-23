@@ -174,7 +174,6 @@ class _BookmarkListState extends State<BookmarkList> {
                                     title: 'Uh oh!', 
                                     message: "request already sent or user already sent you a request", 
                                     buttonText: "Okay", 
-                                    context: context
                                   );
                                 },
                               );
