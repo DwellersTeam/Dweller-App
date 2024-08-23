@@ -60,7 +60,6 @@ class HomePageController extends getx.GetxController {
       case Swipe():
         log('The card was swiped to the : ${activity.direction.name}');
         log('previous index: $previousIndex, target index: $targetIndex');
-        currentIndex.value = 0;
 
         if (activity.direction.name == "right") {
 
@@ -84,6 +83,7 @@ class HomePageController extends getx.GetxController {
         else {
           log("user swiped left (rejection)");
         }
+        currentIndex.value = 0;
 
         break;
       case Unswipe():
