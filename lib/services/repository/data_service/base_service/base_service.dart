@@ -30,21 +30,21 @@ class BaseService extends getX.GetxController {
         //return 'Bad Request: The server could not understand the request due to invalid syntax.';
         return showMessagePopup(
           title: 'Uh oh', 
-          message: 'Bad Request: The server could not understand the request due to invalid syntax.', 
+          message: 'Bad Request: Something went wrong', 
           buttonText: 'Dismiss', 
         );
       case 401:
         //return 'Unauthorized: The client must authenticate itself to get the requested response.';
         return showMessagePopup(
           title: 'Uh oh', 
-          message: 'Unauthorized: The client must authenticate itself to get the requested response.',
+          message: 'Unauthorized: You session may have expired. Please login',
           buttonText: 'Dismiss', 
         );
       case 403:
         //return 'Forbidden: The client does not have access rights to the content.';
         return showMessagePopup(
           title: 'Uh oh', 
-          message: 'Forbidden: The client does not have access rights to the content.',
+          message: 'Forbidden: You do not have rights to this resource',
           buttonText: 'Dismiss', 
         );
       case 404:
@@ -58,7 +58,7 @@ class BaseService extends getX.GetxController {
         //return 'Internal Server Error: The server has encountered a situation it doesn\'t know how to handle.';
         return showMessagePopup(
           title: 'Uh oh', 
-          message: 'Internal Server Error: The server has encountered a situation it doesn\'t know how to handle.',
+          message: 'Internal Server Error: The server has encountered an error',
           buttonText: 'Dismiss', 
         );
       case 502:
