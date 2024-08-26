@@ -74,10 +74,10 @@ class PropertyHostModel{
     required this.facilities,
     required this.propertyPics,
     required this.propertyOwner,
-    //required this.id,
+    required this.id,
     required this.availability
   });
-  //final String id;
+  final String id;
   final String buildingType;
   final num rooms;
   final num floors;
@@ -91,7 +91,7 @@ class PropertyHostModel{
 
   factory  PropertyHostModel.fromJson(Map<String, dynamic> json) {
     return  PropertyHostModel(
-      //id: json['user'] ?? 'null',
+      id: json['_id'] ?? 'null',
       availability: json['availability'] ?? false,
       buildingType: json['building'] ?? 'null',
       rooms: json['rooms'] ?? 0,
@@ -108,7 +108,7 @@ class PropertyHostModel{
 
   Map<String, dynamic> toJson() {
     return {
-      //'user': id,
+      'user': id,
       'availability': availability,
       'buildingType': buildingType,
       'rooms': rooms,

@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:appinio_swiper/appinio_swiper.dart';
+import 'package:dweller/model/listing/property_model.dart';
 import 'package:dweller/model/profile/user_profile_model.dart';
 import 'package:dweller/services/controller/settings/settings_controller.dart';
 import 'package:dweller/services/repository/match_service/match_service.dart';
@@ -26,22 +27,41 @@ class HomePageController extends getx.GetxController {
   final isBookmarked = false.obs;  
 
 
-  getx.RxInt currentIndex = 0.obs;
+  //getx.RxInt currentIndex = 0.obs;
   getx.RxInt rightSwipeCount = 0.obs; // Counter for right swipes
 
   List<String> imageUrls = [
     'assets/images/lionel.jpg',
     'assets/images/messi.png',
   ];
-
-  void nextImage({required List<dynamic> imageList}) {
-    currentIndex.value = (currentIndex.value + 1) % imageList.length;
-    log("${currentIndex.value}");
+  
+  // To track which image is being displayed for each property
+  // Map to store image index dynamically for each property ID
+  final Map<String, int> imageIndex = {};
+  
+  void nextImageForHost({required List<PropertyHostModel> propertyList, required int index}) {
+    final propertyId = propertyList[index].id;
+    if (!imageIndex.containsKey(propertyId)) {
+      imageIndex[propertyId] = 0;
+    }
+    // Cycle through the images for the tapped property
+    imageIndex[propertyId] = (imageIndex[propertyId]! + 1) % propertyList[index].propertyPics.length;
+    log("${imageIndex}");
     update();
   }
   
 
-  
+  void nextImageForSeeker({required List<UserModel> seekersList, required int index}) {
+    final seekerId = seekersList[index].id;
+    if (!imageIndex.containsKey(seekerId)) {
+      imageIndex[seekerId] = 0;
+    }
+    
+    // Cycle through the images for the tapped property
+    imageIndex[seekerId] = (imageIndex[seekerId]! + 1) % seekersList[index].pictures.length;
+    log("${imageIndex}");
+    update();
+  }
 
   
 
@@ -83,17 +103,14 @@ class HomePageController extends getx.GetxController {
         else {
           log("user swiped left (rejection)");
         }
-        currentIndex.value = 0;
 
         break;
       case Unswipe():
         log('A ${activity.direction.name} swipe was undone.');
         log('previous index: $previousIndex, target index: $targetIndex');
-        currentIndex.value = 0;
         break;
       case CancelSwipe():
         log('A swipe was cancelled');
-        currentIndex.value = 0;
         break;
       case DrivenActivity():
         log('Driven Activity');

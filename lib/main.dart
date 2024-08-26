@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'package:dweller/services/bindings/bindings.dart';
+import 'package:dweller/services/repository/chat_service/chat_service.dart';
+import 'package:dweller/services/repository/chat_service/socket_service.dart';
 import 'package:dweller/services/repository/data_service/local_storage/local_storage.dart';
 import 'package:dweller/firebase_options.dart';
 import 'package:dweller/services/repository/location_service/location_service.dart';
@@ -18,7 +21,7 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:flutter_session_jwt/flutter_session_jwt.dart';
-import 'package:intl/intl.dart';
+import "package:intl/intl.dart";
 
 
 
@@ -149,7 +152,7 @@ class _MyAppState extends State<MyApp> {
           useMaterial3: true,
         ),
         defaultTransition: Transition.rightToLeft,
-        
+        initialBinding: MyBindings(),
         //check if token is expired here with tenary operators
         home: token == null ? const SplashScreenUpdated(next_screen: OnBoardingPage(),) : isExpiredVal ? const SplashScreenUpdated(next_screen: IntroPage(),) : const SplashScreenUpdated(next_screen: MainPage(),),
       ),

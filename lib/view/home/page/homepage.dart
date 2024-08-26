@@ -206,7 +206,7 @@ class _HomePageState extends State<HomePage> {
                   //CHECK IF THE LOGGED-IN USER IS A HOST OR SEEKER
                   child: dwellerKind == 'seeker' ? HostCard(isOnPro: controller.isOnPro.value,) : SeekerCard(isOnPro: controller.isOnPro.value),
 
-                  //child: HostCard()
+                  //child: SeekerCard(isOnPro: controller.isOnPro.value)
                 ),
               ), 
                    

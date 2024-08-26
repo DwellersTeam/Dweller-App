@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:dweller/model/chat/chatlist_model.dart';
 import 'package:dweller/services/controller/chat/chat_controller.dart';
 import 'package:dweller/services/repository/chat_service/chat_service.dart';
+import 'package:dweller/services/repository/chat_service/socket_service.dart';
 import 'package:dweller/services/repository/data_service/local_storage/local_storage.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/extractors.dart';
@@ -32,14 +33,12 @@ class ChatList extends StatefulWidget {
 class _ChatListState extends State<ChatList> {
 
 
-  //
+  //final SocketService socketService = Get.find<SocketService>();
+
   Future<void> _refresh() async {
     await Future.delayed(const Duration(seconds: 1));
-    //connectToServer();
+    // Optionally, refresh socket or data if needed
   }
-
-
-
 
   late IO.Socket socket;
   final StreamController<List<ChatListResponse>> _chatsStreamController = StreamController<List<ChatListResponse>>.broadcast();
@@ -111,7 +110,6 @@ class _ChatListState extends State<ChatList> {
     socket.onConnectTimeout((_) => print("connection timed out: $_"));
     socket.onError((_) => print("error: $_"));
   }
-
   
 
   @override
@@ -257,7 +255,7 @@ class _ChatListState extends State<ChatList> {
           
                               InkWell(
                                 child: Text(
-                                  data.lastMessage,
+                                  data.lastMessage.isNotEmpty ? data.lastMessage : "📷 photo",
                                   //"Hello 👋, i noticed you stay in NYC. you seem really cool and i'd love to know you",
                                   style: GoogleFonts.poppins(
                                     color: AppColor.chatGreyColor,

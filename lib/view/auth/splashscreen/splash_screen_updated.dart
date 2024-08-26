@@ -28,7 +28,7 @@ class _SplashScreenUpdatedState extends State<SplashScreenUpdated> {
   final authController = Get.put(AuthController());
 
   late Timer _timer;
-  int _secondsRemaining = 5;
+  int _secondsRemaining = 3;
 
   @override
   void initState() {

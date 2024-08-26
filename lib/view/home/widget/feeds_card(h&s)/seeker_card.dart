@@ -135,10 +135,17 @@ class _SeekerCardState extends State<SeekerCard> {
             }
         
             final item = service.seekersList[index];
+            final seekerId = item.id; // String propertyId
+
+            // Get the current image index, defaulting to 0 if not yet set
+            var currentImageIndex = controller.imageIndex[seekerId] ?? 0;
         
             return InkWell(
               onTap: () {
-                controller.nextImage(imageList: item.pictures);
+                setState(() {
+                  currentImageIndex = controller.imageIndex[seekerId] ?? 0;
+                  controller.nextImageForSeeker(seekersList: service.seekersList, index:  index);
+                });
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -146,7 +153,7 @@ class _SeekerCardState extends State<SeekerCard> {
                   image: DecorationImage(
                     colorFilter: const ColorFilter.mode(AppColor.darkGreyColor, BlendMode.softLight),
                     image: NetworkImage(
-                      item.pictures[controller.currentIndex.value],   /////problem here
+                      item.pictures[currentImageIndex],   /////problem here
                     ),
                     fit: BoxFit.cover,
                     filterQuality: FilterQuality.high,
@@ -168,7 +175,7 @@ class _SeekerCardState extends State<SeekerCard> {
                             child: LinearProgressIndicator(
                               backgroundColor: AppColor.semiDarkGreyColor,
                               valueColor: const AlwaysStoppedAnimation<Color>(AppColor.whiteColor),
-                              value: (controller.currentIndex.value + 1) / item.pictures.length,
+                              value: (currentImageIndex + 1) / item.pictures.length,
                               minHeight: 1.5,
                               borderRadius: BorderRadius.circular(20.r),
                             )

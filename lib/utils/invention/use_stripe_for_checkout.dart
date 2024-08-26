@@ -35,7 +35,7 @@ class StripeCheckoutClass {
 
 
   //this should be created first before anything else (create payment intent to generate "client_secret")
-  Future<Map<String, dynamic>> createPaymentIntent(String amount, String currency) async {
+  Future<Map<String, dynamic>> createPaymentIntent({required String amount, required String currency}) async {
     isLoading.value = true;
     try {
 
@@ -94,7 +94,7 @@ class StripeCheckoutClass {
     try {
 
       //we first create the payment intent
-      final paymentIntent = await createPaymentIntent('10', 'EUR');
+      final paymentIntent = await createPaymentIntent(amount: '10', currency: "EUR");
 
       //initializes the payment sheet to collect card info
       await Stripe.instance.initPaymentSheet(

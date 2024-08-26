@@ -140,10 +140,17 @@ class _HostCardState extends State<HostCard> {
             }
         
             final item = service.propertyList[index];
+            final propertyId = item.id; // String propertyId
+
+            // Get the current image index, defaulting to 0 if not yet set
+            var currentImageIndex = controller.imageIndex[propertyId] ?? 0;
         
             return InkWell(
               onTap: () {
-                controller.nextImage(imageList: item.propertyPics);
+                setState(() {
+                  currentImageIndex = controller.imageIndex[propertyId] ?? 0;
+                  controller.nextImageForHost(propertyList: service.propertyList, index:  index);
+                });
               },
               child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -151,7 +158,7 @@ class _HostCardState extends State<HostCard> {
                       image: DecorationImage(
                         colorFilter: const ColorFilter.mode(AppColor.darkGreyColor, BlendMode.softLight),
                         image: NetworkImage(
-                          item.propertyPics[controller.currentIndex.value],
+                          item.propertyPics[currentImageIndex], //controller.imageIndex[index]
                         ),
                         fit: BoxFit.cover,
                         filterQuality: FilterQuality.high,
@@ -168,7 +175,7 @@ class _HostCardState extends State<HostCard> {
                               child: LinearProgressIndicator(
                                 backgroundColor: AppColor.semiDarkGreyColor,
                                 valueColor: const AlwaysStoppedAnimation<Color>(AppColor.whiteColor),
-                                value: (controller.currentIndex.value + 1) / item.propertyPics.length,
+                                value: (currentImageIndex + 1) / item.propertyPics.length,
                                 minHeight: 1.5,
                                 borderRadius: BorderRadius.circular(20.r),
                               ),
