@@ -8,7 +8,7 @@ import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/custom_paint.dart';
 import 'package:dweller/utils/components/extractors.dart';
 import 'package:dweller/utils/components/loader.dart';
-import 'package:dweller/view/chat/widget/chat_list.dart';
+import 'package:dweller/view/chat/widget/chat_list_new.dart';
 import 'package:dweller/view/home/widget/notification/notification_sheet.dart';
 import 'package:dweller/view/settings/page/profile_type/profile_settings_host.dart';
 import 'package:dweller/view/settings/page/profile_type/profile_settings_seeker.dart';
@@ -187,7 +187,7 @@ class _ChatPageState extends State<ChatPage> {
                 ),*/
               ),*/
 
-              ChatList(),
+              ChatListNew(), //ChatList
   
                    
             ],

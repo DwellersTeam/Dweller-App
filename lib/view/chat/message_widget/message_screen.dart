@@ -24,11 +24,12 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 
 class MessageScreen extends StatefulWidget {
-  MessageScreen({super.key, required this.receipientId, required this.receipientName, required this.receipientPicture, required this.online, required this.receipientFCMToken});
+  MessageScreen({super.key, required this.receipientId, required this.receipientName, required this.receipientPicture, required this.online, required this.receipientFCMToken, required this.onRefresh});
   final String receipientId;
   final String receipientName;
   final String receipientPicture;
   final String receipientFCMToken;
+  final VoidCallback onRefresh;
   bool online;
 
   @override
@@ -50,6 +51,7 @@ class _MessageScreenState extends State<MessageScreen> {
   final notificationService = Get.put(PushNotificationController());
   final String accessToken = LocalStorage.getToken();
   final String refreshToken = LocalStorage.getXrefreshToken();
+  final String myName = LocalStorage.getUsername();
 
   @override
   void initState() {
@@ -154,10 +156,12 @@ class _MessageScreenState extends State<MessageScreen> {
         //send push notification
         await notificationService.sendNotification(
           targetUserToken: widget.receipientFCMToken, 
-          title: widget.receipientName, 
+          title: myName, 
           body: controller.imageUrlController.value.isNotEmpty ? "📷 photo" : messageController.text, 
           type: "chat"
         );
+
+        widget.onRefresh();
       
         //clear the clearables
         messageController.clear();
@@ -181,10 +185,12 @@ class _MessageScreenState extends State<MessageScreen> {
           //send push notification
           await notificationService.sendNotification(
             targetUserToken: widget.receipientFCMToken, 
-            title: widget.receipientName, 
+            title: myName,  //widget.receipientName, 
             body: "📷 photo", 
             type: "chat"
           );
+
+          widget.onRefresh();
           //clear the image url
           controller.imageUrlController.value = "";
         }
@@ -211,6 +217,8 @@ class _MessageScreenState extends State<MessageScreen> {
             'imageUrl': controller.imageUrlController.value,
           }
         );
+
+        widget.onRefresh();
       
         //clear the clearables
         messageController.clear();
@@ -230,6 +238,8 @@ class _MessageScreenState extends State<MessageScreen> {
               'imageUrl': controller.imageUrlController.value,
             }
           );
+
+          widget.onRefresh();
           //clear the image url
           controller.imageUrlController.value = "";
         }

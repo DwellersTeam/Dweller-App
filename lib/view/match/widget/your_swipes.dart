@@ -180,6 +180,7 @@ class _YourSwipesState extends State<YourSwipes> {
                                 status: item.status,
                                 onChat: () {
                                   Get.to(()=> MessageScreen(
+                                    onRefresh: () {},
                                     receipientFCMToken: item.from.fcmToken,
                                     receipientId: item.from.id,
                                     receipientName: "${item.from.firstname} ${item.from.lastname}",
