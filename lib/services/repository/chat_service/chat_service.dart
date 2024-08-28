@@ -47,9 +47,6 @@ class ChatService extends getx.GetxController {
 
       final body = {
         "with": receipientId,
-        "assigned": [
-          "",
-        ],
         "description": taskDescription,
         "name": taskName,
         "dueDate": taskDueDate,

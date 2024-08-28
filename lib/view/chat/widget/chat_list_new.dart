@@ -46,8 +46,10 @@ class _ChatListNewState extends State<ChatListNew> {  //with WidgetsBindingObser
     // Initialize the stream controller
     chatStreamController = StreamController<List<ChatListResponse>>.broadcast();
 
-    // Connect to the socket server manually (if needed)
-    //socketService.reconnect();
+    // Emit an event to fetch chats when the screen is opened
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      socketService.emit('chats', {"id": myId});
+    });
 
     // Listen to 'chats' event from the socket
     socketService.socket.on('chats', (data) {
@@ -56,11 +58,6 @@ class _ChatListNewState extends State<ChatListNew> {  //with WidgetsBindingObser
       List<ChatListResponse> chatList = chatData.map((item) => ChatListResponse.fromJson(item)).toList();
       chatStreamController.add(chatList);
     });
-
-    // Emit an event to fetch chats when the screen is opened
-    /*WidgetsBinding.instance.addPostFrameCallback((_) {
-      socketService.emit('fetchChats', {"userId": myId});
-    });*/
   }
 
   @override

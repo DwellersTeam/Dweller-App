@@ -118,13 +118,21 @@ class _MessageScreenState extends State<MessageScreen> {
       }
       final Map<String, dynamic> messages = data;
       final result = MessageResponse.fromJson(messages);
-      //setState(() {
-        _messages.add(result);  //add json object subsequently
-      //});
+      _messages.add(result);  //add json object subsequently
       _messagesStreamController.add(_messages);
     });
+
+    socket.on('block', (data) {
+      log("block data: $data");
+      if (data is String) {
+        data = jsonDecode(data);
+      }
+      final Map<String, dynamic> response = data;
+      log("$response");
+    });
     
-    //listening to disconnections
+
+    //listening to disconnections & other stuffs
     socket.onDisconnect((_) => print('Disconnected from server'));
     socket.onConnectError((_) => print("connection error: $_"));
     socket.onConnectTimeout((_) => print("connection timed out: $_"));
@@ -265,8 +273,12 @@ class _MessageScreenState extends State<MessageScreen> {
                 onOpenProfile: () {
                   Get.to(() => GetUserByIdPage(userId: widget.receipientId,));
                 },
-                onClearChats: () {},
-                onBlockUser: () {},
+                onClearChats: () {
+                  socket.emit('clear-chats', {"id": widget.receipientId});
+                },
+                onBlockUser: () {
+                  socket.emit('block', {"id": widget.receipientId});
+                },
               ),
               status: widget.online ? "Online" : "Offline",
             ),
