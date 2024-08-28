@@ -130,7 +130,7 @@ class _MessageScreenState extends State<MessageScreen> {
       final Map<String, dynamic> response = data;
       log("$response");
     });
-    
+  
 
     //listening to disconnections & other stuffs
     socket.onDisconnect((_) => print('Disconnected from server'));
