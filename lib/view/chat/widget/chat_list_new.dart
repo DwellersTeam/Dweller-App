@@ -48,7 +48,7 @@ class _ChatListNewState extends State<ChatListNew> {  //with WidgetsBindingObser
 
     // Emit an event to fetch chats when the screen is opened
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      socketService.emit('chats', {"id": myId});
+      socketService.emit('chats', {}); //{"id": myId}
     });
 
     // Listen to 'chats' event from the socket
