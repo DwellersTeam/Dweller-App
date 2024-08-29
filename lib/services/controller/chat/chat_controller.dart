@@ -171,6 +171,8 @@ class ChatPageController extends getx.GetxController {
 
   //SEND PUSH NOTI COUNT
   getx.RxInt notiCount = 0.obs; // Counter for right swipes
+  //check if the current user is blocked
+  final getx.RxBool isBlocked = false.obs;
 
 
 

@@ -7,6 +7,7 @@ import 'package:dweller/services/controller/chat/chat_controller.dart';
 import 'package:dweller/services/repository/data_service/local_storage/local_storage.dart';
 import 'package:dweller/services/repository/notification_service/push_notifications.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
+import 'package:dweller/utils/components/my_snackbar.dart';
 import 'package:dweller/view/chat/message_widget/chat_menu.dart';
 import 'package:dweller/view/chat/message_widget/mesage_textfield.dart';
 import 'package:dweller/view/chat/message_widget/message_body.dart';
@@ -128,7 +129,9 @@ class _MessageScreenState extends State<MessageScreen> {
         data = jsonDecode(data);
       }
       final Map<String, dynamic> response = data;
+      //{id: theUserId, blocked: true}
       log("$response");
+      controller.isBlocked.value = data["blocked"] ?? false;
     });
   
 
@@ -252,6 +255,15 @@ class _MessageScreenState extends State<MessageScreen> {
           controller.imageUrlController.value = "";
         }
       }
+    }
+
+    //show pop up dialog if it is blocked
+    if(controller.isBlocked.value) {
+      showMessagePopup(
+        title: "You have been blocked by ${widget.receipientName}", 
+        message: "you can no longer send messages to him/her", 
+        buttonText: "Okay"
+      );
     }
     
   }
