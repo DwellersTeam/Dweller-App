@@ -46,9 +46,11 @@ class _ChatListNewState extends State<ChatListNew> {  //with WidgetsBindingObser
     chatStreamController = StreamController<List<ChatListResponse>>.broadcast();
 
     // Emit an event to fetch chats when the screen is opened
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      socketService.emit('chats', {}); //{"id": myId}
-    });
+    /*WidgetsBinding.instance.addPostFrameCallback((_) {
+      socketService.emit('chats', {});
+    });*/
+
+    socketService.emit('chats', {}); 
 
     // Listen to 'chats' event from the socket
     socketService.socket.on('chats', (data) {
@@ -158,16 +160,26 @@ class _ChatListNewState extends State<ChatListNew> {  //with WidgetsBindingObser
                   onTap: () {
                     if (data.senderOfLastMessage != myId) {
                       socketService.emit('seen', {"id": data.senderOfLastMessage});
+                      log("seen emitted");
+                      Get.to(() => MessageScreen(
+                        onRefresh: _handleRefresh,
+                        receipientFCMToken: data.fcmToken,
+                        receipientId: data.userId,
+                        receipientName: data.name,
+                        receipientPicture: data.picture,
+                        online: data.online,
+                      ));
                     }
-
-                    Get.to(() => MessageScreen(
-                      onRefresh: _handleRefresh,
-                      receipientFCMToken: data.fcmToken,
-                      receipientId: data.userId,
-                      receipientName: data.name,
-                      receipientPicture: data.picture,
-                      online: data.online,
-                    ));
+                    else{
+                      Get.to(() => MessageScreen(
+                        onRefresh: _handleRefresh,
+                        receipientFCMToken: data.fcmToken,
+                        receipientId: data.userId,
+                        receipientName: data.name,
+                        receipientPicture: data.picture,
+                        online: data.online,
+                      ));
+                    }
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 25.w, vertical: 25.h),
