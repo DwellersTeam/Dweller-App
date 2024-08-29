@@ -139,6 +139,51 @@ class ChatService extends getx.GetxController {
   }
 
   //3
+  Future<void> updateTaskCompletion({
+    required String taskId,
+    required VoidCallback onSuccess,
+    required VoidCallback onFailure,
+    }) async {
+    isLoading.value = true;
+    try {
+
+      final body = {
+        "completed": true,
+      };
+
+      http.Response res = await baseService.httpPatch(endPoint: "tasks/$taskId", body: body);
+
+      if (res.statusCode == 200 || res.statusCode == 201) {
+
+        isLoading.value = false;
+        debugPrint('this is response status ==> ${res.statusCode}');
+        debugPrint('this is response body ==> ${res.body}');
+        onSuccess();
+
+      }
+      else{
+        isLoading.value = false;
+        debugPrint('this is response status ==>${res.statusCode}');
+        debugPrint('this is response body ==>${res.body}');
+        debugPrint('this is response reason ==> ${res.reasonPhrase}');
+        onFailure();
+        /*baseService.showErrorMessage(
+          httpStatusCode: res.statusCode,
+          context: context
+        );*/
+        throw Exception("failed to update task completion boolean");
+      }
+
+    }
+    catch(e, stackTrace) {
+      isLoading.value = false;
+      debugPrint("$e");
+      debugPrint("trace: $stackTrace");
+      throw Exception("$e");
+    }
+  }
+
+  //4
   Future<void> deleteTask({
     required BuildContext context,
     required String taskId,
@@ -179,7 +224,7 @@ class ChatService extends getx.GetxController {
   }
 
 
-  //4
+  //5
   //FETCH CURRENT USER TASK WITH THE SIGNIFICANT OTHER
   Future<List<TaskResponse>> getTaskWithBuddy({required String receipientId}) async {
     isLoading.value = true;

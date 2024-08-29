@@ -58,38 +58,63 @@ void editTaskBottomsheet({
                 children: [
                   InkWell(
                     onTap: () async{
-                      await service.updateTask(
-                        taskId: taskId,
-                        taskName: controller.taskNameTextControllerEdit.text.isNotEmpty ? controller.taskNameTextControllerEdit.text : taskName, 
-                        taskDescription: controller.taskDescriptionTextControllerEdit.text.isNotEmpty ? controller.taskDescriptionTextControllerEdit.text : taskDescription,
-                        taskDueDate: controller.dueDateEdit.value.isNotEmpty ? controller.dueDateEdit.value : dueDate, 
-                        taskDueTime: controller.dueTimeEdit.value.isNotEmpty ? controller.dueTimeEdit.value : dueTime,
-                        onSuccess: () {
-                          controller.taskNameTextControllerEdit.clear();
-                          controller.taskDescriptionTextControllerEdit.clear();
-                          controller.dueDateEdit.value = '';
-                          controller.dueTimeEdit.value = '';
-                          showMySnackBar(
-                            context: context, 
-                            message: "task updated successfully", 
-                            backgroundColor: AppColor.greenColor
-                          );
-                          onRefresh();
-                          Get.back();
-                        },
-                        onFailure: () {
-                          controller.taskNameTextControllerEdit.clear();
-                          controller.taskDescriptionTextControllerEdit.clear();
-                          controller.dueDateEdit.value = '';
-                          controller.dueTimeEdit.value = '';
-                          showMySnackBar(
-                            context: context, 
-                            message: "failed to update task", 
-                            backgroundColor: AppColor.redColor
-                          );
-                          Get.back();
-                        },
-                      );
+                      if(controller.taskNameTextControllerEdit.text.isEmpty && controller.taskDescriptionTextControllerEdit.text.isEmpty && controller.dueDateEdit.value.isEmpty && controller.dueTimeEdit.value.isEmpty) {
+                        await service.updateTaskCompletion(
+                          taskId: taskId, 
+                          onSuccess: () {
+                            Get.back();
+                            onRefresh();
+                            showMySnackBar(
+                              context: context, 
+                              message: 'task marked as "completed"', 
+                              backgroundColor: AppColor.greenColor
+                            );
+                          }, 
+                          onFailure: () {
+                            Get.back();  
+                            showMySnackBar(
+                              context: context, 
+                              message: 'failed to mark task as "complete"', 
+                              backgroundColor: AppColor.redColor
+                            );
+                          }
+                        );
+                      }
+                      else{
+                        await service.updateTask(
+                          taskId: taskId,
+                          taskName: controller.taskNameTextControllerEdit.text.isNotEmpty ? controller.taskNameTextControllerEdit.text : taskName, 
+                          taskDescription: controller.taskDescriptionTextControllerEdit.text.isNotEmpty ? controller.taskDescriptionTextControllerEdit.text : taskDescription,
+                          taskDueDate: controller.dueDateEdit.value.isNotEmpty ? controller.dueDateEdit.value : dueDate, 
+                          taskDueTime: controller.dueTimeEdit.value.isNotEmpty ? controller.dueTimeEdit.value : dueTime,
+                          onSuccess: () {
+                            controller.taskNameTextControllerEdit.clear();
+                            controller.taskDescriptionTextControllerEdit.clear();
+                            controller.dueDateEdit.value = '';
+                            controller.dueTimeEdit.value = '';
+                            showMySnackBar(
+                              context: context, 
+                              message: "task updated successfully", 
+                              backgroundColor: AppColor.greenColor
+                            );
+                            onRefresh();
+                            Get.back();
+                          },
+                          onFailure: () {
+                            controller.taskNameTextControllerEdit.clear();
+                            controller.taskDescriptionTextControllerEdit.clear();
+                            controller.dueDateEdit.value = '';
+                            controller.dueTimeEdit.value = '';
+                            showMySnackBar(
+                              context: context, 
+                              message: "failed to update task", 
+                              backgroundColor: AppColor.redColor
+                            );
+                            Get.back();
+                          },
+                        );
+                      }
+                      
                     },
                     child: Container(
                       alignment: Alignment.center,
@@ -102,7 +127,7 @@ void editTaskBottomsheet({
                       ),
                       child: Obx(
                         () {
-                          return service.isLoading.value ? CircularProgressIndicator.adaptive(backgroundColor: AppColor.whiteColor,) : Row(
+                          return service.isLoading.value ? const CircularProgressIndicator.adaptive(backgroundColor: AppColor.whiteColor,) : Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(

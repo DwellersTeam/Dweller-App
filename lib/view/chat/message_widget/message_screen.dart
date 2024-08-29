@@ -4,9 +4,11 @@ import 'dart:developer';
 
 import 'package:dweller/model/chat/messages_model.dart';
 import 'package:dweller/services/controller/chat/chat_controller.dart';
+import 'package:dweller/services/repository/chat_service/socket_service.dart';
 import 'package:dweller/services/repository/data_service/local_storage/local_storage.dart';
 import 'package:dweller/services/repository/notification_service/push_notifications.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
+import 'package:dweller/utils/components/extractors.dart';
 import 'package:dweller/utils/components/my_snackbar.dart';
 import 'package:dweller/view/chat/message_widget/chat_menu.dart';
 import 'package:dweller/view/chat/message_widget/mesage_textfield.dart';
@@ -38,66 +40,66 @@ class MessageScreen extends StatefulWidget {
 }
 
 class _MessageScreenState extends State<MessageScreen> {
+  
 
-
-
-  late IO.Socket socket;
+  //DEPENDENCY INJECTION
+  final SocketService socketService = Get.find<SocketService>();
 
   final List<MessageResponse> _messages = [];
 
-  final StreamController<List<MessageResponse>> _messagesStreamController = StreamController<List<MessageResponse>>.broadcast();
+  late StreamController<List<MessageResponse>> _messagesStreamController;
   
   
   final controller = Get.put(ChatPageController());
   final notificationService = Get.put(PushNotificationController());
-  final String accessToken = LocalStorage.getToken();
-  final String refreshToken = LocalStorage.getXrefreshToken();
   final String myName = LocalStorage.getUsername();
+  final String myId = LocalStorage.getUserID();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    //initialize the stream controller
+    _messagesStreamController = StreamController<List<MessageResponse>>.broadcast();
+    
+    //call this function to open the socket
     initiateMessages();
+
+    //show pop up dialog if it your chat buddy blocked you
+    if(controller.isBlocked.value && controller.theBlockedUser.value == myId) {
+      showMessagePopup(
+        title: "You have been blocked by ${getFirstName(fullName: widget.receipientName)}", 
+        message: "you can no longer send messages to him/her", 
+        buttonText: "Okay"
+      );
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!socketService.socket.connected) {
+      log('Global Socket disconnected, reconnecting...');
+      socketService.reconnect();
+    } else {
+      log('Global Socket is still connected');
+    }
   }
 
   @override
   void dispose() {
-    socket.dispose();
-    _messagesStreamController.close();
     super.dispose();
   }
 
+
+
   void initiateMessages() {
 
-    //1
-    socket = IO.io(
-      'https://dweller-node-api.onrender.com', 
-      IO.OptionBuilder()
-      .setTransports(["websocket"])
-      .disableAutoConnect()
-      .setExtraHeaders({
-        //"foo": "bar",
-        "accessToken": accessToken,
-        "refreshToken": refreshToken
-      })
-      .build(),
-    );
-
-    //connect manually since autoConnect is set to false
-    socket.connect();
-    
-    //check if connection is established
-    socket.onConnect((_) {
-      log('Connected to server $_');
-      //emit to the server
-      socket.emit('past-messages', {"id": widget.receipientId});
-    });
-    
-
-
+    //emit first
+    socketService.emit('past-messages', {"id": widget.receipientId});
     //listening from backend for direct receipient
-    socket.on('past-messages-${widget.receipientId}', (data) {
+    socketService.on('past-messages-${widget.receipientId}', (data) {
       log("past-messages $data");
       if (data is String) {
         data = jsonDecode(data);
@@ -112,7 +114,7 @@ class _MessageScreenState extends State<MessageScreen> {
       _messagesStreamController.add(result);
     });
 
-    socket.on('direct-message', (data) {
+    socketService.on('direct-message', (data) {
       log("direct message $data");
       if (data is String) {
         data = jsonDecode(data);
@@ -123,7 +125,7 @@ class _MessageScreenState extends State<MessageScreen> {
       _messagesStreamController.add(_messages);
     });
 
-    socket.on('block', (data) {
+    socketService.on('block', (data) {
       log("block data: $data");
       if (data is String) {
         data = jsonDecode(data);
@@ -132,14 +134,8 @@ class _MessageScreenState extends State<MessageScreen> {
       //{id: theUserId, blocked: true}
       log("$response");
       controller.isBlocked.value = data["blocked"] ?? false;
+      controller.theBlockedUser.value = data["theUserId"] ?? "";
     });
-  
-
-    //listening to disconnections & other stuffs
-    socket.onDisconnect((_) => print('Disconnected from server'));
-    socket.onConnectError((_) => print("connection error: $_"));
-    socket.onConnectTimeout((_) => print("connection timed out: $_"));
-    socket.onError((_) => print("error: $_"));
   }
 
   void sendMessage({required TextEditingController messageController}) async{
@@ -149,7 +145,7 @@ class _MessageScreenState extends State<MessageScreen> {
       //send text messages
       if (messageController.text.isNotEmpty) {
 
-        socket.emit(
+        socketService.emit(
           'direct-message', 
           controller.imageUrlController.value.isEmpty ?
           {
@@ -183,7 +179,7 @@ class _MessageScreenState extends State<MessageScreen> {
           log("do nothing");
         }
         else{
-          socket.emit(
+          socketService.emit(
             'direct-message', 
             {
               //'from': widget.userId,
@@ -213,7 +209,7 @@ class _MessageScreenState extends State<MessageScreen> {
       //send text messages
       if (messageController.text.isNotEmpty) {
 
-        socket.emit(
+        socketService.emit(
           'direct-message', 
           controller.imageUrlController.value.isEmpty ?
           {
@@ -240,7 +236,7 @@ class _MessageScreenState extends State<MessageScreen> {
           log("do nothing");
         }
         else{
-          socket.emit(
+          socketService.emit(
             'direct-message', 
             {
               //'from': widget.userId,
@@ -255,15 +251,6 @@ class _MessageScreenState extends State<MessageScreen> {
           controller.imageUrlController.value = "";
         }
       }
-    }
-
-    //show pop up dialog if it is blocked
-    if(controller.isBlocked.value) {
-      showMessagePopup(
-        title: "You have been blocked by ${widget.receipientName}", 
-        message: "you can no longer send messages to him/her", 
-        buttonText: "Okay"
-      );
     }
     
   }
@@ -286,10 +273,11 @@ class _MessageScreenState extends State<MessageScreen> {
                   Get.to(() => GetUserByIdPage(userId: widget.receipientId,));
                 },
                 onClearChats: () {
-                  socket.emit('clear-chats', {"id": widget.receipientId});
+                  _messagesStreamController.add([]);
+                  socketService.emit('clear-chats', {"id": widget.receipientId});
                 },
                 onBlockUser: () {
-                  socket.emit('block', {"id": widget.receipientId});
+                  socketService.emit('block', {"id": widget.receipientId});
                 },
               ),
               status: widget.online ? "Online" : "Offline",

@@ -4,7 +4,7 @@ class TaskResponse{
   TaskResponse({
     required this.taskId,
     required this.receipientId,
-    //required this.assigned,
+    required this.completed,
     required this.taskDescription,
     required this.taskName,
     required this.taskDueDate,
@@ -13,7 +13,7 @@ class TaskResponse{
   });
   final String taskId;
   final String receipientId;
-  //final List<dynamic> assigned;
+  bool completed;
   final String taskDescription;
   final String taskName;
   final String taskDueDate;
@@ -25,7 +25,7 @@ class TaskResponse{
     return TaskResponse(
       taskId: json["_id"] ?? "",
       receipientId: json['with'] ?? '',
-      //assigned: json['assigned'] ?? [],
+      completed: json['completed'] ?? false,
       taskName: json['name'] ?? '',
       taskDescription: json["description"] ?? "",
       taskDueDate: json['dueDate'] ?? "",
@@ -38,7 +38,7 @@ class TaskResponse{
     return {
       "_id": taskId,
       'with': receipientId,
-      //'assigned': assigned,
+      'completed': completed,
       'name': taskName,
       "description": taskDescription,
       'dueDate': taskDueDate,

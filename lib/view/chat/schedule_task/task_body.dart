@@ -186,7 +186,7 @@ class _TaskBodyState extends State<TaskBody> {
                             //width: double.infinity,
                             padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
                             decoration: BoxDecoration(
-                              color: AppColor.blueColorOp,   //AppColor.blueColorOp, //Color.fromRGBO(231, 231, 236, 1)
+                              color: data.completed ? Color.fromRGBO(231, 231, 236, 1) : AppColor.blueColorOp,   //AppColor.blueColorOp, //Color.fromRGBO(231, 231, 236, 1)
                               borderRadius: BorderRadius.circular(15.r)
                             ),
                             child: Row(
@@ -200,9 +200,29 @@ class _TaskBodyState extends State<TaskBody> {
                                     fontWeight: FontWeight.w500
                                   )
                                 ),
-                                //SvgPicture.asset('assets/svg/check_done.svg'),
-                                InkWell(
-                                  onTap: () {},
+                                data.completed
+                                ?SvgPicture.asset('assets/svg/check_done.svg')
+                                :InkWell(
+                                  onTap: () async{
+                                    await widget.service.updateTaskCompletion(
+                                      taskId: data.taskId, 
+                                      onSuccess: () {
+                                        widget.onRefresh();
+                                        showMySnackBar(
+                                          context: context, 
+                                          message: 'task marked as "completed"', 
+                                          backgroundColor: AppColor.greenColor
+                                        );
+                                      }, 
+                                      onFailure: () {
+                                        showMySnackBar(
+                                          context: context, 
+                                          message: 'failed to mark task as "complete"', 
+                                          backgroundColor: AppColor.redColor
+                                        );
+                                      }
+                                    );
+                                  },
                                   child: const Icon(
                                     Icons.check,
                                     //CupertinoIcons.check_mark,
@@ -249,6 +269,7 @@ class _TaskBodyState extends State<TaskBody> {
                                   taskId: data.taskId, 
                                   onSuccess: () {
                                     Get.back();
+                                    widget.onRefresh();
                                     showMySnackBar(
                                       context: context, 
                                       message: "task deleted successfully", 
