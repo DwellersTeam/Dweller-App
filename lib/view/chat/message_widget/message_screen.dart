@@ -125,8 +125,8 @@ class _MessageScreenState extends State<MessageScreen> {
       _messagesStreamController.add(_messages);
     });
 
-    socketService.on('block', (data) {
-      log("block data: $data");
+    socketService.on('blocked', (data) {
+      log("blocked data: $data");
       if (data is String) {
         data = jsonDecode(data);
       }
@@ -160,6 +160,9 @@ class _MessageScreenState extends State<MessageScreen> {
             'imageUrl': controller.imageUrlController.value,
           }
         );
+
+        //socketService.emit('chats', {});
+
         //send push notification
         await notificationService.sendNotification(
           targetUserToken: widget.receipientFCMToken, 
@@ -225,6 +228,8 @@ class _MessageScreenState extends State<MessageScreen> {
           }
         );
 
+        //socketService.emit('chats', {});
+
         widget.onRefresh();
       
         //clear the clearables
@@ -276,8 +281,14 @@ class _MessageScreenState extends State<MessageScreen> {
                   _messagesStreamController.add([]);
                   socketService.emit('clear-chats', {"id": widget.receipientId});
                 },
+                isUserBlocked: controller.isBlocked.value,
                 onBlockUser: () {
-                  socketService.emit('block', {"id": widget.receipientId});
+                  if(controller.isBlocked.value) {
+                    socketService.emit('block-user', {"id": widget.receipientId});
+                  }
+                  else{
+                    socketService.emit('unblock-user', {"id": widget.receipientId});
+                  }
                 },
               ),
               status: widget.online ? "Online" : "Offline",

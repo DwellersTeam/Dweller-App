@@ -9,10 +9,11 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class ChatMenu extends StatelessWidget {
-  const ChatMenu({super.key, required this.onOpenProfile, required this.onClearChats, required this.onBlockUser});
+  const ChatMenu({super.key, required this.onOpenProfile, required this.onClearChats, required this.onBlockUser, required this.isUserBlocked});
   final VoidCallback onOpenProfile;
   final VoidCallback onClearChats;
   final VoidCallback onBlockUser;
+  final bool isUserBlocked;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +83,7 @@ class ChatMenu extends StatelessWidget {
               SvgPicture.asset('assets/svg/chat_delete.svg'),
               SizedBox(width: 10.w,),
               Text(
-                'Block User',
+                isUserBlocked ? 'Unblock User' : "Block user",
                 style: GoogleFonts.poppins(
                   color: AppColor.blackColor,
                   fontSize: 12.sp,

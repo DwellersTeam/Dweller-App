@@ -219,12 +219,13 @@ class _ChatListNewState extends State<ChatListNew> {  //with WidgetsBindingObser
                                       ),
                                     ],
                                   ),
-                                  if (!data.seen)
-                                    Icon(
-                                      CupertinoIcons.circle_fill,
-                                      color: AppColor.deepBlueColor,
-                                      size: 15.r,
-                                    ),
+                                  data.seen
+                                  ?SizedBox.shrink()
+                                  :Icon(
+                                    CupertinoIcons.circle_fill,
+                                    color: AppColor.deepBlueColor,
+                                    size: 15.r,
+                                  ),
                                 ],
                               ),
                               SizedBox(height: 10.h),
