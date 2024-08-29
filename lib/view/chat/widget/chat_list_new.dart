@@ -30,7 +30,6 @@ class ChatListNew extends StatefulWidget {
 
 class _ChatListNewState extends State<ChatListNew> {  //with WidgetsBindingObserver
 
-  //final SocketService socketService = Get.put(SocketService());
   final SocketService socketService = Get.find<SocketService>();
   //final SocketManager socketService = SocketManager();
   
@@ -64,10 +63,6 @@ class _ChatListNewState extends State<ChatListNew> {  //with WidgetsBindingObser
   void dispose() {
     // Remove observer when the widget is disposed
     //WidgetsBinding.instance.removeObserver(this);
-
-    // Disconnect the socket and close the stream when disposing the screen
-    //socketService.disconnect();
-    //chatStreamController.close();
 
     super.dispose();
   }
