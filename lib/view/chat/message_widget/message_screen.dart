@@ -139,7 +139,7 @@ class _MessageScreenState extends State<MessageScreen> {
   }
 
   void sendMessage({required TextEditingController messageController}) async{
-    if(controller.notiCount.value == 5){
+    if(controller.notiCount.value == 3){
       controller.notiCount.value = 0;
     
       //send text messages
