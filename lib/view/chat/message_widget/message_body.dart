@@ -31,6 +31,7 @@ class _MessageBodyState extends State<MessageBody> {
 
   final ScrollController messageScrollController = ScrollController();
   final String userId = LocalStorage.getUserID();
+  
   bool _isUserScrolling = false;
 
   @override
@@ -59,7 +60,6 @@ class _MessageBodyState extends State<MessageBody> {
   
     super.initState();
   }
-
 
   @override
   void dispose() {
@@ -113,7 +113,6 @@ class _MessageBodyState extends State<MessageBody> {
             }
 
             final messages = snapshot.data!;
-            //for Auto-Scrolling just like WhatsApp
             SchedulerBinding.instance.addPostFrameCallback((_) {
               if (!_isUserScrolling && messageScrollController.hasClients) {
                 messageScrollController.jumpTo(
@@ -121,6 +120,8 @@ class _MessageBodyState extends State<MessageBody> {
                 );
               }
             });
+
+          
 
             return ListView.separated(
               controller: messageScrollController,
