@@ -32,8 +32,7 @@ class _MessageBodyState extends State<MessageBody> {
   final ScrollController messageScrollController = ScrollController();
   final String userId = LocalStorage.getUserID();
   
-  bool _isUserScrolling = false;
-
+  /*bool _isUserScrolling = false;
   @override
   void initState() {
 
@@ -59,6 +58,43 @@ class _MessageBodyState extends State<MessageBody> {
     });
   
     super.initState();
+  }*/
+
+  bool _isUserScrolling = false;
+  bool _shouldAutoScroll = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Listener to track if the user is manually scrolling
+    messageScrollController.addListener(() {
+      if (messageScrollController.position.userScrollDirection != ScrollDirection.idle) {
+        _isUserScrolling = true;
+      }
+
+      // Reset the scroll flag if the user scrolls to the bottom
+      if (messageScrollController.position.pixels >= messageScrollController.position.maxScrollExtent) {
+        _isUserScrolling = false;
+      }
+    });
+
+    // Listen to the message stream and auto-scroll if the user is not scrolling manually
+    widget.messagesStream.listen((messages) {
+      if (!_isUserScrolling && messageScrollController.hasClients) {
+        // Use a slight delay to ensure smooth scrolling
+        SchedulerBinding.instance.addPostFrameCallback((_) {
+          _shouldAutoScroll = true;
+          if (_shouldAutoScroll && messageScrollController.hasClients) {
+            messageScrollController.animateTo(
+              messageScrollController.position.maxScrollExtent,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOut,
+            );
+          }
+        });
+      }
+    });
   }
 
   @override
@@ -112,14 +148,21 @@ class _MessageBodyState extends State<MessageBody> {
               );
             }
 
-            final messages = snapshot.data!;
             SchedulerBinding.instance.addPostFrameCallback((_) {
               if (!_isUserScrolling && messageScrollController.hasClients) {
-                messageScrollController.jumpTo(
+                messageScrollController.animateTo(
                   messageScrollController.position.maxScrollExtent,
+                  duration: const Duration(milliseconds: 300),
+                  curve: Curves.easeOut,
                 );
+                
+                /*.jumpTo(
+                  messageScrollController.position.maxScrollExtent,
+                );*/
               }
             });
+
+            final messages = snapshot.data!;
 
           
 
