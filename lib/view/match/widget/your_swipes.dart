@@ -181,11 +181,11 @@ class _YourSwipesState extends State<YourSwipes> {
                                 onChat: () {
                                   Get.to(()=> MessageScreen(
                                     onRefresh: () {},
-                                    receipientFCMToken: item.from.fcmToken,
-                                    receipientId: item.from.id,
-                                    receipientName: "${item.from.firstname} ${item.from.lastname}",
-                                    receipientPicture: item.from.displayPicture,
-                                    online: item.from.online,
+                                    receipientFCMToken: item.to.fcmToken,
+                                    receipientId: item.to.id,
+                                    receipientName: "${item.to.firstname} ${item.to.lastname}",
+                                    receipientPicture: item.to.displayPicture,
+                                    online: item.to.online,
                                   ));
                                 },
                                 onOpenProfile: () {

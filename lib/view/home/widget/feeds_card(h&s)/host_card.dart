@@ -132,6 +132,7 @@ class _HostCardState extends State<HostCard> {
           },
           
           onEnd: () => controller.onEnd(context: context, isUserPro: widget.isOnPro),
+        
 
           cardCount: service.propertyList.length,
           cardBuilder: (BuildContext context, int index) {

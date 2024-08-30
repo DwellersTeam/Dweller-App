@@ -247,7 +247,7 @@ Future<void> subscriptionBottomsheet({
                                         ),
                                       ),
                                       TextSpan(
-                                        text: '${currency(context).currencySymbol}9.99/month',
+                                        text: '${currency(context).currencySymbol}7.99/month',
                                         style: GoogleFonts.bricolageGrotesque(
                                           color: AppColor.whiteColor,
                                           fontSize: 14.sp,
@@ -502,7 +502,7 @@ Future<void> subscriptionBottomsheetAdvancedSearch({
                                         ),
                                       ),
                                       TextSpan(
-                                        text: '${currency(context).currencySymbol}9.99/month',
+                                        text: '${currency(context).currencySymbol}7.99/month',
                                         style: GoogleFonts.bricolageGrotesque(
                                           color: AppColor.whiteColor,
                                           fontSize: 14.sp,

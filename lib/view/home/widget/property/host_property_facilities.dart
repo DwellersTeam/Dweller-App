@@ -19,6 +19,15 @@ class FacilitiesList extends StatelessWidget {
   final List<dynamic> facilities;
 
   //final controller = Get.put(HomePageController());
+  // Define a map to link facility types with icons
+  static const Map<String, String> facilityIcons = {
+    'Wifi': "assets/svg/wifi.svg",
+    'Gym': "assets/svg/gym.svg",
+    'Parking': "assets/svg/parking.svg", //park
+    'Storage': "assets/svg/storage.svg",
+    'EV Charging': "assets/svg/ev_charger.svg", //ev
+    'Kids Park': "assets/svg/kids.svg",
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +50,7 @@ class FacilitiesList extends StatelessWidget {
         itemBuilder: (context, index) {
 
           final data =  facilities[index];
+          final icon = facilityIcons[data]; // Look up the icon by facility name
 
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -62,8 +72,12 @@ class FacilitiesList extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 
-                /*SvgPicture.asset("${data['icon']}", height: 26.h, width: 26.w,),
-                SizedBox(height: 30.h,),*/
+                SvgPicture.asset(
+                  icon ?? "assets/svg/wifi.svg", 
+                  height: 26.h, 
+                  width: 26.w,
+                ),
+                SizedBox(height: 30.h,),
 
                 Text(
                   data,
