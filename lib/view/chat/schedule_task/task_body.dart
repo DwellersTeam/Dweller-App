@@ -192,14 +192,18 @@ class _TaskBodyState extends State<TaskBody> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  data.taskName,
-                                  style: GoogleFonts.poppins(
-                                    color: AppColor.blackColor,
-                                    fontSize: 12.sp,
-                                    fontWeight: FontWeight.w500
-                                  )
+                                Expanded(
+                                  child: Text(
+                                    data.taskName,
+                                    style: GoogleFonts.poppins(
+                                      color: AppColor.blackColor,
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w500
+                                    ),
+                                    overflow: TextOverflow.clip
+                                  ),
                                 ),
+                                SizedBox(width: 20.w),
                                 data.completed
                                 ?SvgPicture.asset('assets/svg/check_done.svg')
                                 :InkWell(
