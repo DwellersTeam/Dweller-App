@@ -6,13 +6,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class ProfileDetailCard extends StatelessWidget {
-  const ProfileDetailCard({super.key, required this.title, required this.child});
+  const ProfileDetailCard({super.key, required this.title, this.child});
   final String title;
-  final Widget child;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
+    return Container(
       //alignment: Alignment.center,
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
       //height: 60.h,
@@ -30,7 +30,7 @@ class ProfileDetailCard extends StatelessWidget {
           ),
         ],
       ),
-      duration: const Duration(milliseconds: 100),
+      //duration: const Duration(milliseconds: 100),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -42,8 +42,8 @@ class ProfileDetailCard extends StatelessWidget {
               fontWeight: FontWeight.w600
             )
           ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
-          child
+          child == null ? const SizedBox.shrink() : SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+          child ?? const SizedBox.shrink()
         ]
       )
     );
