@@ -119,7 +119,7 @@ class HomeService extends getx.GetxController {
   }
 
 
-  Future<PropertyHostModel> getHostPropertyById({required BuildContext context, required String userId}) async {
+  Future<PropertyModel> getHostPropertyById({required BuildContext context, required String userId}) async {
     isLoading.value = true;
     try {
 
@@ -134,7 +134,7 @@ class HomeService extends getx.GetxController {
         //decode response from the server
         final dynamic result = json.decode(res.body);
         
-        PropertyHostModel jsonResponse = PropertyHostModel.fromJson(result);
+        PropertyModel jsonResponse = PropertyModel.fromJson(result);
         return jsonResponse;
 
       }

@@ -140,84 +140,89 @@ class SenderChatBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      //alignment: Alignment.center,
-      //height: 50.h,
-      //width: double.infinity,
-      padding: imageUrl.isEmpty 
-        ? EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h)
-        : EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
-      decoration: BoxDecoration(
-        color: AppColor.blueColor,
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(20.r), topRight: Radius.circular(20.r), bottomLeft: Radius.circular(20.r),)
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width * 0.7, // Max 70% of screen width
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-
-          imageUrl.isEmpty
-          ? const SizedBox.shrink()
-          :Container(
-            alignment: Alignment.center,
-            //height: 200.h,
-            width: double.infinity, 
-            decoration: BoxDecoration(
-              color: AppColor.pureLightGreyColor,
-              borderRadius: BorderRadius.circular(10.r),
+      child: Container(
+        //alignment: Alignment.center,
+        //height: 50.h,
+        //width: double.infinity,
+        padding: imageUrl.isEmpty 
+          ? EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h)
+          : EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+        decoration: BoxDecoration(
+          color: AppColor.blueColor,
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(20.r), topRight: Radius.circular(20.r), bottomLeft: Radius.circular(20.r),)
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+      
+            imageUrl.isEmpty
+            ? const SizedBox.shrink()
+            :Container(
+              alignment: Alignment.center,
+              //height: 200.h,
+              width: double.infinity, 
+              decoration: BoxDecoration(
+                color: AppColor.pureLightGreyColor,
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+              child: CachedNetworkImage(
+                imageUrl: imageUrl,
+                fit: BoxFit.contain,
+                filterQuality: FilterQuality.high,
+                errorWidget: (context, url, error) {
+                  log("error loading image: $error");
+                  return Text(
+                    error.toString(),
+                    style: GoogleFonts.poppins(
+                      color: AppColor.darkGreyColor,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w400
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  );
+                },
+              ),
             ),
-            child: CachedNetworkImage(
-              imageUrl: imageUrl,
-              fit: BoxFit.contain,
-              filterQuality: FilterQuality.high,
-              errorWidget: (context, url, error) {
-                log("error loading image: $error");
-                return Text(
-                  error.toString(),
-                  style: GoogleFonts.poppins(
-                    color: AppColor.darkGreyColor,
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w400
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                );
-              },
+            imageUrl.isEmpty
+            ? const SizedBox.shrink()
+            :SizedBox(height: 5.h,),
+      
+            Text(
+              content,
+              //'Yup! I do. Just my be my fav activity in Vinyl.',
+              style: GoogleFonts.poppins(
+                color: AppColor.whiteColor,
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w400
+              )
             ),
-          ),
-          imageUrl.isEmpty
-          ? const SizedBox.shrink()
-          :SizedBox(height: 5.h,),
-
-          Text(
-            content,
-            //'Yup! I do. Just my be my fav activity in Vinyl.',
-            style: GoogleFonts.poppins(
-              color: AppColor.whiteColor,
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w400
-            )
-          ),
-          SizedBox(height: 5.h,),
-          Text(
-            time,
-            style: GoogleFonts.poppins(
-              color: AppColor.whiteColor,
-              fontSize: 8.sp,
-              fontWeight: FontWeight.w600
-            )
-          ),
-          //SizedBox(height: 3.h,),
-          //isSeen
-          /*Icon(
-            Icons.done_all_rounded,
-            color: Colors.grey,
-            size: 20.r,
-          ),
-          Icon(
-            CupertinoIcons.checkmark_alt,
-            color: Colors.grey,
-            size: 20.r,
-          ),*/
-        ],
+            SizedBox(height: 5.h,),
+            Text(
+              time,
+              style: GoogleFonts.poppins(
+                color: AppColor.whiteColor,
+                fontSize: 8.sp,
+                fontWeight: FontWeight.w600
+              )
+            ),
+            //SizedBox(height: 3.h,),
+            //isSeen
+            /*Icon(
+              Icons.done_all_rounded,
+              color: Colors.grey,
+              size: 20.r,
+            ),
+            Icon(
+              CupertinoIcons.checkmark_alt,
+              color: Colors.grey,
+              size: 20.r,
+            ),*/
+          ],
+        ),
       ),
     );
   }

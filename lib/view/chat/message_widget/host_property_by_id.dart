@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:dweller/main.dart';
 import 'package:dweller/model/listing/property_model.dart';
 import 'package:dweller/services/repository/home_service/home_service.dart';
@@ -35,7 +34,7 @@ class _HostPropertyInfoByIdState extends State<HostPropertyInfoById> {
 
   final service = Get.put(HomeService());
 
-  late Future<PropertyHostModel> propertyFuture;
+  late Future<PropertyModel> propertyFuture;
 
   @override
   void initState() {
@@ -46,7 +45,7 @@ class _HostPropertyInfoByIdState extends State<HostPropertyInfoById> {
 
 
   //REFRESH FUNCTIONALITY
-  Future<PropertyHostModel> _refresh() async{
+  Future<PropertyModel> _refresh() async{
     await Future.delayed(const Duration(seconds: 2));
     final propertyFuture = await service.getHostPropertyById(context: context,userId: widget.userId);
     return propertyFuture;
@@ -62,7 +61,7 @@ class _HostPropertyInfoByIdState extends State<HostPropertyInfoById> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<PropertyHostModel>(
+    return FutureBuilder<PropertyModel>(
       future: propertyFuture,
       builder: (context, snapshot) {
         if(snapshot.connectionState == ConnectionState.waiting){

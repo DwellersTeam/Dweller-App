@@ -7,6 +7,7 @@ import 'package:dweller/model/profile/user_profile_model.dart';
 //for fetch logged in user property by he's id
 class PropertyModel{
   PropertyModel({
+    required this.propertyId,
     required this.buildingType,
     required this.rooms,
     required this.floors,
@@ -17,6 +18,7 @@ class PropertyModel{
     required this.propertyPics,
     required this.id,
   });
+  final String propertyId;
   final String id;
   final String buildingType;
   final num rooms;
@@ -29,6 +31,7 @@ class PropertyModel{
 
   factory PropertyModel.fromJson(Map<String, dynamic> json) {
     return PropertyModel(
+      propertyId: json["_id"] ?? "",
       id: json['user'] ?? 'null',
       buildingType: json['building'] ?? 'null',
       rooms: json['rooms'] ?? 0,
@@ -44,6 +47,7 @@ class PropertyModel{
 
   Map<String, dynamic> toJson() {
     return {
+      "_id": propertyId,
       'user': id,
       'buildingType': buildingType,
       'rooms': rooms,
@@ -53,7 +57,6 @@ class PropertyModel{
       'location': location.toJson(),
       'facilities': facilities,
       'pictures': propertyPics,
-
     };
   }
 }
@@ -123,3 +126,5 @@ class PropertyHostModel{
     };
   }
 }
+
+
