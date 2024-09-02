@@ -163,6 +163,7 @@ class _ChatListNewState extends State<ChatListNew> {  //with WidgetsBindingObser
                       log("seen emitted");
                       Get.to(() => MessageScreen(
                         onRefresh: _handleRefresh,
+                        dwellerKind: data.dwellerKind,
                         receipientFCMToken: data.fcmToken,
                         receipientId: data.userId,
                         receipientName: data.name,
@@ -173,6 +174,7 @@ class _ChatListNewState extends State<ChatListNew> {  //with WidgetsBindingObser
                     else{
                       Get.to(() => MessageScreen(
                         onRefresh: _handleRefresh,
+                        dwellerKind: data.dwellerKind,
                         receipientFCMToken: data.fcmToken,
                         receipientId: data.userId,
                         receipientName: data.name,

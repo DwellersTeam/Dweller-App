@@ -119,6 +119,48 @@ class HomeService extends getx.GetxController {
   }
 
 
+  Future<PropertyHostModel> getHostPropertyById({required BuildContext context, required String userId}) async {
+    isLoading.value = true;
+    try {
+
+      http.Response res = await baseService.httpGet(endPoint: "properties/$userId",);
+
+      if (res.statusCode == 200 || res.statusCode == 201) {
+
+        isLoading.value = false;
+        debugPrint('this is response status ==> ${res.statusCode}');
+        debugPrint('this is response body for the users property ==> ${res.body}');
+        
+        //decode response from the server
+        final dynamic result = json.decode(res.body);
+        
+        PropertyHostModel jsonResponse = PropertyHostModel.fromJson(result);
+        return jsonResponse;
+
+      }
+      else{
+        isLoading.value = false;
+        hasError.value = true;
+        debugPrint('this is response body ==>${res.body}');
+        debugPrint('this is response status ==>${res.statusCode}');
+        debugPrint('this is response reason ==> ${res.reasonPhrase}');
+        baseService.showErrorMessage(httpStatusCode: res.statusCode, context: context);
+        throw Exception("failed to fetch host property");
+      }
+
+    }
+
+    catch(e, stackTrace) {
+      isLoading.value = false;
+      hasError.value = true;
+      debugPrint("$e");
+      debugPrint("trace: $stackTrace");
+      throw Exception("$e");
+    }
+  
+  }
+
+
 
 
 }

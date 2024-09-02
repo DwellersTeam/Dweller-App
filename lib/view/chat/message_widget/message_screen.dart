@@ -11,6 +11,7 @@ import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/extractors.dart';
 import 'package:dweller/utils/components/my_snackbar.dart';
 import 'package:dweller/view/chat/message_widget/chat_menu.dart';
+import 'package:dweller/view/chat/message_widget/host_profile.dart';
 import 'package:dweller/view/chat/message_widget/mesage_textfield.dart';
 import 'package:dweller/view/chat/message_widget/message_body.dart';
 import 'package:dweller/view/chat/message_widget/message_header.dart';
@@ -27,11 +28,12 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 
 class MessageScreen extends StatefulWidget {
-  MessageScreen({super.key, required this.receipientId, required this.receipientName, required this.receipientPicture, required this.online, required this.receipientFCMToken, required this.onRefresh});
+  MessageScreen({super.key, required this.dwellerKind,  required this.receipientId, required this.receipientName, required this.receipientPicture, required this.online, required this.receipientFCMToken, required this.onRefresh});
   final String receipientId;
   final String receipientName;
   final String receipientPicture;
   final String receipientFCMToken;
+  final String dwellerKind;
   final VoidCallback onRefresh;
   bool online;
 
@@ -275,7 +277,9 @@ class _MessageScreenState extends State<MessageScreen> {
               name: widget.receipientName,
               menuBar: ChatMenu(
                 onOpenProfile: () {
-                  Get.to(() => GetUserByIdPage(userId: widget.receipientId,));
+                  widget.dwellerKind == "host"
+                  ?Get.to(() => GetHostProfile(userId: widget.receipientId,))
+                  :Get.to(() => GetUserByIdPage(userId: widget.receipientId,));
                 },
                 onClearChats: () {
                   _messagesStreamController.add([]);

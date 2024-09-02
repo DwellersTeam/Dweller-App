@@ -177,6 +177,7 @@ class _SwipesOnYouState extends State<SwipesOnYou> {
                                 onChat: () {
                                   Get.to(()=> MessageScreen(
                                     onRefresh: () {},
+                                    dwellerKind: item.from.dwellerKind,
                                     receipientFCMToken: item.from.fcmToken,
                                     receipientId: item.from.id,
                                     receipientName: "${item.from.firstname} ${item.from.lastname}",

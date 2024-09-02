@@ -15,7 +15,9 @@ class ChatListResponse{
     required this.createdAt,
     required this.online,
     required this.seen,
+    required this.dwellerKind,
   });
+  final String dwellerKind;
   final String fcmToken;
   final String chatId;
   final String userId;
@@ -31,6 +33,7 @@ class ChatListResponse{
 
   factory ChatListResponse.fromJson(Map<String, dynamic> json) {
     return ChatListResponse(
+      dwellerKind: json["dwellerKind"] ?? "",
       fcmToken: json["fcmToken"] ?? '',
       chatId: json["_id"] ?? "",
       userId: json['userId'] ?? "",
@@ -46,6 +49,7 @@ class ChatListResponse{
 
   Map<String, dynamic> toJson() {
     return {
+      "dwellerKind": dwellerKind,
       "fcmToken": fcmToken,
       "chatId": chatId,
       "userId": userId,

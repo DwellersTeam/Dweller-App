@@ -181,6 +181,7 @@ class _YourSwipesState extends State<YourSwipes> {
                                 onChat: () {
                                   Get.to(()=> MessageScreen(
                                     onRefresh: () {},
+                                    dwellerKind: item.to.dwellerKind,
                                     receipientFCMToken: item.to.fcmToken,
                                     receipientId: item.to.id,
                                     receipientName: "${item.to.firstname} ${item.to.lastname}",

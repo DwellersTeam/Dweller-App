@@ -170,6 +170,7 @@ class _MessageBodyState extends State<MessageBody> {
               controller: messageScrollController,
               scrollDirection: Axis.vertical,
               physics: const BouncingScrollPhysics(),
+              shrinkWrap: true,
               itemCount: messages.length,
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
               separatorBuilder: (context, index) => SizedBox(height: 30.h),
@@ -186,12 +187,12 @@ class _MessageBodyState extends State<MessageBody> {
                   showDateHeader = currentDate != previousDate;
                 }
             
-                return Dismissible(
-                  key: UniqueKey(),
+                return Container(  //Dismissible
+                  /*key: UniqueKey(),
                   direction: data.to == userId ? DismissDirection.startToEnd : DismissDirection.endToStart,
                   onDismissed: (direction) {
                     //delete or reply message
-                  },
+                  },*/
                   child: Column(
                     crossAxisAlignment: data.from != userId  ? CrossAxisAlignment.start : CrossAxisAlignment.end,
                     children: [
