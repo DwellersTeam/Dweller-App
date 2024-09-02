@@ -221,7 +221,7 @@ class _SearchPageState extends State<SearchPage> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 40.w),
                         child: Text(
-                          'sgbrthtdjtjyjytkjtyhrdthrhthtjhfthtfhdrhrghrdhtfjtjtjdtjtjtdjdtjtj',
+                          'precise searching, limitless dwellers',
                           style: GoogleFonts.poppins(
                             color: AppColor.darkPurpleColor,
                             fontSize: 12.sp,
