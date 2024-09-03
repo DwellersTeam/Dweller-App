@@ -224,7 +224,7 @@ class _AddListingPageState extends State<AddListingPage> {
                         return SelectorButton(
                           buttonColor: AppColor.whiteColor,
                           dropdownOverlay: DropdownButton<String>(
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.poppins(
                                 color: AppColor.blackColor,
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w500),
@@ -251,7 +251,7 @@ class _AddListingPageState extends State<AddListingPage> {
                                 value: item,
                                 child: Text(
                                   item,
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.poppins(
                                       color: AppColor.blackColor,
                                       fontSize: 14.sp,
                                       fontWeight: FontWeight.w400),
