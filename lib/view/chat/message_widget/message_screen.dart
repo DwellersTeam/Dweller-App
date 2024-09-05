@@ -69,13 +69,13 @@ class _MessageScreenState extends State<MessageScreen> {
     initiateMessages();
 
     //show pop up dialog if it your chat buddy blocked you
-    if(controller.isBlocked.value == true && controller.theBlockedUser.value == myId) {
+    /*if(controller.isBlocked.value == true && controller.theBlockedUser.value == myId) {
       showMessagePopup(
         title: "You have been blocked by ${getFirstName(fullName: widget.receipientName)}", 
         message: "you can no longer send messages to him/her", 
         buttonText: "Okay"
       );
-    }
+    }*/
   }
 
   @override
@@ -126,7 +126,7 @@ class _MessageScreenState extends State<MessageScreen> {
       _messages.add(result);  //add json object subsequently
       _messagesStreamController.add(_messages);
     });
-
+    
     socketService.on('blocked', (data) {
       log("blocked data: $data");
       if (data is String) {
