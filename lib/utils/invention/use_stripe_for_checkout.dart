@@ -83,6 +83,36 @@ class StripeCheckoutClass {
     } on Exception catch (e) {
       if (e is StripeException) {
         log('Error from Stripe: ${e.error.localizedMessage}');
+        log('Error Code from Stripe: ${e.error.code}');
+        if(e.error.code == FailureCode.Failed) {
+          showMessagePopup(
+            title: "Uh oh!", 
+            message: e.error.message!, //"you are already subscribed to Dweller PRO", 
+            buttonText: "Okay", 
+          );
+        }
+        else if(e.error.code == FailureCode.Canceled) {
+          showMessagePopup(
+            title: "Uh oh!", 
+            message: "payment intent was cancelled", 
+            buttonText: "Okay", 
+          );
+        }
+        else if(e.error.code == FailureCode.Timeout) {
+          showMessagePopup(
+            title: "Uh oh!", 
+            message: "payment intent timed out", 
+            buttonText: "Okay", 
+          );
+        }
+        else{
+          showMessagePopup(
+            title: "Uh oh!", 
+            message: "something went wrong", 
+            buttonText: "Okay", 
+          );
+
+        }
       } else {
         log('Unforeseen error: $e');
       }

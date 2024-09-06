@@ -80,7 +80,7 @@ class StripeSubscriptionClass {
         if(e.error.code == FailureCode.Failed) {
           showMessagePopup(
             title: "Uh oh!", 
-            message: "you are already subscribed to Dweller PRO", 
+            message: e.error.message!, //"you are already subscribed to Dweller PRO", 
             buttonText: "Okay", 
           );
         }
