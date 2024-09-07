@@ -192,14 +192,14 @@ class _SwipesOnYouState extends State<SwipesOnYou> {
                                   await matchService.acceptMatchRequest(
                                     context: context, 
                                     id: item.id, 
-                                    onSuccess: () {
-                                      notificationService.sendNotification(
+                                    onSuccess: () async{
+                                      await notificationService.sendNotification(
                                         type: 'match',
                                         targetUserToken: item.from.fcmToken,
                                         title: 'Hey, ${item.from.firstname}',
                                         body: '$currentUsername just accepted your match request',
                                       );
-                                      _handleRefresh();
+                                      await _handleRefresh();
                                     },
                                   );
                                 },
@@ -207,14 +207,14 @@ class _SwipesOnYouState extends State<SwipesOnYou> {
                                   await matchService.declineMatchRequest(
                                     context: context, 
                                     id: item.id, 
-                                    onSuccess: () {
-                                      notificationService.sendNotification(
+                                    onSuccess: () async{
+                                      await notificationService.sendNotification(
                                         type: 'match',
                                         targetUserToken: item.from.fcmToken,
                                         title: 'Hey, ${item.from.firstname}',
                                         body: '$currentUsername declined your match request',
                                       );
-                                      _handleRefresh();
+                                      await _handleRefresh();
                                     },
                                   );
                                 },
