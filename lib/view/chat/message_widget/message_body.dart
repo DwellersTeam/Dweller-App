@@ -86,10 +86,14 @@ class _MessageBodyState extends State<MessageBody> {
         SchedulerBinding.instance.addPostFrameCallback((_) {
           _shouldAutoScroll = true;
           if (_shouldAutoScroll && messageScrollController.hasClients) {
-            messageScrollController.animateTo(
+            messageScrollController
+            /*.animateTo(
               messageScrollController.position.maxScrollExtent,
               duration: const Duration(milliseconds: 300),
               curve: Curves.easeOut,
+            );*/
+            .jumpTo(
+              messageScrollController.position.maxScrollExtent,
             );
           }
         });
@@ -150,15 +154,16 @@ class _MessageBodyState extends State<MessageBody> {
 
             SchedulerBinding.instance.addPostFrameCallback((_) {
               if (!_isUserScrolling && messageScrollController.hasClients) {
-                messageScrollController.animateTo(
+                messageScrollController
+                /*.animateTo(
                   messageScrollController.position.maxScrollExtent,
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeOut,
-                );
-                
-                /*.jumpTo(
-                  messageScrollController.position.maxScrollExtent,
                 );*/
+                
+                .jumpTo(
+                  messageScrollController.position.maxScrollExtent,
+                );
               }
             });
 
