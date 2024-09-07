@@ -194,6 +194,7 @@ Future<void> rightSwipeAlert({required BuildContext context, required UserModel 
                           await matchService.sendMatchRequest(
                             context: context, 
                             userId: user.id, 
+                            direction: "right",
                             onSuccess: () {
                               Get.back();
                               matchMadeAlert(user: user);

@@ -245,12 +245,14 @@ class MatchService extends getx.GetxController {
     required String userId,
     required VoidCallback onSuccess,
     required VoidCallback onFailure,
+    required String direction
     }) async {
     isLoading.value = true;
     try {
 
       final body = {
-        "to": userId
+        "to": userId,
+        "direstion": direction,
       };
 
       http.Response res = await baseService.httpPost(endPoint: "matches", body: body);

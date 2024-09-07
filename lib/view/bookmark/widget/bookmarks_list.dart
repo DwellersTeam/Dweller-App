@@ -159,6 +159,7 @@ class _BookmarkListState extends State<BookmarkList> {
                               await matchService.sendMatchRequest(
                                 context: context, 
                                 userId: item.profile.id, 
+                                direction: "right",
                                 onSuccess: () {
                                   _handleRefresh();
                                   notificationService.sendNotification(

@@ -17,79 +17,69 @@ import 'package:get/get.dart' as getX;
 class BaseService extends getX.GetxController {
 
 
-  //Eroor Function taht shows error messages
   Future<dynamic> showErrorMessage({required int httpStatusCode, required BuildContext context}) async {
     switch (httpStatusCode) {
       case 200:
-        return 'Success (POST)';
+        return 'Success!';
       case 201:
-        return 'Success (PUT/PATCH)';
+        return 'Success!';
       case 204:
-        return 'Success (Content Deleted)';
+        return 'Deleted Successfully!';
       case 400:
-        //return 'Bad Request: The server could not understand the request due to invalid syntax.';
         return showMessagePopup(
-          title: 'Uh oh', 
-          message: 'Bad Request: Something went wrong', 
+          title: 'Oops!', 
+          message: 'Something went wrong. Please try again.', 
           buttonText: 'Dismiss', 
         );
       case 401:
-        //return 'Unauthorized: The client must authenticate itself to get the requested response.';
         return showMessagePopup(
-          title: 'Uh oh', 
-          message: 'Unauthorized: You session may have expired. Please login',
+          title: 'Session Expired', 
+          message: 'Please log in again.', 
           buttonText: 'Dismiss', 
         );
       case 403:
-        //return 'Forbidden: The client does not have access rights to the content.';
         return showMessagePopup(
-          title: 'Uh oh', 
-          message: 'Forbidden: You do not have rights to this resource',
+          title: 'Access Denied', 
+          message: 'You do not have permission for this action.', 
           buttonText: 'Dismiss', 
         );
       case 404:
-        //return 'Not Found: The server can not find the requested resource.';
         return showMessagePopup(
-          title: 'Uh oh', 
-          message: 'Not Found: The server can not find the requested resource.',
+          title: 'Not Found', 
+          message: 'The requested resource could not be found.', 
           buttonText: 'Dismiss', 
         );
       case 500:
-        //return 'Internal Server Error: The server has encountered a situation it doesn\'t know how to handle.';
         return showMessagePopup(
-          title: 'Uh oh', 
-          message: 'Internal Server Error: The server has encountered an error',
+          title: 'Server Error', 
+          message: 'There was a problem on our end. Please try again later.', 
           buttonText: 'Dismiss', 
         );
       case 502:
-        //return 'Bad Gateway: The server was acting as a gateway or proxy and received an invalid response from the upstream server.';
         return showMessagePopup(
-          title: 'Uh oh', 
-          message: 'Bad Gateway: The server was acting as a gateway or proxy and received an invalid response from the upstream server.',
+          title: 'Bad Gateway', 
+          message: 'The server is having issues. Please try again later.', 
           buttonText: 'Dismiss', 
         );
       case 503:
-        //return 'Service Unavailable: The server is not ready to handle the request. Common causes might be a server that is down for maintenance or that is overloaded.';
         return showMessagePopup(
-          title: 'Uh oh', 
-          message: 'Service Unavailable: The server is not ready to handle the request. Common causes might be a server that is down for maintenance or that is overloaded.',
+          title: 'Service Unavailable', 
+          message: 'The service is temporarily unavailable. Please try again later.', 
           buttonText: 'Dismiss', 
         );
       case 504:
-        //return 'Gateway Timeout: The server is acting as a gateway or proxy and did not receive a timely response from the upstream server.';
         return showMessagePopup(
-          title: 'Uh oh', 
-          message: 'Gateway Timeout: The server is acting as a gateway or proxy and did not receive a timely response from the upstream server.',
+          title: 'Timeout', 
+          message: 'The server took too long to respond. Please try again later.', 
           buttonText: 'Dismiss', 
         );
       default:
-        //return 'Unknown Error: An unexpected error occurred.';
         return showMessagePopup(
-          title: 'Uh oh', 
-          message: 'Unknown Error: An unexpected error occurred.',
+          title: 'Error', 
+          message: 'An unexpected error occurred. Please try again.', 
           buttonText: 'Dismiss', 
         );
-    }   
+    }
   }
 
 

@@ -74,6 +74,7 @@ class HomePageController extends getx.GetxController {
     //add variables but make them nullable => [String? val, String? fil]
     required BuildContext context, 
     required VoidCallback onSuccess,
+    required VoidCallback onLeftSwipe,
     required UserModel userModel
     }) {
     switch (activity) {
@@ -102,6 +103,7 @@ class HomePageController extends getx.GetxController {
         } 
         else {
           log("user swiped left (rejection)");
+          onLeftSwipe();
         }
 
         break;

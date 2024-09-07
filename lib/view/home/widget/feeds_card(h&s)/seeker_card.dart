@@ -103,8 +103,23 @@ class _SeekerCardState extends State<SeekerCard> {
           onSwipeEnd: (int previousIndex, int targetIndex, SwiperActivity activity) {
             if (targetIndex >= 0 && targetIndex < service.seekersList.length) {
               controller.swipeEnd(
+                onLeftSwipe: () async{
+                  await matchService.sendMatchRequest(
+                    direction: "left",
+                    context: context, 
+                    userId: service.seekersList[previousIndex].id,
+                    onSuccess: () {
+                      //call the notifications API to send a push notification and create data in db of the person
+                      print('match sent');
+                    },
+                    onFailure: () {
+                      print("failed");
+                    },
+                  );
+                },
                 onSuccess: () async{
                   await matchService.sendMatchRequest(
+                    direction: "right",
                     context: context, 
                     userId: service.seekersList[previousIndex].id,
                     onSuccess: () {

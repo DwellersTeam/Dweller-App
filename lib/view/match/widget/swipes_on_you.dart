@@ -193,13 +193,13 @@ class _SwipesOnYouState extends State<SwipesOnYou> {
                                     context: context, 
                                     id: item.id, 
                                     onSuccess: () {
-                                      _handleRefresh();
                                       notificationService.sendNotification(
                                         type: 'match',
                                         targetUserToken: item.from.fcmToken,
                                         title: 'Hey, ${item.from.firstname}',
                                         body: '$currentUsername just accepted your match request',
                                       );
+                                      _handleRefresh();
                                     },
                                   );
                                 },
@@ -208,13 +208,13 @@ class _SwipesOnYouState extends State<SwipesOnYou> {
                                     context: context, 
                                     id: item.id, 
                                     onSuccess: () {
-                                      _handleRefresh();
                                       notificationService.sendNotification(
                                         type: 'match',
                                         targetUserToken: item.from.fcmToken,
                                         title: 'Hey, ${item.from.firstname}',
                                         body: '$currentUsername declined your match request',
                                       );
+                                      _handleRefresh();
                                     },
                                   );
                                 },

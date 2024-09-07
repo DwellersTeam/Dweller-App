@@ -107,9 +107,24 @@ class _HostCardState extends State<HostCard> {
           onSwipeEnd: (int previousIndex, int targetIndex, SwiperActivity activity) {
             if (targetIndex >= 0 && targetIndex < service.propertyList.length) {
               controller.swipeEnd(
+                onLeftSwipe: () async{
+                  await matchService.sendMatchRequest(
+                    context: context, 
+                    direction: "left",
+                    userId: service.propertyList[previousIndex].propertyOwner.id,
+                    onSuccess: () {
+                      //call the notifications API to send a push notification and create data in db of the person
+                      print('match sent');
+                    },
+                    onFailure: () {
+                      print("failed");
+                    },
+                  );
+                },
                 onSuccess: () async{
                   await matchService.sendMatchRequest(
                     context: context, 
+                    direction: "right",
                     userId: service.propertyList[previousIndex].propertyOwner.id,
                     onSuccess: () {
                       //call the notifications API to send a push notification and create data in db of the person
