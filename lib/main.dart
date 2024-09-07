@@ -1,13 +1,10 @@
 import 'dart:io';
 import 'package:dweller/services/bindings/bindings.dart';
-import 'package:dweller/services/repository/chat_service/chat_service.dart';
-import 'package:dweller/services/repository/chat_service/socket_service.dart';
 import 'package:dweller/services/repository/data_service/local_storage/local_storage.dart';
 import 'package:dweller/firebase_options.dart';
 import 'package:dweller/services/repository/location_service/location_service.dart';
 import 'package:dweller/services/repository/notification_service/push_notifications.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
-import 'package:dweller/view/auth/login/page/login_page.dart';
 import 'package:dweller/view/auth/onboarding/page/intro_page.dart';
 import 'package:dweller/view/auth/splashscreen/splash_screen_updated.dart';
 import 'package:dweller/view/auth/onboarding/screen/onboarding_screen.dart';
