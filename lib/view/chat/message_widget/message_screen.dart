@@ -108,11 +108,11 @@ class _MessageScreenState extends State<MessageScreen> {
       }
       final List<Map<String, dynamic>> messageList = List<Map<String, dynamic>>.from(data);
       final result = messageList.map((e) => MessageResponse.fromJson(e)).toList();
-      //setState(() {
+    
         _messages
         ..clear()
         ..addAll(result);
-      //});
+
       _messagesStreamController.add(result);
     });
 
