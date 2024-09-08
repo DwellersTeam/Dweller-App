@@ -13,6 +13,8 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 
 class SocketService extends GetxController {  //GetxService
+
+
   late IO.Socket socket;
   
   final String refreshToken = LocalStorage.getXrefreshToken();
@@ -28,7 +30,8 @@ class SocketService extends GetxController {  //GetxService
   // Initialize the socket connection
   void _initSocket() {
     socket = IO.io(
-      'https://dweller-node-api.onrender.com', 
+      //'https://dweller-node-api.onrender.com', 
+      "https://dweller-api-61110ae7ceda.herokuapp.com",
       IO.OptionBuilder()
         .setTransports(["websocket"])
         .disableAutoConnect()

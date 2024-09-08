@@ -87,8 +87,7 @@ class BaseService extends getX.GetxController {
 
 
   //General Base URL
-  String socketUrl = "ws://dweller-node-api.onrender.com/";
-  String baseUrl = "https://dweller-node-api.onrender.com/api/v1/";
+  String baseUrl = "https://dweller-api-61110ae7ceda.herokuapp.com/api/v1/"; //"https://dweller-node-api.onrender.com/api/v1/";
   
 
   ///HTTP SERVICES/// 
