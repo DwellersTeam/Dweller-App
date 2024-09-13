@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/extractors.dart';
+import 'package:dweller/utils/components/loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -81,10 +82,13 @@ class ReceiverChatBox extends StatelessWidget {
                       imageUrl: imageUrl,
                       fit: BoxFit.contain,
                       filterQuality: FilterQuality.high,
+                      progressIndicatorBuilder: (context, url, progress) {
+                        return CircularProgressIndicator.adaptive(backgroundColor: AppColor.whiteColor,);
+                      },
                       errorWidget: (context, url, error) {
                         log("error loading image: $error");
                         return Text(
-                          error.toString(),
+                          "couldn't process imge",  //error.toString(),
                           style: GoogleFonts.poppins(
                             color: AppColor.darkGreyColor,
                             fontSize: 12.sp,
@@ -173,10 +177,13 @@ class SenderChatBox extends StatelessWidget {
                 imageUrl: imageUrl,
                 fit: BoxFit.contain,
                 filterQuality: FilterQuality.high,
+                progressIndicatorBuilder: (context, url, progress) {
+                  return CircularProgressIndicator.adaptive(backgroundColor: AppColor.darkPurpleColor,);
+                },
                 errorWidget: (context, url, error) {
                   log("error loading image: $error");
                   return Text(
-                    error.toString(),
+                    "couldn't process imge",  ////error.toString(),
                     style: GoogleFonts.poppins(
                       color: AppColor.darkGreyColor,
                       fontSize: 12.sp,

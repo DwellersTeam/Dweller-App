@@ -152,6 +152,12 @@ class StripeSubscriptionClass {
           ]
         ),
       );
+
+      /*await Stripe.instance.confirmSetupIntent(
+        paymentIntentClientSecret: subData.clientSecret,
+        params: PaymentMethodParams.card(paymentMethodData: PaymentMethodData())
+      );*/
+
   
       //display payment sheet to collect card info, processes the subscription payment and then disposes the payment sheet
       await displayPaymentSheet(context: context);

@@ -197,77 +197,82 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                           ),
                         ],
                       )
-                      :Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      :Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'join',
+                                style: GoogleFonts.bricolageGrotesque(
+                                  color: AppColor.darkPurpleColor,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                overflow: TextOverflow.fade,
+                              ),
+                              SizedBox(width: 6.w,),
+                              SvgPicture.asset("assets/svg/sub_logo.svg"),
+                              SizedBox(width: 6.w,),
+                              Text(
+                                'dweller',
+                                style: GoogleFonts.bricolageGrotesque(
+                                  color: AppColor.darkPurpleColor,
+                                  fontSize: 23.sp,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                overflow: TextOverflow.fade,
+                              ),
+                              SizedBox(width: 6.w,),
+                              ///gradient button
+                              SizedBox(
+                                height: 25.h,
+                                //width: 50.w,
+                                child: GradientElevatedButton(
+                                  onPressed: () {},
+                                  style: GradientElevatedButton.styleFrom(
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                      Color.fromRGBO(9, 173, 234, 1),
+                                      Color.fromRGBO(41, 57, 238, 1),
+                          
+                                        //AppColor.blueColorGradient2,
+                                        //AppColor.blueColorGradient1,
+                                      ],
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    'PRO',
+                                    style: GoogleFonts.bricolageGrotesque(
+                                      color: AppColor.whiteColor,
+                                      fontSize: 10.sp,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
+                              
+                            ],
+                          ),
+                          SizedBox(height: 5.h,),
                           Text(
-                            'join',
+                            'and get extra features',
                             style: GoogleFonts.bricolageGrotesque(
                               color: AppColor.darkPurpleColor,
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w500,
                             ),
-                            overflow: TextOverflow.fade,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          SizedBox(width: 6.w,),
-                          SvgPicture.asset("assets/svg/sub_logo.svg"),
-                          SizedBox(width: 6.w,),
-                          Text(
-                            'dweller',
-                            style: GoogleFonts.bricolageGrotesque(
-                              color: AppColor.darkPurpleColor,
-                              fontSize: 23.sp,
-                              fontWeight: FontWeight.w700,
-                            ),
-                            overflow: TextOverflow.fade,
-                          ),
-                          SizedBox(width: 6.w,),
-                          ///gradient button
-                          SizedBox(
-                            height: 25.h,
-                            //width: 50.w,
-                            child: GradientElevatedButton(
-                              onPressed: () {},
-                              style: GradientElevatedButton.styleFrom(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                  Color.fromRGBO(9, 173, 234, 1),
-                                  Color.fromRGBO(41, 57, 238, 1),
-
-                                    //AppColor.blueColorGradient2,
-                                    //AppColor.blueColorGradient1,
-                                  ],
-                                  begin: Alignment.centerLeft,
-                                  end: Alignment.centerRight,
-                                ),
-                              ),
-                              child: Text(
-                                'PRO',
-                                style: GoogleFonts.bricolageGrotesque(
-                                  color: AppColor.whiteColor,
-                                  fontSize: 10.sp,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 6.w,),
-                          Expanded(
-                            child: Text(
-                              'and get extra features',
-                              style: GoogleFonts.bricolageGrotesque(
-                                color: AppColor.darkPurpleColor,
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
+                          
                         ],
                       ),
 
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.04),
 
                       //sub features
                       Row(
@@ -432,7 +437,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         }
                       ),*/
 
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.04),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.06),
 
                       //UPGRADE TO PRO gradient button
                       widget.pro 
