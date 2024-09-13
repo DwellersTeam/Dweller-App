@@ -103,7 +103,7 @@ class _RegisterPage3State extends State<RegisterPage3> {
                         ),
                         SizedBox(height: 20.h,),
                         Text(
-                          'Kindly enter the OTP that has been sent to ****user@gmail.com',  //email text controller
+                          'Kindly enter the OTP that has been sent to your email',  //email text controller  //
                           style: GoogleFonts.poppins(
                             color: AppColor.semiDarkGreyColor,
                             fontSize: 12.sp,
