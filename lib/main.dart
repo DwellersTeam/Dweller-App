@@ -110,7 +110,7 @@ class _MyAppState extends State<MyApp> {
   final locationService = Get.put(LocationService());
 
   final token = LocalStorage.getXrefreshToken();
-  final isUserNew = LocalStorage.getIsNewUser() ?? "no";
+  final isUserNew = LocalStorage.getIsNewUser();
 
 
   bool isExpiredVal = false;
