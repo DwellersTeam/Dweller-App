@@ -121,7 +121,7 @@ class _HomePageState extends State<HomePage> {
                             radius: 24.r,
                             backgroundColor: Colors.grey.withOpacity(0.1),
                             //backgroundImage: const AssetImage("assets/images/lionel.jpg"),
-                            child: const LoaderS()
+                            //child: const LoaderS()
                           );
                         }
                         if(snapshot.hasError){

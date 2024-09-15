@@ -99,7 +99,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
                             radius: 24.r,
                             backgroundColor: Colors.grey.withOpacity(0.1),
                             //backgroundImage: const AssetImage("assets/images/lionel.jpg"),
-                            child: LoaderS()
+                            //child: LoaderS()
                           );
                         }
                         if(snapshot.hasError){

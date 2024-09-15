@@ -15,6 +15,7 @@ import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/extractors.dart';
 import 'package:dweller/utils/components/my_snackbar.dart';
 import 'package:dweller/view/auth/login/page/login_page.dart';
+import 'package:dweller/view/auth/onboarding/page/intro_page.dart';
 import 'package:dweller/view/create_profile/page/intro/welcome_page.dart';
 import 'package:dweller/view/main/mainpage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -81,7 +82,7 @@ class AuthService extends getx.GetxController {
     await signOutWithGoogle();
 
     isLoading.value = false;
-    getx.Get.offAll(() => const LoginPage());
+    getx.Get.offAll(() => const IntroPage());
   }
 
 
