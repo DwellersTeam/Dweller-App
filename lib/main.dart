@@ -151,7 +151,7 @@ class _MyAppState extends State<MyApp> {
         defaultTransition: Transition.rightToLeft,
         initialBinding: MyBindings(),
         //check if token is expired here with tenary operators
-        home: isUserNew == null ? const SplashScreenUpdated(next_screen: OnBoardingPage(),) : isExpiredVal ? const SplashScreenUpdated(next_screen: IntroPage(),) : const SplashScreenUpdated(next_screen: MainPage(),),
+        home: isUserNew == null ? const SplashScreenUpdated(next_screen: OnBoardingPage(),) : token == null ? const SplashScreenUpdated(next_screen: IntroPage(),)  : isExpiredVal ? const SplashScreenUpdated(next_screen: IntroPage(),) : const SplashScreenUpdated(next_screen: MainPage(),),
       ),
     );
   }

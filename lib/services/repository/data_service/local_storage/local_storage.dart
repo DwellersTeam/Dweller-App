@@ -34,7 +34,7 @@ class LocalStorage {
 
   /// use this to know if the user is a new user so you get to show onboarding screen
   static getIsNewUser() {
-    return GetStorage().read("isNewUser") ?? "no";
+    return GetStorage().read("isNewUser");
   }
 
   /// use this to [saveDwellerType] to local storage
