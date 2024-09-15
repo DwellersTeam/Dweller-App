@@ -27,6 +27,15 @@ class LocalStorage {
     return GetStorage().read("FCMToken") ?? "non";
   }
 
+  /// use this to know if the user is a new user so you get to show onboarding screen
+  static isNewUser(String value) {
+    return GetStorage().write("isNewUser", value);
+  }
+
+  /// use this to know if the user is a new user so you get to show onboarding screen
+  static getIsNewUser() {
+    return GetStorage().read("isNewUser") ?? "no";
+  }
 
   /// use this to [saveDwellerType] to local storage
   static saveDwellerType(String value) {

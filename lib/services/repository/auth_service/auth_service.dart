@@ -333,6 +333,7 @@ class AuthService extends getx.GetxController {
           await LocalStorage.saveUserID(userId);
           await LocalStorage.saveUserEmail(email);
           await LocalStorage.saveUsername(displayName);
+          LocalStorage.isNewUser("no");
         } 
         else {
           log("Failed to decode JWT token.");
@@ -427,6 +428,7 @@ class AuthService extends getx.GetxController {
           LocalStorage.saveUserID(userId);
           LocalStorage.saveUserEmail(email);
           LocalStorage.saveUsername(displayName);
+          LocalStorage.isNewUser("no");
         } 
         else {
           log("Failed to decode JWT token.");
@@ -541,6 +543,7 @@ class AuthService extends getx.GetxController {
           LocalStorage.saveUserID(userId);
           LocalStorage.saveUserEmail(email);
           LocalStorage.saveUsername("$firstName $lastName");
+          LocalStorage.isNewUser("no");
         } 
         else {
           log("Failed to decode JWT token.");
@@ -658,6 +661,7 @@ class AuthService extends getx.GetxController {
           LocalStorage.saveTokenExpDate(expDate);
           LocalStorage.saveUserID(userId);
           LocalStorage.saveUserEmail(email);
+          LocalStorage.isNewUser("no");
         } else {
           log("Failed to decode JWT token.");
         }
