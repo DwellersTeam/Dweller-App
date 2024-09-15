@@ -81,7 +81,7 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
             children: [
               //appbar
               DwellerAppBar(
-                actionIcon: SvgPicture.asset('assets/svg/settings_icon.svg'),
+                //actionIcon: SvgPicture.asset('assets/svg/settings_icon.svg'),
               ),
               //SizedBox(height: 10.h,),
               Padding(

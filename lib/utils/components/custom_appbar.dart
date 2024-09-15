@@ -10,8 +10,8 @@ import 'package:get/get.dart';
 
 
 class DwellerAppBar extends StatelessWidget {
-  const DwellerAppBar({super.key, required this.actionIcon});
-  final Widget actionIcon;
+  const DwellerAppBar({super.key, this.actionIcon});
+  final Widget? actionIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +19,11 @@ class DwellerAppBar extends StatelessWidget {
       alignment: Alignment.center,
       //height: 90.h,
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColor.whiteColor,
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: actionIcon == null ? MainAxisAlignment.start : MainAxisAlignment.spaceBetween,
         children: [
           InkWell(
             onTap: () {
@@ -31,7 +31,7 @@ class DwellerAppBar extends StatelessWidget {
             },
             child: SvgPicture.asset("assets/svg/arrow_back.svg")
           ),
-          actionIcon
+          actionIcon ?? const SizedBox.shrink()
         ],
       ),
     );
@@ -51,7 +51,7 @@ class DwellerAppBarHost extends StatelessWidget {
       alignment: Alignment.center,
       //height: 90.h,
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColor.whiteColor,
       ),
       child: Row(
