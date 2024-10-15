@@ -24,6 +24,7 @@ class HomePageController extends getx.GetxController {
   final subscriptionClass = StripeSubscriptionClass();
 
   final isOnPro = false.obs;
+  final hasProperty = false.obs;
   final isBookmarked = false.obs;  
 
 

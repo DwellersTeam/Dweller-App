@@ -10,6 +10,7 @@ import 'package:dweller/services/repository/notification_service/push_notificati
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/extractors.dart';
 import 'package:dweller/utils/components/loader.dart';
+import 'package:dweller/utils/components/my_snackbar.dart';
 import 'package:dweller/view/create_profile/page/intro/welcome_page.dart';
 import 'package:dweller/view/home/widget/feeds_card(h&s)/host_card.dart';
 import 'package:dweller/view/home/widget/feeds_card(h&s)/seeker_card.dart';
@@ -60,6 +61,7 @@ class _HomePageState extends State<HomePage> {
       controller.shakeCard();
     });
     profileFuture = _refresh();
+    
     super.initState();
   }
 
@@ -69,7 +71,20 @@ class _HomePageState extends State<HomePage> {
     await Future.delayed(const Duration(seconds: 2));
     final profileFuture = await profileService.fetchUserDetailFromJWT(context);
     controller.isOnPro.value = profileFuture.pro;
+    controller.hasProperty.value = profileFuture.property ?? false;
+    log("does current user have property ? ${controller.hasProperty.value}");
     log("is current user on dweller pro ? ${controller.isOnPro.value}");
+    if(controller.hasProperty.value) {
+      showPropertyAlertPopup(
+        onTap: () {
+          Get.back();
+          Get.to(() => ProfilePageHost(
+            property: profileFuture.property,
+            userId: profileFuture.id,
+          ));
+        },
+      );
+    }
     return profileFuture;
   }
 

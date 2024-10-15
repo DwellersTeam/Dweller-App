@@ -120,7 +120,7 @@ Future<void> showMessagePopup({
 
 
 Future<void> showPropertyAlertPopup({ 
-  required BuildContext context,
+  //required BuildContext context,
   required VoidCallback onTap,
   }) async{
   Get.dialog(
@@ -153,7 +153,7 @@ Future<void> showPropertyAlertPopup({
                       )
                     ]
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.02,),
+                  SizedBox(height: 20.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -190,7 +190,7 @@ Future<void> showPropertyAlertPopup({
                   ),
 
               
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.04,),
+                  SizedBox(height: 20.h),
                     
                   InkWell(
                     onTap: onTap,

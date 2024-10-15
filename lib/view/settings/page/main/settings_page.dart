@@ -296,6 +296,7 @@ class _SettingsPageState extends State<SettingsPage> {
                                 CupertinoIcons.chevron_forward
                               )
                             ),
+                            
                             SizedBox(height: 50.h,),
                             SettingsSelector(
                               onTap: () {
@@ -308,6 +309,14 @@ class _SettingsPageState extends State<SettingsPage> {
                                 size: 24.r,
                                 CupertinoIcons.chevron_forward
                               )
+                            ),
+                            SizedBox(height: 50.h,),
+                            SettingsSelector(
+                              onTap: () {
+                                
+                              },
+                              svgImage: SvgPicture.asset("assets/svg/logout.svg"),
+                              text: "Delete Account",
                             ),
                             SizedBox(height: 50.h,),
                             SettingsSelector(
@@ -331,7 +340,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   }
                 )
               ),
-              SizedBox(height: 50.h,),
+              //SizedBox(height: 50.h,),
                 
           
             ],
