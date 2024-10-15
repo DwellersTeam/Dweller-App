@@ -335,6 +335,7 @@ class _SettingsPageState extends State<SettingsPage> {
                               svgImage: SvgPicture.asset("assets/svg/logout.svg"),
                               text: "Logout",
                             ),
+                            SizedBox(height: 50.h,),
                           ],
                         ),
                       ),

@@ -12,7 +12,7 @@ class MyBindings implements Bindings{
   void dependencies() {
     // TODO: implement dependencies
     //Get.put<SocketService>(SocketService(), permanent: true);
-    Get.lazyPut<SocketService>(() => SocketService(), fenix: true);  //fenix: true
+    Get.lazyPut(() => SocketService(), fenix: true);
     Get.put(PushNotificationController());
   }
   
