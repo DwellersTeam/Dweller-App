@@ -76,7 +76,7 @@ class EditLifestylePage extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 0.h),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         /*Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -104,10 +104,10 @@ class EditLifestylePage extends StatelessWidget {
                           },
                           child: SvgPicture.asset("assets/svg/arrow_back.svg")
                         ),
-                        InkWell(
+                        /*InkWell(
                           onTap: () {},
                           child: SvgPicture.asset('assets/svg/settings_icon.svg')
-                        ),
+                        ),*/
                       ],
                     ),
                   ),

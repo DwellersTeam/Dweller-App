@@ -39,7 +39,6 @@ class _SearchTextfieldState extends State<SearchTextfield> {
         keyboardType: widget.keyboardType,
         maxLines: 2,
         minLines: 1,
-        autocorrect: true,
         inputFormatters: widget.inputFormatters,
         enableSuggestions: true,
         enableInteractiveSelection: true,

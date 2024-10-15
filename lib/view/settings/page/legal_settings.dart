@@ -1,3 +1,4 @@
+import 'package:dweller/services/controller/settings/settings_controller.dart';
 import 'package:dweller/utils/colors/appcolor.dart';
 import 'package:dweller/utils/components/custom_appbar.dart';
 import 'package:dweller/utils/components/custom_paint.dart';
@@ -17,7 +18,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 
 class LegalSettings extends StatelessWidget {
-  const LegalSettings({super.key});
+  const LegalSettings({super.key, required this.controller});
+  final SettingsController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class LegalSettings extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //appbar
-              DwellerAppBar(
+              const DwellerAppBar(
                 //actionIcon: SvgPicture.asset('assets/svg/settings_icon.svg'),
               ),
               //SizedBox(height: 10.h,),
@@ -49,21 +51,27 @@ class LegalSettings extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h), 
                 child: LegalSelector(
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.launchUrlLink(link: "https://dwellersteam.github.io/privacy-policy/");
+                  },
                   text: "Terms of Service"
                 ),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h), 
                 child: LegalSelector(
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.launchUrlLink(link: "https://dwellersteam.github.io/privacy-policy/");
+                  },
                   text: "Privacy Policy"
                 ),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h), 
                 child: LegalSelector(
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.launchUrlLink(link: "https://dwellersteam.github.io/privacy-policy/");
+                  },
                   text: "Community Guidelines"
                 ),
               ),

@@ -50,7 +50,7 @@ class ChangeMobileNumberPage extends StatelessWidget {
 
                   //appbar
                   DwellerAppBar(
-                    actionIcon: SvgPicture.asset('assets/svg/settings_icon.svg'),
+                    //actionIcon: SvgPicture.asset('assets/svg/settings_icon.svg'),
                   ),
                   
                   SizedBox(height: MediaQuery.of(context).size.height * 0.25,),

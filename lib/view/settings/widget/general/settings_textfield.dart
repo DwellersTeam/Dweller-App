@@ -39,7 +39,6 @@ class _SettingsTextfieldState extends State<SettingsTextfield> {
         keyboardType: widget.keyboardType,
         maxLines: 5,
         minLines: 1,
-        autocorrect: true,
         inputFormatters: const [],
         enableSuggestions: true,
         enableInteractiveSelection: true,

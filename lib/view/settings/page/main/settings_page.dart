@@ -300,7 +300,9 @@ class _SettingsPageState extends State<SettingsPage> {
                             SizedBox(height: 50.h,),
                             SettingsSelector(
                               onTap: () {
-                                Get.to(() => const LegalSettings());
+                                Get.to(() => LegalSettings(
+                                  controller: controller,
+                                ));
                               },
                               svgImage: SvgPicture.asset("assets/svg/legal.svg"),
                               text: "Legal",

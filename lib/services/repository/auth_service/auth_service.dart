@@ -589,7 +589,7 @@ class AuthService extends getx.GetxController {
         debugPrint('this is response body ==>${res.body}');
         debugPrint('this is response status ==>${res.statusCode}');
         //debugPrint('this is response reason ==> ${res.reasonPhrase}');
-        return baseService.showErrorMessage(context: context, httpStatusCode: res.statusCode!);
+        return baseService.showErrorMessage(context: context, httpStatusCode: res.statusCode);
       }
     }
     on FormatException catch(e, stackTrace){
@@ -752,7 +752,7 @@ class AuthService extends getx.GetxController {
         debugPrint('this is response body ==>${res.body}');
         debugPrint('this is response status ==>${res.statusCode}');
         //debugPrint('this is response reason ==> ${res.reasonPhrase}');
-        return baseService.showErrorMessage(context: context, httpStatusCode: res.statusCode!);
+        return baseService.showErrorMessage(context: context, httpStatusCode: res.statusCode);
       }
     }
     on FormatException catch(e, stackTrace){
@@ -815,7 +815,7 @@ class AuthService extends getx.GetxController {
         debugPrint('this is response body ==>${res.body}');
         debugPrint('this is response status ==>${res.statusCode}');
         //debugPrint('this is response reason ==> ${res.reasonPhrase}');
-        return baseService.showErrorMessage(context: context, httpStatusCode: res.statusCode!);
+        return baseService.showErrorMessage(context: context, httpStatusCode: res.statusCode);
       }
   
     }

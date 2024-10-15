@@ -38,7 +38,6 @@ class _ProfileTextFieldState extends State<ProfileTextField> {
         keyboardType: widget.keyboardType,
         maxLines: 2,
         minLines: 1,
-        autocorrect: true,
         inputFormatters: const [],
         enableSuggestions: true,
         enableInteractiveSelection: true,

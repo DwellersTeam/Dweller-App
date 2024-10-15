@@ -37,7 +37,6 @@ class _AboutTextFieldState extends State<AboutTextField> {
         keyboardType: widget.keyboardType,
         maxLines: 10,
         minLines: 3,
-        autocorrect: true,
         inputFormatters: const [],
         enableSuggestions: true,
         enableInteractiveSelection: true,

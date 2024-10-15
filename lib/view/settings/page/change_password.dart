@@ -49,7 +49,7 @@ class ChangePasswordPage extends StatelessWidget {
                 children: [
                   //appbar
                   DwellerAppBar(
-                    actionIcon: SvgPicture.asset('assets/svg/settings_icon.svg'),
+                    //actionIcon: SvgPicture.asset('assets/svg/settings_icon.svg'),
                   ),
                   
                   SizedBox(height: 20.h,),

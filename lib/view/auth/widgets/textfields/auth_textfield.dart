@@ -37,7 +37,6 @@ class _AuthTextFieldState extends State<AuthTextField> {
         keyboardType: widget.keyboardType,
         maxLines: 2,
         minLines: 1,
-        autocorrect: true,
         inputFormatters: const [],
         enableSuggestions: true,
         enableInteractiveSelection: true,
@@ -113,7 +112,6 @@ class _AuthPhoneNumberTextFieldState extends State<AuthPhoneNumberTextField> {
         keyboardType: widget.keyboardType,
         maxLines: 2,
         minLines: 1,
-        autocorrect: true,
         inputFormatters: [
           FilteringTextInputFormatter.digitsOnly,
         ],
@@ -188,7 +186,6 @@ class _AuthPasswordTextFieldState extends State<AuthPasswordTextField> {
         keyboardType: widget.keyboardType,
         //maxLines: 2,
         minLines: 1,
-        autocorrect: true,
         inputFormatters: const [],
         enableSuggestions: true,
         enableInteractiveSelection: true,
