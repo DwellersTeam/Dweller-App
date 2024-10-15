@@ -71,7 +71,7 @@ class _HomePageState extends State<HomePage> {
     await Future.delayed(const Duration(seconds: 2));
     final profileFuture = await profileService.fetchUserDetailFromJWT(context);
     controller.isOnPro.value = profileFuture.pro;
-    controller.hasProperty.value = profileFuture.property ?? false;
+    controller.hasProperty.value = profileFuture.property;
     log("does current user have property ? ${controller.hasProperty.value}");
     log("is current user on dweller pro ? ${controller.isOnPro.value}");
     if(controller.hasProperty.value) {
